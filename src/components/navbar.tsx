@@ -25,7 +25,7 @@ const Navbar: React.FC<NavbarProps> = ({ menuItems, isLoggedIn }) => {
       <div
         className={`${active} w-[60%] md:w-[40%] xl:w-fit md:bg-none top-[40px] md:top-[70px]  md:mt-0 mt-10`}
       >
-        <ul className="flex flex-col items-baseline px-6 space-y-6 font-medium xl:flex-row xl:items-center xl:space-y-0 xl:px-0 xl:space-x-10">
+        <ul className="flex flex-col items-baseline px-6 space-y-6 font-medium md:flex-row md:items-center md:space-y-0 md:px-0 md:space-x-10">
           {menuItems.map((menuitem, index) => (
             <li
               key={index}

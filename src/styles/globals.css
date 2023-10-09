@@ -34,7 +34,7 @@
   display: none;
 }
 
-@media screen and (max-width: 1282px) {
+@media screen and (max-width: 767px) {
   .nav-toggler {
     display: block;
   }
