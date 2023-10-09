@@ -8,13 +8,19 @@ const config: Config = {
   ],
   theme: {
     extend: {
-      backgroundImage: {
-        "gradient-radial": "radial-gradient(var(--tw-gradient-stops))",
-        "gradient-conic":
-          "conic-gradient(from 180deg at 50% 50%, var(--tw-gradient-stops))",
-      },
       fontFamily: {
         aeonik: ["var(--font-aeonik)"],
+      },
+      backgroundColor: {
+        t: {
+          "faded-purple": "rgba(55, 27, 137, 0.44)",
+        },
+      },
+      colors: {
+        t: {
+          black: "#1A1A1A",
+          purple: "#371B89",
+        },
       },
     },
   },

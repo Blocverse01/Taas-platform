@@ -1,3 +1,69 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+.link {
+  background: linear-gradient(to right, #FFFF, #FFF),
+    linear-gradient(to right, #1A1A1A, #1A1A1A, #1A1A1A);
+  background-size: 100% 3px, 0 3px;
+  background-position: 100% 100%, 0 100%;
+  background-repeat: no-repeat;
+  transition: background-size 100ms;
+}
+
+.link:hover {
+  background-size: 0 3px, 100% 3px;
+}
+
+.nav-menu {
+  /* display: flex; */
+  /* justify-content: space-around; */
+  /* gap: 3rem; */
+}
+
+.nav-toggler div {
+  width: 2rem;
+  height: 0.2rem;
+  margin: 0.4rem;
+  background: #371B89;
+  transition: 0.2s ease-in;
+}
+
+.nav-toggler {
+  cursor: pointer;
+  display: none;
+}
+
+@media screen and (max-width: 1282px) {
+  .nav-toggler {
+    display: block;
+  }
+
+  .nav-menu {
+    justify-content: initial;
+    z-index: 100;
+    position: fixed;
+    flex-direction: column;
+    right: 0;
+    height: 100%;
+    transform: translateX(100%);
+    background: #371B89;
+    transition: 0.2s ease-in-out;
+  }
+}
+
+.nav-active {
+  transform: translateX(0);
+}
+
+.toggler .line1 {
+  transform: rotate(-45deg) translate(-14px, 8px);
+}
+
+.toggler .line2 {
+  opacity: 0;
+}
+
+.toggler .line3 {
+  transform: rotate(45deg) translate(-6px, 2px);
+}
