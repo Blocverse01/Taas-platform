@@ -2,8 +2,18 @@
 import { useState } from "react";
 import { Link as ScrollLink } from "react-scroll";
 import Link from "next/link";
-import { NavbarProps } from "../types/types";
 
+interface MenuItem {
+  title: string;
+  isScrollLink: boolean;
+  href?: string;
+  target?: string;
+}
+
+type NavbarProps = {
+  menuItems: MenuItem[];
+  isLoggedIn: boolean;
+};
 const Navbar: React.FC<NavbarProps> = ({ menuItems, isLoggedIn }) => {
   const [active, setActive] = useState("nav-menu");
   const [toggleIcon, setToggleIcon] = useState("nav-toggler");
@@ -86,4 +96,4 @@ const Navbar: React.FC<NavbarProps> = ({ menuItems, isLoggedIn }) => {
     </nav>
   );
 };
-export default Navbar;
+export { Navbar };

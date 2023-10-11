@@ -1,30 +1,31 @@
-import Navbar from "@/components/navbar";
+"use client";
+import { Navbar } from "@/components/landingPage/navbar";
 import { aeonikFont } from "@/font/setup";
-import { MenuItem } from "@/types/types";
 import Image from "next/image";
 import hero from "@/assets/hero-img.png";
 import {
-  Api,
-  Security,
-  Team,
-  Plus,
-  Padlock,
-  Levels,
-  Wallet,
-  Compatibility,
-  Developers,
-  Sdk,
-  Vector1,
-  Tick,
-  Tick2,
   Facebook,
   Twitter,
   Instagram,
   Linkedln,
+  Plus,
+  Tick,
+  Tick2,
 } from "@/assets/icon";
+import { ComponentProps } from "react";
+import {
+  CustomPlan,
+  DevIntegrations,
+  ManageAssets,
+  PropertyListingPlan,
+  TeamManagement,
+  TeamMemberPlan,
+} from "@/components/landingPage/sectionData";
 
 export default function Home() {
-  const menuItems: MenuItem[] = [
+  type MenuItems = ComponentProps<typeof Navbar>["menuItems"]; // MenuItem[];
+
+  const menuItems: MenuItems = [
     { title: "Docs", href: "/", isScrollLink: false },
     { title: "Pricing", target: "pricing", href: "/", isScrollLink: true },
     {
@@ -45,130 +46,6 @@ export default function Home() {
     title: string;
     text: string;
   };
-
-  interface FeatureObjects {
-    id: number;
-    icon: React.ReactNode;
-    title: string;
-    text: string;
-  }
-
-  const ManageAssets: FeatureObjects[] = [
-    {
-      id: 1,
-      title: "Token and asset security",
-      text: "TAAS Ensures the security of tokenized assets by implementing robust security measures to protect digital assets, user data, and transactions from unauthorized access, manipulation, or theft.",
-      icon: <Security />,
-    },
-    {
-      id: 2,
-      title: "Easy API integration",
-      text: "TAAS makes it easy for you to connect and extend your systems effortlessly. Our goal is to manage all the complexity of tokenization, while enabling you to focus on scaling your business.",
-      icon: <Api />,
-    },
-    {
-      id: 3,
-      title: "Easy asset and team management",
-      text: "TAAS empowers you to efficiently add, tokenize, and organize your assets as well as enables seamless team collaboration in one dashboard.",
-      icon: <Team />,
-    },
-  ];
-
-  const TeamManagement: FeatureObjects[] = [
-    {
-      id: 1,
-      title: "Role Based Access",
-      text: "TAAS makes it possible for you to give access based on roles i.e Admin and Software developer.",
-      icon: <Padlock />,
-    },
-    {
-      id: 2,
-      title: "Multi Authorization Levels",
-      text: "Create multi authorization requirements for Token asset creation, sales creation and withdrawals.",
-      icon: <Levels />,
-    },
-    {
-      id: 3,
-      title: "Safe Multisig Wallet",
-      text: "TAAS Integrates a smart contract based multi-signature wallet.",
-      icon: <Wallet />,
-    },
-  ];
-
-  const DevIntegrations: FeatureObjects[] = [
-    {
-      id: 1,
-      title: "Cross-platform compatibility",
-      text: "We enable integrations across various technology stacks and frameworks, bring your frontend, we've got your back.😉",
-      icon: <Compatibility />,
-    },
-    {
-      id: 2,
-      title: "Collaborate with other developers",
-      text: "TAAS enables you to expand your technical team and let them have access to our Docs and API.",
-      icon: <Developers />,
-    },
-    {
-      id: 3,
-      title: "API/SDK",
-      text: "Our API and SDK is built with easy integration.",
-      icon: <Sdk />,
-    },
-  ];
-
-  interface PricingObject {
-    id: number;
-    plan: string;
-  }
-
-  const TeamMemberPlan: PricingObject[] = [
-    {
-      id: 1,
-      plan: "1 dev = free",
-    },
-    {
-      id: 2,
-      plan: "1 admin = $20/month",
-    },
-    {
-      id: 3,
-      plan: "2 admin = $36/months",
-    },
-    {
-      id: 4,
-      plan: "3 admin = $90/months",
-    },
-  ];
-
-  const PropertyListingPlan: PricingObject[] = [
-    {
-      id: 1,
-      plan: "1 dev = free",
-    },
-    {
-      id: 2,
-      plan: "2 properties = $45/annum",
-    },
-    {
-      id: 3,
-      plan: "5 properties = $200/annum",
-    },
-    {
-      id: 4,
-      plan: "10 properties = $425/annum",
-    },
-  ];
-
-  const CustomPlan: PricingObject[] = [
-    {
-      id: 1,
-      plan: "Unlimited admin",
-    },
-    {
-      id: 2,
-      plan: "Unlimited property",
-    },
-  ];
 
   const TitleAndText: React.FC<TitleAndTextProps> = ({ title, text }) => (
     <div>
@@ -353,7 +230,7 @@ export default function Home() {
               </button>
               {TeamMemberPlan.map((plan) => (
                 <div className="text-t-purple" key={plan.id}>
-                  <p className="flex items-center ">
+                  <div className="flex items-center ">
                     <p className="w-5 h-5 justify-center rounded-full flex items-center bg-t-purple">
                       <Tick />
                     </p>
@@ -361,7 +238,7 @@ export default function Home() {
                       {" "}
                       {plan.plan}
                     </span>
-                  </p>
+                  </div>
                 </div>
               ))}
             </div>
@@ -374,7 +251,7 @@ export default function Home() {
               </button>
               {PropertyListingPlan.map((plan) => (
                 <div className="text-white" key={plan.id}>
-                  <p className="flex items-center ">
+                  <div className="flex items-center ">
                     <p className="w-5 h-5 justify-center rounded-full flex items-center bg-white">
                       <Tick2 />
                     </p>
@@ -382,7 +259,7 @@ export default function Home() {
                       {" "}
                       {plan.plan}
                     </span>
-                  </p>
+                  </div>
                 </div>
               ))}
             </div>
@@ -394,7 +271,7 @@ export default function Home() {
                 </button>
                 {CustomPlan.map((plan) => (
                   <div className="text-t-purple" key={plan.id}>
-                    <p className="flex items-center ">
+                    <div className="flex items-center ">
                       <p className="w-5 h-5 justify-center rounded-full flex items-center bg-t-purple">
                         <Tick />
                       </p>
@@ -402,7 +279,7 @@ export default function Home() {
                         {" "}
                         {plan.plan}
                       </span>
-                    </p>
+                    </div>
                   </div>
                 ))}
               </div>
