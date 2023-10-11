@@ -429,7 +429,7 @@ export default function Home() {
             </a>
           </div>
         </section>
-        <footer className="md:mt-32 mt-28 mb-10 flex flex-col md:flex-row space-y-8 md:space-y-8 justify-around items-center text-t-purple">
+        <footer className="md:mt-32 mt-28 mb-10 flex flex-col md:flex-row space-y-8 md:space-y-0 justify-around items-center text-t-purple">
           <div className="w-[200px] flex justify-around">
             <a href="#">
               <Facebook />
