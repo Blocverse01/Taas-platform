@@ -47,7 +47,7 @@
     right: 0;
     height: 100%;
     transform: translateX(100%);
-    background: #371B89;
+    background: white;
     transition: 0.2s ease-in-out;
   }
 }

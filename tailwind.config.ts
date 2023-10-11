@@ -13,7 +13,7 @@ const config: Config = {
       },
       backgroundColor: {
         t: {
-          "faded-purple": "rgba(55, 27, 137, 0.44)",
+          "faded-purple": "rgba(55, 27, 137, 0.22)",
         },
       },
       colors: {

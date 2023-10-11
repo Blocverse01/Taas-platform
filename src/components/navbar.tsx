@@ -62,7 +62,7 @@ const Navbar: React.FC<NavbarProps> = ({ menuItems, isLoggedIn }) => {
           <Link href="/login">
             <button
               type="button"
-              className="select-none hover:-translate-y-[3px] duration-200 text-t-purple  text-[20px] font-bold "
+              className="select-none hover:-translate-y-[3px] duration-200 text-t-purple  text-sm  md:text-[20px] font-bold "
             >
               Login
             </button>
@@ -71,7 +71,7 @@ const Navbar: React.FC<NavbarProps> = ({ menuItems, isLoggedIn }) => {
           <Link href="/signup">
             <button
               type="button"
-              className="select-none hover:-translate-y-[3px] duration-200 font-medium bg-t-purple text-white  rounded-lg text-[20px] py-4 px-8"
+              className="select-none hover:-translate-y-[3px] duration-200 font-medium bg-t-purple text-white  rounded-lg text-sm  md:text-[20px] py-4 px-8"
             >
               Get Started
             </button>
