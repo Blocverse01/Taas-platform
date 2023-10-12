@@ -28,7 +28,7 @@ const Navbar: React.FC<NavbarProps> = ({ menuItems, isLoggedIn }) => {
   };
 
   return (
-    <nav className=" z-30 flex items-center xl:shadow-md justify-between  md:justify-around w-full px-4 py-4   xl:relative">
+    <nav className=" z-30 flex items-center xl:shadow-md justify-between  md:justify-around w-full px-4 py-6   xl:relative">
       <div>
         <h2 className="font-bold text-[24px]">TAAS</h2>
       </div>
@@ -39,7 +39,7 @@ const Navbar: React.FC<NavbarProps> = ({ menuItems, isLoggedIn }) => {
           {menuItems.map((menuitem, index) => (
             <li
               key={index}
-              className="text-t-black link select-none cursor-pointer  text-[20px] font-medium"
+              className="text-t-black link select-none cursor-pointer  text-[20px] md:text-sm  font-medium"
             >
               {menuitem.isScrollLink ? (
                 <ScrollLink
@@ -72,7 +72,7 @@ const Navbar: React.FC<NavbarProps> = ({ menuItems, isLoggedIn }) => {
           <Link href="/login">
             <button
               type="button"
-              className="select-none hover:-translate-y-[3px] duration-200 text-t-purple  text-sm  md:text-[20px] font-bold "
+              className="select-none hover:-translate-y-[3px] duration-200 text-t-purple  text-sm   font-bold "
             >
               Login
             </button>
@@ -81,7 +81,7 @@ const Navbar: React.FC<NavbarProps> = ({ menuItems, isLoggedIn }) => {
           <Link href="/signup">
             <button
               type="button"
-              className="select-none hover:-translate-y-[3px] duration-200 font-medium bg-t-purple text-white  rounded-lg text-sm  md:text-[20px] py-4 px-8"
+              className="select-none hover:-translate-y-[3px] duration-200 font-medium bg-t-purple text-white  rounded-lg text-sm  py-4 px-8"
             >
               Get Started
             </button>

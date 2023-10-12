@@ -14,6 +14,7 @@ const config: Config = {
       backgroundColor: {
         t: {
           "faded-purple": "rgba(55, 27, 137, 0.22)",
+          "faded-purple2": "rgba(55, 27, 137, 0.1)",
         },
       },
       colors: {
