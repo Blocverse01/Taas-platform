@@ -11,6 +11,7 @@ import {
   Plus,
   Tick,
   Tick2,
+  HeroBg,
 } from "@/assets/icon";
 import { ComponentProps } from "react";
 import {
@@ -77,8 +78,11 @@ export default function Home() {
   return (
     <div className={`${aeonikFont.variable} font-aeonik`}>
       <Navbar menuItems={menuItems} isLoggedIn={false} />
-      <main className="mt-20  text-t-black">
-        <section className="text-center px-6 md:px-12 xl:px-20 flex flex-col space-y-8">
+      <main className="mt-20 overflow-x-hidden   text-t-black">
+        <section className="text-center px-6 md:px-12 xl:px-20 flex flex-col relative space-y-8">
+          <div className="absolute  opacity-20  right-[10px] xl:right-[0px] xl:left-[160px] top-0">
+            <HeroBg />
+          </div>
           <p className="text-center text-t-purple text-sm  rounded-[32px] p-4 bg-t-faded-purple2 w-fit mx-auto">
             The best asset tokenization platform
           </p>
@@ -120,9 +124,12 @@ export default function Home() {
           </div>
         </section>
 
-        <div className="w-fit md:mt-32 mt-28 mx-auto">
-          {" "}
-          <Plus />
+        <div className="full flex items-center justify-between space-x-2 md:mt-32 mt-28 mx-auto">
+          <div className="h-[1px] bg-[#F0F2F5] w-full"></div>
+          <div className=" scale-110 ">
+            <Plus />
+          </div>
+          <div className="h-[1px] bg-[#F0F2F5] w-full"></div>
         </div>
 
         <section className="md:mt-32 px-6 md:px-12 xl:px-20 mt-28">
@@ -200,7 +207,7 @@ export default function Home() {
                 type="button"
                 className="select-none w-fit  hover:-translate-y-[3px] duration-200 font-medium bg-t-purple text-white  rounded-lg text-[20px] py-4 px-8"
               >
-                See Api Docs
+                See API Docs
               </a>
             </div>
           </div>
@@ -223,15 +230,15 @@ export default function Home() {
             text="TAAS has affordable plans for teams of every size and capacity, enabling you work with maximum efficiency."
           />
           <div className="grid grid-cols-1 gap-y-8 mt-10  md:grid-cols-2 xl:grid-cols-3 md:mt-16 h-fit md:gap-8 lg:ml-16">
-            <div className="flex flex-col w-full md:w-[322px] p-4 gradient-border border-2 rounded-[12px] space-y-8">
-              <h2 className="text-2xl font-bold text-t-purple">
+            <div className="flex flex-col w-full md:w-[322px] p-4 shadow-sm rounded-xl space-y-8">
+              <h2 className="text-[20px] font-bold text-t-purple">
                 Team Member Plan
               </h2>
-              <button className="select-none hover:-translate-y-[3px] font-semibold text-white bg-t-purple  duration-200  gradient-bg rounded-lg text-[20px] py-2 px-10">
+              <button className="select-none hover:-translate-y-[3px] font-semibold text-white bg-t-purple  duration-200  gradient-bg rounded-lg text-base py-2 px-10">
                 Get Started
               </button>
               {TeamMemberPlan.map((plan) => (
-                <div className="text-t-purple" key={plan.id}>
+                <div className="text-t-purple text-base" key={plan.id}>
                   <div className="flex items-center ">
                     <p className="w-5 h-5 justify-center rounded-full flex items-center bg-t-purple">
                       <Tick />
@@ -244,15 +251,15 @@ export default function Home() {
                 </div>
               ))}
             </div>
-            <div className="flex flex-col bg-t-purple w-full md:w-[322px] p-4 gradient-border border-2 rounded-[12px] space-y-8">
-              <h2 className="text-2xl font-bold text-white">
+            <div className="flex flex-col bg-t-purple w-full md:w-[322px] p-4 shadow-sm rounded-xl space-y-8">
+              <h2 className="text-[20px] font-bold text-white">
                 Property Listing Plan
               </h2>
-              <button className="select-none hover:-translate-y-[3px] font-semibold text-t-purple bg-white  duration-200  gradient-bg rounded-lg text-[20px] py-2 px-10">
+              <button className="select-none hover:-translate-y-[3px] font-semibold text-t-purple bg-white  duration-200  gradient-bg rounded-lg text-base py-2 px-10">
                 Get Started
               </button>
               {PropertyListingPlan.map((plan) => (
-                <div className="text-white" key={plan.id}>
+                <div className="text-white text-base" key={plan.id}>
                   <div className="flex items-center ">
                     <p className="w-5 h-5 justify-center rounded-full flex items-center bg-white">
                       <Tick2 />
@@ -265,14 +272,14 @@ export default function Home() {
                 </div>
               ))}
             </div>
-            <div className="flex flex-col w-full md:w-[322px] h-[364px] xl:h-full p-4 gradient-border border-2 rounded-[12px] justify-between">
+            <div className="flex flex-col w-full md:w-[322px] h-[364px] xl:h-full p-4 shadow-sm rounded-xl justify-between">
               <div className="flex flex-col space-y-8">
-                <h2 className="text-2xl font-bold text-t-purple">Custom</h2>
-                <button className="select-none hover:-translate-y-[3px] font-semibold text-white  duration-200  bg-t-purple rounded-lg text-[20px] py-2 px-10">
+                <h2 className="text-[20px] font-bold text-t-purple">Custom</h2>
+                <button className="select-none hover:-translate-y-[3px] font-semibold text-white  duration-200  bg-t-purple rounded-lg text-base py-2 px-10">
                   Contact Us
                 </button>
                 {CustomPlan.map((plan) => (
-                  <div className="text-t-purple" key={plan.id}>
+                  <div className="text-t-purple text-base" key={plan.id}>
                     <div className="flex items-center ">
                       <p className="w-5 h-5 justify-center rounded-full flex items-center bg-t-purple">
                         <Tick />
@@ -289,23 +296,25 @@ export default function Home() {
           </div>
         </section>
         <section className="md:mt-32 px-6 md:px-12 xl:px-20 mt-28">
-          <div className="flex flex-col md:flex-row space-y-8 md:sapce-y-0 justify-between items-center">
+          <div className="flex flex-col md:flex-row space-y-8 md:sapce-y-0 justify-between ">
             <div>
               <h2 className=" text-[36px] max-w-[404px] leading-[46px] font-bold">
                 Tokenize your assets in another dimension
               </h2>
-              <p className=" text-xl lg:w-[500px] xl:w-auto md:text-[20px] mt-4 md:mt-0  opacity-70 leading-[32px]  font-medium  max-w-[700px] ">
+              <p className=" text-xl lg:w-[500px] xl:w-[384px] md:text-[20px] mt-4 md:mt-0  opacity-70 leading-[32px]  font-medium  max-w-[700px] ">
                 Let us help you create and manage your tokenized assets with
                 extraordinary ease.
               </p>
             </div>
-            <a
-              href="#"
-              type="button"
-              className="select-none w-fit  hover:-translate-y-[3px] duration-200 font-medium bg-t-purple text-white  rounded-lg text-[20px] py-4 px-8"
-            >
-              Send us a message
-            </a>
+            <div>
+              <a
+                href="#"
+                type="button"
+                className="select-none w-fit  hover:-translate-y-[3px] duration-200 font-medium bg-t-purple text-white  rounded-lg text-[20px] py-4 px-8"
+              >
+                Send us a message
+              </a>
+            </div>
           </div>
         </section>
         <footer className="md:mt-32 px-6 md:px-12 xl:px-20 mt-28 mb-10 flex flex-col md:flex-row space-y-8 md:space-y-0 justify-around items-center text-t-purple">
