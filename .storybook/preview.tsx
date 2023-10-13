@@ -1,4 +1,7 @@
+import React from "react";
 import type { Preview } from "@storybook/react";
+import "@/styles/globals.css";
+import { aeonikFont } from "../src/font/setup";
 
 const preview: Preview = {
   parameters: {
@@ -10,6 +13,13 @@ const preview: Preview = {
       },
     },
   },
+  decorators: [
+    (Story) => (
+      <div className={`${aeonikFont.variable} font-aeonik`}>
+        <Story />
+      </div>
+    ),
+  ],
 };
 
 export default preview;
