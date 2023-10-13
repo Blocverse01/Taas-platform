@@ -21,6 +21,9 @@ const config: Config = {
         t: {
           black: "#1A1A1A",
           purple: "#371B89",
+          gray: {
+            1: "#F9FAFB"
+          }
         },
       },
     },

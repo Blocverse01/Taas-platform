@@ -14,13 +14,13 @@ export const aeonikFont = localFont({
       style: "italic",
     },
     {
-      path: "./aeonik/AeonikTRIAL-Light.otf",
-      weight: "400",
+      path: "./aeonik/Aeonik-Medium.otf",
+      weight: "500",
       style: "normal",
     },
     {
-      path: "./aeonik/AeonikTRIAL-LightItalic.otf",
-      weight: "400",
+      path: "./aeonik/Aeonik-MediumItalic.otf",
+      weight: "500",
       style: "italic",
     },
     {

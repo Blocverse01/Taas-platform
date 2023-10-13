@@ -28,12 +28,12 @@ const Navbar: React.FC<NavbarProps> = ({ menuItems, isLoggedIn }) => {
   };
 
   return (
-    <nav className=" z-30 flex items-center xl:shadow-md justify-between  md:justify-around w-full px-4 py-6   xl:relative">
+    <nav className="z-30 flex items-center xl:shadow-lg justify-between w-full px-4 py-6 xl:relative lg:px-6 xl:px-[72px]">
       <div>
         <h2 className="font-bold text-[24px]">TAAS</h2>
       </div>
       <div
-        className={`${active} w-[60%] md:w-[40%] xl:w-fit md:bg-none top-[40px] md:top-[70px]  md:mt-0 mt-10`}
+        className={`${active} w-[60%] md:w-[40%] xl:w-fit md:bg-none top-[40px] md:top-[70px] md:mt-0 mt-10`}
       >
         <ul className="flex flex-col items-baseline px-6 space-y-6 font-medium md:flex-row md:items-center md:space-y-0 md:px-0 md:space-x-10">
           {menuItems.map((menuitem, index) => (
