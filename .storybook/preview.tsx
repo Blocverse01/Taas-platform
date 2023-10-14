@@ -1,7 +1,9 @@
-import React from "react";
+import React, { useEffect, useRef } from "react";
 import type { Preview } from "@storybook/react";
 import "@/styles/globals.css";
 import { aeonikFont } from "../src/font/setup";
+import "react-loading-skeleton/dist/skeleton.css";
+import { useSetModalParent } from "../src/lib/zustand/modalSlice";
 
 const preview: Preview = {
   parameters: {
@@ -14,11 +16,21 @@ const preview: Preview = {
     },
   },
   decorators: [
-    (Story) => (
-      <div className={`${aeonikFont.variable} font-aeonik`}>
-        <Story />
-      </div>
-    ),
+    (Story) => {
+      const modalRef = useRef<HTMLDivElement | null>(null);
+      const setModalParent = useSetModalParent();
+
+      useEffect(() => {
+        if (modalRef.current) {
+          setModalParent(modalRef.current);
+        }
+      }, [setModalParent]);
+      return (
+        <div ref={modalRef} className={`${aeonikFont.variable} font-aeonik`}>
+          <Story />
+        </div>
+      );
+    },
   ],
 };
 

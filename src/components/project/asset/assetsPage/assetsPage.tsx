@@ -1,12 +1,12 @@
 import { ComponentProps, FC } from "react";
-import { RealEstateAssetCard } from "../asset";
-import { AssetsList } from "../assetsList";
+import { RealEstateAssetCard } from "./assetCards";
+import { AssetsList } from "./assetsList";
 import { Plus } from "@/assets/icon";
 
 type RealEstateAsset = ComponentProps<typeof RealEstateAssetCard>["asset"] & {
   id: string;
 };
-type AssetType = "real estate";
+
 type Assets = Array<RealEstateAsset>; // Todo: add other possible asset types
 
 interface AssetsPageProps {

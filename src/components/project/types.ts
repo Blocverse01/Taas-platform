@@ -1,0 +1,1 @@
+type AssetType = "real estate";
