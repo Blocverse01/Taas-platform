@@ -38,3 +38,4 @@ next-env.d.ts
 /solidity/artifacts
 /solidity/cache
 /solidity/typechain-types
+build-storybook.log
