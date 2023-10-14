@@ -22,8 +22,10 @@ const config: Config = {
           black: "#1A1A1A",
           purple: "#371B89",
           gray: {
-            1: "#F9FAFB"
-          }
+            1: "#F9FAFB",
+            2: "#FAFAFA",
+            3: "#464545",
+          },
         },
       },
     },
