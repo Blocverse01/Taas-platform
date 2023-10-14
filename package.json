@@ -8,7 +8,8 @@
     "start": "next start",
     "lint": "next lint",
     "storybook": "storybook dev -p 6006",
-    "build-storybook": "storybook build"
+    "build-storybook": "storybook build",
+    "chromatic": "npx chromatic --exit-zero-on-changes"
   },
   "dependencies": {
     "next": "13.5.4",
@@ -30,12 +31,15 @@
     "@types/react-dom": "^18",
     "@types/react-scroll": "^1.8.8",
     "autoprefixer": "^10",
+    "chromatic": "^7.4.0",
     "eslint": "^8",
     "eslint-config-next": "13.5.4",
     "eslint-plugin-storybook": "^0.6.15",
-    "storybook": "^7.4.6",
     "postcss": "^8",
+    "storybook": "^7.4.6",
     "tailwindcss": "^3",
     "typescript": "^5"
-  }
+  },
+  "readme": "ERROR: No README data found!",
+  "_id": "taas-platform@0.1.0"
 }
