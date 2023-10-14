@@ -1,1 +1,1 @@
-export * from "./documentsManager"
+export * from "./documentsManagement";

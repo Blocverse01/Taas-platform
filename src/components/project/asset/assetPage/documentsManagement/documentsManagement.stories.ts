@@ -1,10 +1,10 @@
 import type { Meta, StoryObj } from "@storybook/react";
 
-import { DocumentsManager } from "./documentsManager";
+import { DocumentsManagement } from "./documentsManagement";
 
 const meta = {
-  title: "Project/DocumentsManager",
-  component: DocumentsManager,
+  title: "Project/DocumentsManagement",
+  component: DocumentsManagement,
   parameters: {
     layout: "centered",
   },
@@ -34,9 +34,9 @@ const meta = {
       },
     ],
   },
-} satisfies Meta<typeof DocumentsManager>;
+} satisfies Meta<typeof DocumentsManagement>;
 
 export default meta;
 type Story = StoryObj<typeof meta>;
 
-export const DocumentsManager_: Story = {};
+export const DocumentsManagement_: Story = {};

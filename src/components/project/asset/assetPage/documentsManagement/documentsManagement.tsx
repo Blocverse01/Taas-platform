@@ -11,15 +11,15 @@ interface Document {
   id: string;
 }
 
-interface DocumentsManagerProps {
+interface DocumentsManagementProps {
   documents: Array<Document>;
 }
 
-const DocumentsManager: FC<DocumentsManagerProps> = ({ documents }) => {
+const DocumentsManagement: FC<DocumentsManagementProps> = ({ documents }) => {
   return (
     <section className="bg-t-gray-2 p-6 rounded-xl">
       <div className="flex justify-between items-center mb-[31px]">
-        <h3 className="text-t-black text-2xl font-medium">Documents</h3>
+        <h3 className="text-t-black text-xl font-medium">Documents</h3>
         <button className="underline text-t-purple text-base">Add New Document</button>
       </div>
       <section className="grid grid-cols-3 gap-8">
@@ -83,4 +83,4 @@ const DocumentCard: FC<{
   );
 };
 
-export { DocumentsManager };
+export { DocumentsManagement };
