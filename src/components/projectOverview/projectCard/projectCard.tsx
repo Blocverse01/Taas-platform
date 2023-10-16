@@ -23,7 +23,7 @@ const ProjectCard: FC<ProjectCardProps> = ({ project }) => {
   return (
     <div className="bg-t-gray  text-t-purple duration-200 hover:scale-105 hover:bg-t-purple hover:text-white  w-full h-[181px]  rounded-[10px] border border-[#ECECEC] flex flex-col space-y-4  p-5 relative group">
       <Image
-        className="absolute z-1 inset-0  group-hover:opacity-10"
+        className="absolute  scale-110   z-1 inset-0  group-hover:opacity-10"
         src={CardBg}
         alt="Image"
       />
