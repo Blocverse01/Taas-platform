@@ -32,7 +32,7 @@ const ProjectCard: FC<ProjectCardProps> = ({ project }) => {
         <div className="group-hover:text-white">
           <House />
         </div>
-        <p className="  text-[12px] font-medium text-t-purple2 capitalize  bg-t-purple3 duration-200 group-hover:bg-white  px-4 py-1 rounded-full  ">
+        <p className="  text-[12px] font-medium text-t-purple group-hover:text-t-purple2 capitalize  bg-t-purple3 duration-200 group-hover:bg-white  px-4 py-1 rounded-full  ">
           {assetType}
         </p>
       </div>
