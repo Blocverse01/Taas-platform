@@ -1,18 +1,20 @@
 "use client";
-
 import { FC } from "react";
-import { useSelectedLayoutSegment } from "next/navigation";
+import { useRouter } from "next/router";
 import { Avatar, Notification } from "../icons";
 
 const Header: FC = () => {
-  const segment = useSelectedLayoutSegment();
+  const router = useRouter();
+  const pathnameParts = router.pathname.split("/").filter(Boolean);
+  const lastPathname = pathnameParts[pathnameParts.length - 1];
+  const pageTitle = lastPathname === "dashboard" ? "Overview" : lastPathname;
 
   return (
-    <header className="relative flex justify-between items-center p-6 pt-12 capitalize border-b-[1px] border-t-grey-3">
-      <p>{segment ?? "overview"}</p>
-      <div className="flex space-x-2.5">
-        <Avatar />
+    <header className="relative flex justify-between items-center p-6 pt-12 capitalize  border-t-grey-3">
+      <p className="text-[20px] font-medium">{pageTitle}</p>
+      <div className="flex items-center space-x-5">
         <Notification />
+        <Avatar />
       </div>
     </header>
   );

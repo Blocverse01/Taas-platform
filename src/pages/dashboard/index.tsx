@@ -1,18 +1,35 @@
-import { Header } from "@/components/header";
-import { Sidebar } from "@/components/sidebar";
+import type { NextPageWithLayout } from "../_app";
+import Link from "next/link";
+import { ComponentProps, ReactElement } from "react";
 
-interface DashboardLayoutProps {
-  children: React.ReactNode;
-}
+import { ProjectsOverview } from "@/components/projectOverview";
+import { Projects } from "@/components/projectOverview/projectDemoData";
 
-export default function DashboardLayout({ children }: DashboardLayoutProps) {
+import DashboardLayout from "@/components/layout/dashboardLayout";
+import { Cross } from "@/components/icons";
+
+type Projects = ComponentProps<typeof ProjectsOverview>["projects"];
+
+const DashboardPage: NextPageWithLayout = () => {
   return (
-    <section className="min-h-screen text-white relative grid grid-cols-[12rem_1fr] w-full h-full">
-      <Sidebar />
-      <main className="bg-gray-950">
-        <Header />
-        <div className="p-6">{children}</div>
-      </main>
-    </section>
+    <div>
+      <div className="flex items-center justify-between mb-6">
+        <p className="font-medium text-t-purple4">All Projects</p>
+        <Link
+          href={"/projects/create-project"}
+          className="px-3 py-4 rounded flex items-center  text-white  w-max bg-t-purple"
+        >
+          <Cross />
+          <span className="ml-2"> Create new project</span>
+        </Link>
+      </div>
+      <ProjectsOverview projects={Projects} />
+    </div>
   );
-}
+};
+
+DashboardPage.getLayout = function getLayout(page: ReactElement) {
+  return <DashboardLayout>{page}</DashboardLayout>;
+};
+
+export default DashboardPage;

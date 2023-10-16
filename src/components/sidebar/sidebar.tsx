@@ -1,7 +1,10 @@
 "use client";
 import Link from "next/link";
-import { Dashboard, Assets, Teams, Settings, Notification } from "../icons";
-import { useSelectedLayoutSegment } from "next/navigation";
+import { Dashboard, Integrations } from "../icons";
+import logo from "@/assets/logo.svg";
+
+import { useRouter } from "next/router";
+import Image from "next/image";
 
 const navItems = [
   {
@@ -13,37 +16,35 @@ const navItems = [
   {
     name: "integrations",
     href: "/dashboard/integrations",
-    icon: <Settings />,
+    icon: <Integrations />,
     targetSegment: "integrations",
-  },
-  {
-    name: "notifications",
-    href: "/dashboard/notifications",
-    icon: <Notification />,
-    targetSegment: "notifications",
   },
 ];
 
 const Sidebar = () => {
-  const segment = useSelectedLayoutSegment();
+  const router = useRouter();
 
   return (
     <aside className="border-r-[1px] border-t-grey-3">
       <div className="flex flex-col gap-8 pt-12 text-center">
         <nav className="flex flex-col gap-6 list-none">
-          <p className="text-lg font-bold">TAAS</p>
-          {navItems.map((item) => (
-            <Link
-              className={`flex relative gap-2 p-4 pl-16 items-center  ${
-                item.targetSegment === segment ? "bg-t-purple text-black" : ""
-              }`}
-              key={item.href}
-              href={item.href}
-            >
-              <span className="absolute left-8">{item.icon}</span>
-              <span className="capitalize">{item.name}</span>
-            </Link>
-          ))}
+          <p className="text-[12px] font-medium flex items-center text-t-purple  w-fit mx-auto">
+            <Image className="mr-2" src={logo} alt="logo" /> TAAS
+          </p>
+          <div className="mt-6 px-2">
+            {navItems.map((item) => (
+              <Link
+                className={`flex relative rounded gap-2 p-4 pl-16 items-center ${
+                  router.pathname === item.href ? "bg-t-purple text-white" : ""
+                }`}
+                key={item.href}
+                href={item.href}
+              >
+                <span className="absolute left-8">{item.icon}</span>
+                <span className="capitalize">{item.name}</span>
+              </Link>
+            ))}
+          </div>
         </nav>
       </div>
     </aside>
