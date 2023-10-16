@@ -16,7 +16,7 @@ interface ProjectCardProps {
   };
 }
 
-//  TODO: make SVG change BG on hover
+//  TODO: make SVG change color on hover
 
 const ProjectCard: FC<ProjectCardProps> = ({ project }) => {
   const { name, assetType, timeCreated, link: projectLink } = project;
