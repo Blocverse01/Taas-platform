@@ -16,6 +16,8 @@ interface ProjectCardProps {
   };
 }
 
+//  TODO: make SVG change BG on hover
+
 const ProjectCard: FC<ProjectCardProps> = ({ project }) => {
   const { name, assetType, timeCreated, link: projectLink } = project;
   return (
@@ -28,7 +30,6 @@ const ProjectCard: FC<ProjectCardProps> = ({ project }) => {
       <Link href={projectLink} className="absolute z-[999] inset-0" />
       <div className="flex z-10 items-center justify-between">
         <div className="group-hover:text-white">
-          //TODO: make SVG change BG on hover
           <House />
         </div>
         <p className="  text-[12px] font-medium text-t-purple2 capitalize  bg-t-purple3 duration-200 group-hover:bg-white  px-4 py-1 rounded-full  ">
