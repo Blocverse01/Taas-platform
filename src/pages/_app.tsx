@@ -35,7 +35,7 @@ export default function App({ Component, pageProps }: AppPropsWithLayout) {
           success: {
             iconTheme: {
               primary: TAAS_PURPLE,
-              secondary: "black",
+              secondary: "white",
             },
           },
         }}

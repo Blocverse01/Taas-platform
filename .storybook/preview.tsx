@@ -35,7 +35,7 @@ const preview: Preview = {
               success: {
                 iconTheme: {
                   primary: TAAS_PURPLE,
-                  secondary: "black",
+                  secondary: "white",
                 },
               },
             }}
