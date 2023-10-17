@@ -9,7 +9,7 @@ const RecentTransactions = () => {
         <h1 className=" text-xl font-medium ">Recent Transactions</h1>
         <p className="font-sm text-t-gray-10">View All</p>
       </div>
-      <div>
+      <div className="mt-4">
         <TransactionTemplate transaction={TransactionData} />
       </div>
     </div>
