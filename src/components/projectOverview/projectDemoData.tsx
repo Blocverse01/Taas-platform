@@ -1,4 +1,4 @@
-export const Projects = [
+export const demoProjects = [
   {
     name: "Kings Holdings",
     assetType: "real estate",

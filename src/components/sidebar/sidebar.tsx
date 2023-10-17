@@ -1,8 +1,6 @@
-"use client";
 import Link from "next/link";
-import { Dashboard, Integrations } from "../icons";
+import { Dashboard, Integrations } from "@/assets/icon";
 import logo from "@/assets/logo.svg";
-
 import { useRouter } from "next/router";
 import Image from "next/image";
 

@@ -1,11 +1,9 @@
-"use client";
-import { Caret, House } from "@/components/icons";
+import { Caret, House } from "@/assets/icon";
 import Image from "next/image";
 import Link from "next/link";
-import { FC, ReactElement, useState } from "react";
+import { FC, useState } from "react";
 import { formatDistance } from "date-fns";
 import CardBg from "@/assets/project-card-bg.png";
-import { motion } from "framer-motion";
 
 interface ProjectCardProps {
   project: {
@@ -29,12 +27,12 @@ const ProjectCard: FC<ProjectCardProps> = ({ project }) => {
   };
   return (
     <div
-      className="bg-t-gray overflow-hidden  text-t-purple duration-200 hover:scale-105 hover:bg-t-purple hover:text-white  w-full h-[181px]  rounded-[10px] border border-[#ECECEC] flex flex-col space-y-4  p-5 relative group"
+      className="bg-t-gray overflow-hidden text-t-purple duration-200 hover:scale-105 hover:bg-t-purple hover:text-white w-full h-[181px] rounded-[10px] border border-[#ECECEC] flex flex-col space-y-4 p-5 relative group"
       onMouseEnter={handleMouseEnter}
       onMouseLeave={handleMouseLeave}
     >
       <Image
-        className="absolute  scale-110   z-1 inset-0  group-hover:opacity-10"
+        className="absolute scale-110  z-1 inset-0 group-hover:opacity-10"
         src={CardBg}
         alt="Image"
       />

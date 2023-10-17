@@ -1,7 +1,6 @@
-"use client";
 import { FC } from "react";
 import { useRouter } from "next/router";
-import { Avatar, Notification } from "../icons";
+import { Avatar, Notification } from "@/assets/icon";
 
 const Header: FC = () => {
   const router = useRouter();

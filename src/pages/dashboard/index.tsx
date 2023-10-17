@@ -3,10 +3,10 @@ import Link from "next/link";
 import { ComponentProps, ReactElement } from "react";
 
 import { ProjectsOverview } from "@/components/projectOverview";
-import { Projects } from "@/components/projectOverview/projectDemoData";
+import { demoProjects } from "@/components/projectOverview/projectDemoData";
 
 import DashboardLayout from "@/components/layout/dashboardLayout";
-import { Cross } from "@/components/icons";
+import { Plus } from "@/assets/icon";
 
 type Projects = ComponentProps<typeof ProjectsOverview>["projects"];
 
@@ -19,11 +19,11 @@ const DashboardPage: NextPageWithLayout = () => {
           href={"/projects/create-project"}
           className="px-3 py-4 rounded flex items-center  text-white  w-max bg-t-purple"
         >
-          <Cross />
-          <span className="ml-2"> Create new project</span>
+          <Plus width="16" height="16" />
+          <span className="ml-2">Create new project</span>
         </Link>
       </div>
-      <ProjectsOverview projects={Projects} />
+      <ProjectsOverview projects={demoProjects} />
     </div>
   );
 };

@@ -1,7 +1,6 @@
-"use client";
 import { ComponentProps, FC } from "react";
 import { ProjectCard } from "./projectCard";
-import { GridListing } from "../gridlisting/gridListing";
+import { GridListing } from "../gridListing";
 
 type ProjectCardProps = ComponentProps<typeof ProjectCard>;
 
@@ -11,7 +10,7 @@ interface ProjectsOverviewProps {
 
 const ProjectsOverview: FC<ProjectsOverviewProps> = ({ projects }) => {
   return (
-    <GridListing
+    <GridListing<(typeof projects)[number]>
       items={projects}
       renderItem={(item) => <ProjectCard project={item} />}
     />
