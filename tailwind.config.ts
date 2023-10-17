@@ -23,6 +23,8 @@ const config: Config = {
         t: {
           black: "#1A1A1A",
           purple: TAAS_PURPLE,
+          purple2: "rgba(55, 27, 137, 0.6)",
+          purple3: "rgba(55, 27, 137, 0.15)",
           gray: {
             1: "#F9FAFB",
             2: "#FAFAFA",
@@ -43,7 +45,10 @@ const config: Config = {
           to: { opacity: "1" },
         },
         contentShow: {
-          from: { opacity: "0", transform: "translate(-50%, -48%) scale(0.96)" },
+          from: {
+            opacity: "0",
+            transform: "translate(-50%, -48%) scale(0.96)",
+          },
           to: { opacity: "1", transform: "translate(-50%, -50%) scale(1)" },
         },
         slideUpAndFade: {
