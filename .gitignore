@@ -35,3 +35,8 @@ yarn-error.log*
 next-env.d.ts
 
 build-storybook.log
+
+# hardhat
+solidity/artifacts
+solidity/typechain-types
+solidity/cache
