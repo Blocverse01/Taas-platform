@@ -1,5 +1,7 @@
 import type { Config } from "tailwindcss";
 
+export const TAAS_PURPLE = "#371B89";
+
 const config: Config = {
   content: [
     "./src/pages/**/*.{js,ts,jsx,tsx,mdx}",
@@ -20,7 +22,7 @@ const config: Config = {
       colors: {
         t: {
           black: "#1A1A1A",
-          purple: "#371B89",
+          purple: TAAS_PURPLE,
           purple2: "rgba(55, 27, 137, 0.6)",
           purple3: "rgba(55, 27, 137, 0.15)",
           gray: {
@@ -30,6 +32,7 @@ const config: Config = {
             4: "#646464",
             5: "#474747",
             6: "#FEFBFB",
+            7: "#F3F3F3"
           },
           red: {
             1: "#C02425",
