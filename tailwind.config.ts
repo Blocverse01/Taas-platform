@@ -28,6 +28,9 @@ const config: Config = {
             4: "#646464",
             5: "#474747",
             6: "#FEFBFB",
+            7: "rgba(26, 26, 26, 0.5)",
+            8: "#FCFCFC",
+            9: "rgba(26, 26, 26, 0.7)",
           },
           red: {
             1: "#C02425",
@@ -40,7 +43,10 @@ const config: Config = {
           to: { opacity: "1" },
         },
         contentShow: {
-          from: { opacity: "0", transform: "translate(-50%, -48%) scale(0.96)" },
+          from: {
+            opacity: "0",
+            transform: "translate(-50%, -48%) scale(0.96)",
+          },
           to: { opacity: "1", transform: "translate(-50%, -50%) scale(1)" },
         },
         slideUpAndFade: {
