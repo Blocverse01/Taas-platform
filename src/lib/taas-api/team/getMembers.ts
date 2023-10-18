@@ -1,9 +1,9 @@
-import { getSession } from "next-auth/react";
+import { getCurrentUser } from "@/utils/constants";
 import { Address } from "viem"
 
 const FEATURE_READY = false;
 const getTeamMembers = async (teamId: string) => {
-  const currentUser = await getSession();
+  const currentUser = await getCurrentUser();
   if (!currentUser) throw new Error('No session');
 
   if (!FEATURE_READY) {
