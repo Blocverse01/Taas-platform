@@ -1,0 +1,19 @@
+{
+  "id": "mig_cjniirkltim0ijn14lgg",
+  "parentID": "mig_cjniidcltim0ijn14leg",
+  "checksum": "1:6937f56b9c657b8a968e566ea5263c3801983a3ae3f47abbc5481c31ee9f1601",
+  "operations": [
+    {
+      "addColumn": {
+        "column": {
+          "name": "project",
+          "type": "link",
+          "link": {
+            "table": "Project"
+          }
+        },
+        "table": "Property"
+      }
+    }
+  ]
+}

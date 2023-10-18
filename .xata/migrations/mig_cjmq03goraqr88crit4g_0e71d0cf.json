@@ -1,0 +1,18 @@
+{
+  "id": "mig_cjmq03goraqr88crit4g",
+  "parentID": "mig_cjmpfoo1htoaj3eohal0",
+  "checksum": "1:0e71d0cfed0d51791fa83178460e2e4826e247c28be33d57ca9d7077a6048bf7",
+  "operations": [
+    {
+      "addColumn": {
+        "column": {
+          "name": "treasuryWallet",
+          "type": "text",
+          "notNull": true,
+          "defaultValue": ""
+        },
+        "table": "Project"
+      }
+    }
+  ]
+}

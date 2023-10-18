@@ -1,0 +1,16 @@
+{
+  "id": "mig_cjmsj67kva27jttljjrg",
+  "parentID": "mig_cjmsj3u2rvp1ofkijh5g",
+  "checksum": "1:d0102ddd3df864ed4472a0206d091b86b1201423b1e53046aa03692e136738e7",
+  "operations": [
+    {
+      "addColumn": {
+        "column": {
+          "name": "enabledPaymentMethods",
+          "type": "multiple"
+        },
+        "table": "Project"
+      }
+    }
+  ]
+}

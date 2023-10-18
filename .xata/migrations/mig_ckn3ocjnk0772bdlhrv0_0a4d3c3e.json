@@ -1,0 +1,12 @@
+{
+  "id": "mig_ckn3ocjnk0772bdlhrv0",
+  "parentID": "mig_ckkmq0590n1m12fhoqmg",
+  "checksum": "1:0a4d3c3ed6ea1c27eb538cf9ec4ed16a2d48f24b5b9a81671e24691d3c1dfbf4",
+  "operations": [
+    {
+      "addTable": {
+        "table": "ProjectTeamMembers"
+      }
+    }
+  ]
+}
