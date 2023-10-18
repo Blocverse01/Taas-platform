@@ -1,7 +1,7 @@
 import { getSession } from "next-auth/react";
 import { deactivateMemberRolePayload, updateMemberRolePayload } from "./teamTypes";
 import { projectRepository, projectTeamRepository } from "@/utils/constants";
-import { getProjectTeamId } from "@/utils/assembler";
+import { getProjectTeamId } from "@/utils/helperfunctions";
 
 export const updateTeamMemberRole = async (payload: updateMemberRolePayload) => {
 
@@ -55,7 +55,7 @@ export const removeTeamMember = async (payload: deactivateMemberRolePayload) => 
             throw new Error("User is not a current team member")
         }
 
-        exisitingProjectTeamMember.update({isActive: false});
+        exisitingProjectTeamMember.update({ isActive: false });
     } catch (error: any) {
         throw error;
     }
