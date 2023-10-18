@@ -3,19 +3,18 @@ import { createProjectTeammate } from "../project/addProjectTeam";
 import MailService from "@/utils/email";
 import { getAddTeamMemberMailOption } from "@/utils/email/helpers";
 import {
-  getCurrentUser,
   projectRepository,
   projectTeamRepository,
   userRepository,
 } from "@/utils/constants";
 import { AddNewMemberPayload } from "./teamTypes";
 import { getProjectTeamMemberId } from "@/utils/helperfunctions";
+import { Session } from "next-auth";
 
-export const addNewTeamMember = async (payload: AddNewMemberPayload) => {
-  const currentUser = await getCurrentUser();
-
-  if (!currentUser) throw new Error("Unauthorized action");
-
+export const addNewTeamMember = async (
+  currentUser: Session,
+  payload: AddNewMemberPayload
+) => {
   const project = await projectRepository()
     .filter({
       id: payload.projectId,

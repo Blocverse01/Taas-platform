@@ -3,20 +3,17 @@ import {
   updateMemberRolePayload,
 } from "./teamTypes";
 import {
-  getCurrentUser,
   projectRepository,
   projectTeamRepository,
 } from "@/utils/constants";
 import { getProjectTeamMemberId } from "@/utils/helperfunctions";
+import { Session } from "next-auth";
 
 export const updateTeamMemberRole = async (
+  currentUser: Session,
   payload: updateMemberRolePayload
 ) => {
   try {
-    const currentUser = await getCurrentUser();
-
-    if (!currentUser) throw new Error("Unauthorized action");
-
     const project = await projectRepository()
       .filter({
         id: payload.projectId,
@@ -47,13 +44,10 @@ export const updateTeamMemberRole = async (
 };
 
 export const removeTeamMember = async (
+  currentUser: Session,
   payload: deactivateMemberRolePayload
 ) => {
   try {
-    const currentUser = await getCurrentUser();
-
-    if (!currentUser) throw new Error("Unauthorized action");
-
     const project = await projectRepository()
       .filter({
         id: payload.projectId,

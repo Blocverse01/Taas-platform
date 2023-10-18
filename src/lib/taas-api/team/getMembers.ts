@@ -1,11 +1,8 @@
-import { getCurrentUser } from "@/utils/constants";
+import { Session } from "next-auth";
 import { Address } from "viem"
 
 const FEATURE_READY = false;
-const getTeamMembers = async (teamId: string) => {
-  const currentUser = await getCurrentUser();
-  if (!currentUser) throw new Error('No session');
-
+const getTeamMembers = async (currentUser: Session, teamId: string) => {
   if (!FEATURE_READY) {
     const dummyMembers = [{
       email: "toochukwukingz6@gmail.com",
