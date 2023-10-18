@@ -5,7 +5,7 @@ import MailService from "@/utils/email";
 import { getAddTeamMemberMailOption } from "@/utils/email/helpers";
 import { projectRepository, projectTeamRepository, userRepository } from "@/utils/constants";
 import { AddNewMemberPayload } from "./teamTypes";
-import { getProjectTeamId } from "@/utils/assembler";
+import { getProjectTeamId } from "@/utils/helperfunctions";
 
 export const addNewTeamMember = async (payload: AddNewMemberPayload) => {
 
