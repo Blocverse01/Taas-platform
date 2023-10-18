@@ -6,7 +6,8 @@ type CreateTaasUserPayload = {
 }
 
 const createUser = async (payload: CreateTaasUserPayload) => {
-    return await userRepository.create(payload.email, {
+    return await userRepository.create({
+        email: payload.email,
         walletAddress: payload.walletAddress        
     });
 };
