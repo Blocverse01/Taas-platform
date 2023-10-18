@@ -20,7 +20,7 @@ export const updateTeamMemberRole = async (
       })
       .getFirstOrThrow();
 
-    if (project.owner?.id != currentUser.user?.email) {
+    if (project.owner?.id != currentUser.user?.id) {
       throw new Error("Only the project owner can update team member role");
     }
 
@@ -54,7 +54,7 @@ export const removeTeamMember = async (
       })
       .getFirstOrThrow();
 
-    if (project.owner?.id != currentUser.user?.email) {
+    if (project.owner?.id != currentUser.user?.id) {
       throw new Error("Only the project owner can update team member role");
     }
 

@@ -21,7 +21,7 @@ export const addNewTeamMember = async (
     })
     .getFirstOrThrow();
 
-  if (project.owner?.id != currentUser.user?.email) {
+  if (project.owner?.id != currentUser.user?.id) {
     throw new Error("Only the project owner can add team mates");
   }
 
