@@ -1,6 +1,4 @@
 
-
-
 type AddTeamMemberEmailPayload = {
     firstname: string;
     email: string;

@@ -5,7 +5,7 @@ import MailService from "@/utils/email";
 import { getAddTeamMemberMailOption } from "@/utils/email/helpers";
 import { projectRepository, projectTeamRepository, userRepository } from "@/utils/constants";
 import { AddNewMemberPayload } from "./teamTypes";
-import { getProjectTeamId } from "@/utils/helperfunctions";
+import { getProjectTeamMemberId } from "@/utils/helperfunctions";
 
 export const addNewTeamMember = async (payload: AddNewMemberPayload) => {
 
@@ -30,7 +30,7 @@ export const addNewTeamMember = async (payload: AddNewMemberPayload) => {
         });
     }
 
-    const projectTeamMemberId = getProjectTeamId(payload.projectId, user.id);
+    const projectTeamMemberId = getProjectTeamMemberId(payload.projectId, user.id);
 
     const existingTeamMember = await projectTeamRepository.filter({ id: projectTeamMemberId }).getFirst();
 

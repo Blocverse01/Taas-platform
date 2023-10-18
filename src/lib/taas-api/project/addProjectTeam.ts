@@ -1,4 +1,4 @@
-import { getProjectTeamId } from "@/utils/helperfunctions";
+import { getProjectTeamMemberId } from "@/utils/helperfunctions";
 import { projectRepository, projectTeamRepository, xata } from "@/utils/constants";
 
 type CreateProjectTeammatePayload = {
@@ -10,7 +10,7 @@ type CreateProjectTeammatePayload = {
 
 const createProjectTeammate = async (payload: CreateProjectTeammatePayload) => {
 
-    const projectTeamMemberId = getProjectTeamId(payload.projectId, payload.userId);
+    const projectTeamMemberId = getProjectTeamMemberId(payload.projectId, payload.userId);
 
     return await projectTeamRepository.create(projectTeamMemberId, {
         projectId: payload.projectId,
