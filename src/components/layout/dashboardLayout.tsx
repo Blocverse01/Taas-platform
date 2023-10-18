@@ -7,7 +7,7 @@ interface DashboardLayoutProps {
 
 export default function DashboardLayout({ children }: DashboardLayoutProps) {
   return (
-    <section className="min-h-screen text-black relative grid grid-cols-[12rem_1fr] w-full h-full">
+    <section className="min-h-screen text-t-black relative grid grid-cols-[12rem_1fr] w-full h-full">
       <Sidebar />
       <main className="bg-white">
         <Header />
