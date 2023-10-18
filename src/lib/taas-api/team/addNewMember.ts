@@ -1,0 +1,64 @@
+import { getSession } from "next-auth/react";
+import { createUser } from "../user";
+import { createProjectTeamate } from "../project/addProjectTeam";
+import MailService from "@/utils/email";
+import { getAddTeamMemberMailOption } from "@/utils/email/helpers";
+import { projectRepository, projectTeamRepository, userRepository } from "@/utils/constants";
+
+type AddNewMemberPayload = {
+    projectId: string,
+    name: string,
+    email: string,
+    role: string
+}
+
+export const addNewTeamMember = async (payload: AddNewMemberPayload) => {
+
+    const currentUser = await getSession();
+
+    if (!currentUser) throw new Error('Unauthorized action');
+
+    const project = await projectRepository.filter({
+        id: payload.projectId
+    }).getFirstOrThrow();
+
+    if (project.owner?.id != currentUser.user?.email) {
+        throw new Error("Only the project owner can add team mates")
+    }
+
+    (await userRepository.filter({ email: payload.email }).getFirst()) || await createUser({
+        email: payload.email,
+        walletAddress: "",
+    });
+
+    const existingTeamMember = await projectTeamRepository.filter({ id: `${payload.projectId}-${payload.email}` }).getFirst();
+
+    if (existingTeamMember && existingTeamMember.isActive) {
+        throw new Error("This user is already an active team member")
+    }
+
+    if (!existingTeamMember) {
+        await createProjectTeamate({
+            projectId: payload.projectId,
+            email: payload.email,
+            role: +payload.role,
+            isActive: false
+        });
+    }
+
+    const mailOptions = getAddTeamMemberMailOption({
+        firstname: payload.name,
+        senderEmail: currentUser.user?.email as string,
+        link: process.env.HOST_SITE as string,
+        email: payload.email
+    });
+
+
+    (await MailService.getTransporter())
+        .sendMail(mailOptions,
+            async (error) => {
+                if (error){
+                    throw new Error("An Error occured\nNo email sent!");
+                }
+            });
+}
