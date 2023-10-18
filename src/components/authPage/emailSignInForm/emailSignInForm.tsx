@@ -1,4 +1,5 @@
 import { Input } from "@/components/formPrimitives/input";
+import { FormSubmitSpinner } from "@/components/loaders";
 import { Form, Formik } from "formik";
 import { FC } from "react";
 import toast from "react-hot-toast";
@@ -65,9 +66,16 @@ const EmailSignInForm: FC<EmailSignInFormProps> = ({
           <button
             disabled={isSubmitting}
             type="submit"
-            className="w-full bg-t-purple py-[17px] rounded flex justify-center px-[57px] disabled:opacity-60 text-white"
+            className="w-full bg-t-purple py-[17px] rounded flex items-center justify-center px-[57px] disabled:opacity-60 text-white"
           >
-            Request for OTP
+            {isSubmitting ? (
+              <>
+                <FormSubmitSpinner />
+                <span className="ml-2">Authenticating</span>
+              </>
+            ) : (
+              "Request for OTP"
+            )}
           </button>
         </Form>
       )}
