@@ -1,4 +1,4 @@
-import { Session } from "next-auth";
+import type { Session } from "next-auth";
 import { Address } from "viem"
 
 const FEATURE_READY = false;
@@ -19,7 +19,7 @@ const getTeamMembers = async (currentUser: Session, teamId: string) => {
     return dummyMembers.map((member) => ({
       ...member,
       walletAddress: member.walletAddress as Address,
-      isCurrentUser: member.email === currentUser.user?.email
+      isCurrentUser: member.email === currentUser.user.email
     }))
   }
   return [];

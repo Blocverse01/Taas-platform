@@ -9,7 +9,7 @@ import {
 } from "@/utils/constants";
 import { AddNewMemberPayload } from "./teamTypes";
 import { getProjectTeamMemberId } from "@/utils/helperfunctions";
-import { Session } from "next-auth";
+import type { Session } from "next-auth";
 
 export const addNewTeamMember = async (
   currentUser: Session,
@@ -21,7 +21,7 @@ export const addNewTeamMember = async (
     })
     .getFirstOrThrow();
 
-  if (project.owner?.id != currentUser.user?.id) {
+  if (project.owner?.id != currentUser.user.id) {
     throw new Error("Only the project owner can add team mates");
   }
 
@@ -43,7 +43,7 @@ export const addNewTeamMember = async (
     .filter({ id: projectTeamMemberId })
     .getFirst();
 
-  if (existingTeamMember && existingTeamMember.isActive) {
+  if (existingTeamMember?.isActive) {
     throw new Error("This user is already an active team member");
   }
 
@@ -58,14 +58,14 @@ export const addNewTeamMember = async (
 
   const mailOptions = getAddTeamMemberMailOption({
     firstname: payload.name,
-    senderEmail: currentUser.user?.email as string,
+    senderEmail: currentUser.user.email,
     link: process.env.HOST_SITE as string,
     email: payload.email,
   });
 
-  (await MailService.getTransporter()).sendMail(mailOptions, async (error) => {
+  (await MailService.getTransporter()).sendMail(mailOptions, (error) => {
     if (error) {
-      throw new Error("An Error occured\nNo email sent!");
+      throw new Error("An Error occurred\nNo email sent!");
     }
   });
 };

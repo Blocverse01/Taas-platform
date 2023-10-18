@@ -7,7 +7,7 @@ import {
   projectTeamRepository,
 } from "@/utils/constants";
 import { getProjectTeamMemberId } from "@/utils/helperfunctions";
-import { Session } from "next-auth";
+import type { Session } from "next-auth";
 
 export const updateTeamMemberRole = async (
   currentUser: Session,
@@ -20,7 +20,7 @@ export const updateTeamMemberRole = async (
       })
       .getFirstOrThrow();
 
-    if (project.owner?.id != currentUser.user?.id) {
+    if (project.owner?.id != currentUser.user.id) {
       throw new Error("Only the project owner can update team member role");
     }
 
@@ -54,7 +54,7 @@ export const removeTeamMember = async (
       })
       .getFirstOrThrow();
 
-    if (project.owner?.id != currentUser.user?.id) {
+    if (project.owner?.id != currentUser.user.id) {
       throw new Error("Only the project owner can update team member role");
     }
 
