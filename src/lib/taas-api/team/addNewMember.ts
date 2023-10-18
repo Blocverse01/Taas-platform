@@ -1,16 +1,11 @@
 import { getSession } from "next-auth/react";
 import { createUser } from "../user";
-import { createProjectTeamate } from "../project/addProjectTeam";
+import { createProjectTeammate } from "../project/addProjectTeam";
 import MailService from "@/utils/email";
 import { getAddTeamMemberMailOption } from "@/utils/email/helpers";
 import { projectRepository, projectTeamRepository, userRepository } from "@/utils/constants";
-
-type AddNewMemberPayload = {
-    projectId: string,
-    name: string,
-    email: string,
-    role: string
-}
+import { AddNewMemberPayload } from "./teamTypes";
+import { getProjectTeamId } from "@/utils/assembler";
 
 export const addNewTeamMember = async (payload: AddNewMemberPayload) => {
 
@@ -26,25 +21,27 @@ export const addNewTeamMember = async (payload: AddNewMemberPayload) => {
         throw new Error("Only the project owner can add team mates")
     }
 
-    const userExists = await userRepository.filter({ email: payload.email }).getFirst();
+    let user = await userRepository.filter({ email: payload.email }).getFirst();
 
-    if (!userExists) {
-        await createUser({
+    if (!user) {
+        user = await createUser({
             email: payload.email,
             walletAddress: "",
         });
     }
 
-    const existingTeamMember = await projectTeamRepository.filter({ id: `${payload.projectId}-${payload.email}` }).getFirst();
+    const projectTeamMemberId = getProjectTeamId(payload.projectId, user.id);
+
+    const existingTeamMember = await projectTeamRepository.filter({ id: projectTeamMemberId }).getFirst();
 
     if (existingTeamMember && existingTeamMember.isActive) {
         throw new Error("This user is already an active team member")
     }
 
     if (!existingTeamMember) {
-        await createProjectTeamate({
+        await createProjectTeammate({
             projectId: payload.projectId,
-            email: payload.email,
+            userId: payload.email,
             role: +payload.role,
             isActive: false
         });
@@ -61,7 +58,7 @@ export const addNewTeamMember = async (payload: AddNewMemberPayload) => {
     (await MailService.getTransporter())
         .sendMail(mailOptions,
             async (error) => {
-                if (error){
+                if (error) {
                     throw new Error("An Error occured\nNo email sent!");
                 }
             });
