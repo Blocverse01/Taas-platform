@@ -32,3 +32,31 @@ export const updateTeamMemberRole = async (payload: updateMemberRolePayload) => 
     }
 }
 
+export const removeTeamMember = async (payload: deactivateMemberRolePayload) => {
+
+    try {
+        const currentUser = await getSession();
+
+        if (!currentUser) throw new Error('Unauthorized action');
+
+        const project = await projectRepository.filter({
+            id: payload.projectId
+        }).getFirstOrThrow();
+
+        if (project.owner?.id != currentUser.user?.email) {
+            throw new Error("Only the project owner can update team member role")
+        }
+
+        const projectTeamId = getProjectTeamId(project.id, payload.teamMemberUserId);
+
+        const exisitingProjectTeamMember = await projectTeamRepository.filter({ id: projectTeamId, isActive: true }).getFirst();
+
+        if (!exisitingProjectTeamMember) {
+            throw new Error("User is not a current team member")
+        }
+
+        exisitingProjectTeamMember.update({isActive: false});
+    } catch (error: any) {
+        throw error;
+    }
+}
