@@ -1,0 +1,13 @@
+{
+  "id": "mig_cjnikr2tvmm24dt1jh70",
+  "parentID": "mig_cjnikipqmp04ac32jmug",
+  "checksum": "1:74f3fa4457fd8cc6624a5703e0cf97fefec38ca55da7e7d1c3422d5547ee0a24",
+  "operations": [
+    {
+      "renameTable": {
+        "newName": "TokenizedProperty",
+        "oldName": "Property"
+      }
+    }
+  ]
+}

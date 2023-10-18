@@ -1,0 +1,19 @@
+{
+  "id": "mig_ckkmp93c3j43km6hav0g",
+  "parentID": "mig_ckik7tn3u7h5rrps7qb0",
+  "checksum": "1:04d73cd858daa19e175fb8e3e7011d27a33df55e983321522430e6dcdd624b37",
+  "operations": [
+    {
+      "addColumn": {
+        "column": {
+          "name": "project",
+          "type": "link",
+          "link": {
+            "table": "Project"
+          }
+        },
+        "table": "AssetDocument"
+      }
+    }
+  ]
+}

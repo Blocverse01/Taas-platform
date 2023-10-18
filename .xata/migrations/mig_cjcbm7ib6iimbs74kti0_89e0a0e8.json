@@ -1,0 +1,19 @@
+{
+  "id": "mig_cjcbm7ib6iimbs74kti0",
+  "parentID": "mig_cjcblblcbb623ggplqsg",
+  "checksum": "1:89e0a0e8269c0487ed47192a08ddbcceffed29b70a36fd315a2c2f9618e51dc0",
+  "operations": [
+    {
+      "addColumn": {
+        "column": {
+          "name": "owner",
+          "type": "link",
+          "link": {
+            "table": "User"
+          }
+        },
+        "table": "Project"
+      }
+    }
+  ]
+}

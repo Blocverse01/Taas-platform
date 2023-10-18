@@ -1,0 +1,18 @@
+{
+  "id": "mig_cjnikvkltim0ijn14lkg",
+  "parentID": "mig_cjnikr2tvmm24dt1jh70",
+  "checksum": "1:2d7b7237ebf6d44b52f255c6eeb23cdecde71157464b2f7784237d21c4bc4c0d",
+  "operations": [
+    {
+      "addColumn": {
+        "column": {
+          "name": "tokenTicker",
+          "type": "string",
+          "notNull": true,
+          "defaultValue": ""
+        },
+        "table": "TokenizedProperty"
+      }
+    }
+  ]
+}

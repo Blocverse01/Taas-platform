@@ -1,0 +1,18 @@
+{
+  "id": "mig_cjkb4c0199d472l7ufgg",
+  "parentID": "mig_cjkb41g199d472l7uffg",
+  "checksum": "1:062a7e1a9f86101b0bc92d1b521dbe6f1be62340e43b83a989d7121924072545",
+  "operations": [
+    {
+      "addColumn": {
+        "column": {
+          "name": "assetType",
+          "type": "text",
+          "notNull": true,
+          "defaultValue": "real estate"
+        },
+        "table": "Project"
+      }
+    }
+  ]
+}

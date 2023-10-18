@@ -1,0 +1,17 @@
+{
+  "id": "mig_ckfboagv2e8b9mca28pg",
+  "parentID": "mig_ckfb8jgv2e8b9mca2570",
+  "checksum": "1:776edfe7dc1c8127a71c9cc1a2fadda403eb5c03db8e289118d65b37a8d0c359",
+  "operations": [
+    {
+      "addColumn": {
+        "column": {
+          "name": "apiKey",
+          "type": "string",
+          "unique": true
+        },
+        "table": "ApiKey"
+      }
+    }
+  ]
+}

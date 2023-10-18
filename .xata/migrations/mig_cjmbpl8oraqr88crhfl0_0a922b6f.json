@@ -1,0 +1,18 @@
+{
+  "id": "mig_cjmbpl8oraqr88crhfl0",
+  "parentID": "mig_cjkb4c0199d472l7ufgg",
+  "checksum": "1:0a922b6ff41ec4c4a292efbae6480261cc31993f57204f71984efe1162f49067",
+  "operations": [
+    {
+      "addColumn": {
+        "column": {
+          "name": "web3Environment",
+          "type": "text",
+          "notNull": true,
+          "defaultValue": "mainnet"
+        },
+        "table": "Project"
+      }
+    }
+  ]
+}

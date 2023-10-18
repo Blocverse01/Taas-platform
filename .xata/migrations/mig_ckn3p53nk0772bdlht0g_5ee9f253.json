@@ -1,0 +1,16 @@
+{
+  "id": "mig_ckn3p53nk0772bdlht0g",
+  "parentID": "mig_ckn3ovjnk0772bdlhss0",
+  "checksum": "1:5ee9f25336b92cbc02959bf7c2d838fd6554adc5774c0a24c076208ca616b020",
+  "operations": [
+    {
+      "addColumn": {
+        "column": {
+          "name": "roleId",
+          "type": "int"
+        },
+        "table": "ProjectTeamMembers"
+      }
+    }
+  ]
+}

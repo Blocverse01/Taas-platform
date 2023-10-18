@@ -1,0 +1,19 @@
+{
+  "id": "mig_ckn3opbh6mrahcars9jg",
+  "parentID": "mig_ckn3ojrnk0772bdlhscg",
+  "checksum": "1:39ebb446b22d895c0cf1cd62dabddc92a3520191e57199a6845d8add367bd583",
+  "operations": [
+    {
+      "addColumn": {
+        "column": {
+          "name": "userId",
+          "type": "link",
+          "link": {
+            "table": "User"
+          }
+        },
+        "table": "ProjectTeamMembers"
+      }
+    }
+  ]
+}

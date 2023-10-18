@@ -1,0 +1,18 @@
+{
+  "id": "mig_cjkb41g199d472l7uffg",
+  "parentID": "mig_cjcbm7ib6iimbs74kti0",
+  "checksum": "1:a6c0cd6a2dea50daa591306c6d0b32597259b3e2cb5994e3138a12581a8ad1a1",
+  "operations": [
+    {
+      "addColumn": {
+        "column": {
+          "name": "createdAt",
+          "type": "datetime",
+          "notNull": true,
+          "defaultValue": "now"
+        },
+        "table": "Project"
+      }
+    }
+  ]
+}

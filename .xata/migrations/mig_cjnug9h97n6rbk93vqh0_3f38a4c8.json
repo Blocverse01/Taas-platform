@@ -1,0 +1,18 @@
+{
+  "id": "mig_cjnug9h97n6rbk93vqh0",
+  "parentID": "mig_cjnug4h97n6rbk93vqg0",
+  "checksum": "1:3f38a4c88f2bf9b8f3c84f4efb8cc8b3a0c17330dd5f75ba79994fca0c6fa10b",
+  "operations": [
+    {
+      "addColumn": {
+        "column": {
+          "name": "title",
+          "type": "string",
+          "notNull": true,
+          "defaultValue": ""
+        },
+        "table": "ActivityLog"
+      }
+    }
+  ]
+}
