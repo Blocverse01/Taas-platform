@@ -1,10 +1,12 @@
 import cn from "classnames";
 import { useField, FieldHookConfig, ErrorMessage } from "formik";
 
-/**
- * @description Input for Text or Number fields.
- */
-const Input = (props: FormElement & FieldHookConfig<string | number>) => {
+const Textarea = (
+  props: FormElement &
+    FieldHookConfig<string | number> & {
+      rows: number;
+    }
+) => {
   const [field, meta] = useField(props);
 
   const isInvalid = meta.touched && !!meta.error;
@@ -32,16 +34,16 @@ const Input = (props: FormElement & FieldHookConfig<string | number>) => {
       <label className="block mb-3 text-t-black" htmlFor={props.id}>
         {props.customLabel ?? props.label}
       </label>
-      <input
+      <textarea
         className={inputClasses}
         {...field}
         placeholder={props.placeholder}
         name={props.name}
-        type={props.type}
         id={props.id}
         aria-label={props.label}
         onWheel={(e) => e.currentTarget.blur()}
         autoFocus={props.autoFocus}
+        rows={props.rows}
       />
       <div className="text-red-500 mt-1">
         <ErrorMessage name={props.name} component="div" />
@@ -50,4 +52,4 @@ const Input = (props: FormElement & FieldHookConfig<string | number>) => {
   );
 };
 
-export { Input };
+export { Textarea };

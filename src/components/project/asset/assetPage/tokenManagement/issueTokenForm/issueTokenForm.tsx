@@ -6,7 +6,10 @@ import { Input } from "@/components/formPrimitives/input";
 import classNames from "classnames";
 
 interface IssueTokenFormProps {
-  handleIssueToken: (destinationAddress: Address, amount: number) => Promise<void>;
+  handleIssueToken: (
+    destinationAddress: Address,
+    amount: number
+  ) => Promise<void>;
   backButton?: React.ReactNode;
   submitButtonText: string;
 }
@@ -26,7 +29,11 @@ const issueTokenValidationSchema = Yup.object().shape({
 
 type Values = Yup.InferType<typeof issueTokenValidationSchema>;
 
-const IssueTokenForm: FC<IssueTokenFormProps> = ({ handleIssueToken, backButton, submitButtonText }) => {
+const IssueTokenForm: FC<IssueTokenFormProps> = ({
+  handleIssueToken,
+  backButton,
+  submitButtonText,
+}) => {
   useEffect(() => {
     document.getElementById("destination")?.focus();
   }, []);
@@ -37,7 +44,10 @@ const IssueTokenForm: FC<IssueTokenFormProps> = ({ handleIssueToken, backButton,
       validationSchema={issueTokenValidationSchema}
       onSubmit={async (values, { resetForm, setSubmitting }) => {
         try {
-          await handleIssueToken(values.destinationWallet as Address, values.amount);
+          await handleIssueToken(
+            values.destinationWallet as Address,
+            values.amount
+          );
           resetForm();
         } catch (error) {
         } finally {
@@ -47,8 +57,18 @@ const IssueTokenForm: FC<IssueTokenFormProps> = ({ handleIssueToken, backButton,
     >
       {({ isValid, isSubmitting }) => (
         <Form className="space-y-8">
-          <Input label="Wallet Address" type="text" name="destinationWallet" id="destination" />
-          <Input label="Amount of Asset" type="text" name="amount" id="amount" />
+          <Input
+            label="Wallet Address"
+            type="text"
+            name="destinationWallet"
+            id="destination"
+          />
+          <Input
+            label="Amount of Asset"
+            type="text"
+            name="amount"
+            id="amount"
+          />
           <div
             className={classNames({
               "grid grid-cols-2 gap-2.5": Boolean(backButton),
@@ -57,7 +77,6 @@ const IssueTokenForm: FC<IssueTokenFormProps> = ({ handleIssueToken, backButton,
             {backButton}
             <button
               type="submit"
-              aria-disabled={!isValid}
               disabled={isSubmitting}
               className="bg-t-purple text-white py-[18px] px-[70px] rounded w-full"
             >

@@ -1,5 +1,7 @@
 import type { Config } from "tailwindcss";
 
+export const TAAS_PURPLE = "#371B89";
+
 const config: Config = {
   content: [
     "./src/pages/**/*.{js,ts,jsx,tsx,mdx}",
@@ -20,7 +22,9 @@ const config: Config = {
       colors: {
         t: {
           black: "#1A1A1A",
-          purple: "#371B89",
+          purple: TAAS_PURPLE,
+          purple2: "rgba(55, 27, 137, 0.6)",
+          purple3: "rgba(55, 27, 137, 0.15)",
           gray: {
             1: "#F9FAFB",
             2: "#FAFAFA",
@@ -28,6 +32,9 @@ const config: Config = {
             4: "#646464",
             5: "#474747",
             6: "#FEFBFB",
+            7: "#F3F3F3",
+            8: "#EFEFEF",
+            9: "#4A5564",
           },
           red: {
             1: "#C02425",
@@ -40,7 +47,10 @@ const config: Config = {
           to: { opacity: "1" },
         },
         contentShow: {
-          from: { opacity: "0", transform: "translate(-50%, -48%) scale(0.96)" },
+          from: {
+            opacity: "0",
+            transform: "translate(-50%, -48%) scale(0.96)",
+          },
           to: { opacity: "1", transform: "translate(-50%, -50%) scale(1)" },
         },
         slideUpAndFade: {
