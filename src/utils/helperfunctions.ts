@@ -1,4 +1,4 @@
 
-export const getProjectTeamId = (projectId: string, userId: string) => {
+export const getProjectTeamMemberId = (projectId: string, userId: string) => {
     return `${projectId}-${userId}`
 }
