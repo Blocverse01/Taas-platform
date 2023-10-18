@@ -4,6 +4,7 @@ import usdt from "@/assets/usdt.png";
 import usdc from "@/assets/usdc.png";
 import euroc from "@/assets/euroc.png";
 import * as Switch from "@radix-ui/react-switch";
+import { Plus } from "@/assets/icon";
 
 const Settings = () => {
   return (
@@ -71,6 +72,12 @@ const Settings = () => {
             </Switch.Root>
           </div>
         </div>
+      </div>
+
+      <div className="mt-20 flex items-center">
+        <div className="w-[633px] h-[1px] bg-[#F0F2F5]"></div>
+        <Plus />
+        <div className="w-[633px] h-[1px] bg-[#F0F2F5]"></div>
       </div>
     </div>
   );
