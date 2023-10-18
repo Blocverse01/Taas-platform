@@ -1,0 +1,12 @@
+{
+  "id": "mig_cjnim71qmp04ac32jn10",
+  "parentID": "mig_cjnils9qmp04ac32jmvg",
+  "checksum": "1:34b8b96d7f873f930dafd98cbb6c4a58cb7a27980d151667b5af188f7511baaf",
+  "operations": [
+    {
+      "addTable": {
+        "table": "AssetDocument"
+      }
+    }
+  ]
+}

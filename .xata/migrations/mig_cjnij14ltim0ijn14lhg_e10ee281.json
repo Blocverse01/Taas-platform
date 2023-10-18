@@ -1,0 +1,18 @@
+{
+  "id": "mig_cjnij14ltim0ijn14lhg",
+  "parentID": "mig_cjniirkltim0ijn14lgg",
+  "checksum": "1:e10ee2815829da6e93ce00eab6c56aaf4fbe052666d6702cd5bb1dd5cd64a5b6",
+  "operations": [
+    {
+      "addColumn": {
+        "column": {
+          "name": "tokenAddress",
+          "type": "text",
+          "notNull": true,
+          "defaultValue": ""
+        },
+        "table": "Property"
+      }
+    }
+  ]
+}

@@ -1,0 +1,18 @@
+{
+  "id": "mig_cjnikipqmp04ac32jmug",
+  "parentID": "mig_cjnika4ltim0ijn14ljg",
+  "checksum": "1:c2d91a209109c5faf28b6cf0cb46f53e22e6d5bd5ea352d584001b0ea371b06b",
+  "operations": [
+    {
+      "addColumn": {
+        "column": {
+          "name": "size",
+          "type": "float",
+          "notNull": true,
+          "defaultValue": "0"
+        },
+        "table": "Property"
+      }
+    }
+  ]
+}

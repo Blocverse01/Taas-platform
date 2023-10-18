@@ -1,0 +1,14 @@
+{
+  "id": "mig_cjmpfoo1htoaj3eohal0",
+  "parentID": "mig_cjmbpl8oraqr88crhfl0",
+  "checksum": "1:6d392140873c62c5d9f47029a1101b947510ddb0908db483da02f53f4127c3f2",
+  "operations": [
+    {
+      "renameColumn": {
+        "newName": "assetController",
+        "oldName": "safeAddress",
+        "table": "Project"
+      }
+    }
+  ]
+}

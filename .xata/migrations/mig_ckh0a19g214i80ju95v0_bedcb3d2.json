@@ -1,0 +1,13 @@
+{
+  "id": "mig_ckh0a19g214i80ju95v0",
+  "parentID": "mig_ckfc9h480rf798f6gerg",
+  "checksum": "1:bedcb3d2efd15b71021ebb4e3fffa7967e974f4651075a0d9f7bba63f6895503",
+  "operations": [
+    {
+      "removeColumn": {
+        "column": "isRevoked",
+        "table": "ApiKey"
+      }
+    }
+  ]
+}

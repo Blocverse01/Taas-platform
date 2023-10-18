@@ -1,0 +1,20 @@
+{
+  "id": "mig_ckik7tn3u7h5rrps7qb0",
+  "parentID": "mig_ckik7p79553br6fcub60",
+  "checksum": "1:257cb526a52d393950eaf70792732f04512d33e7b4afa1795576904f9c22da0e",
+  "operations": [
+    {
+      "addColumn": {
+        "column": {
+          "name": "project",
+          "type": "link",
+          "link": {
+            "table": "Project"
+          },
+          "unique": true
+        },
+        "table": "ApiKey"
+      }
+    }
+  ]
+}

@@ -1,0 +1,18 @@
+{
+  "id": "mig_cjnika4ltim0ijn14ljg",
+  "parentID": "mig_cjnij8kltim0ijn14lig",
+  "checksum": "1:9aad4c8c51b1947479e48895eab5ea60815d1561227c277d62938068f7b2861d",
+  "operations": [
+    {
+      "addColumn": {
+        "column": {
+          "name": "location",
+          "type": "text",
+          "notNull": true,
+          "defaultValue": ""
+        },
+        "table": "Property"
+      }
+    }
+  ]
+}

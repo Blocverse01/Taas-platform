@@ -1,0 +1,12 @@
+{
+  "id": "mig_ckfb8jgv2e8b9mca2570",
+  "parentID": "mig_cjnv3ih97n6rbk93vu9g",
+  "checksum": "1:02dae975ee9e4c5c34fa123b9192aefc1855823bbadb48885c20334073fc724f",
+  "operations": [
+    {
+      "addTable": {
+        "table": "ApiKey"
+      }
+    }
+  ]
+}

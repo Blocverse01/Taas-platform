@@ -1,0 +1,18 @@
+{
+  "id": "mig_cjninisltim0ijn14lng",
+  "parentID": "mig_cjninfhqmp04ac32jn30",
+  "checksum": "1:ca3a32909fb06f46233d23bf8854976a751730037633c2ab700774a2da96b7e4",
+  "operations": [
+    {
+      "addColumn": {
+        "column": {
+          "name": "fileType",
+          "type": "string",
+          "notNull": true,
+          "defaultValue": ""
+        },
+        "table": "AssetDocument"
+      }
+    }
+  ]
+}

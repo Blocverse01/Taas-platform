@@ -1,0 +1,14 @@
+{
+  "id": "mig_ckn3orbnk0772bdlhsqg",
+  "parentID": "mig_ckn3opbh6mrahcars9jg",
+  "checksum": "1:f571bfae8e135efdd065cd5d413c728793858eda4d5bdd45e854559c31c5a9b0",
+  "operations": [
+    {
+      "renameColumn": {
+        "newName": "projectId",
+        "oldName": "ProjectId",
+        "table": "ProjectTeamMembers"
+      }
+    }
+  ]
+}

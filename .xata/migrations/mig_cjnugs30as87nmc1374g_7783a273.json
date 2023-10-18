@@ -1,0 +1,16 @@
+{
+  "id": "mig_cjnugs30as87nmc1374g",
+  "parentID": "mig_cjnugkh97n6rbk93vqi0",
+  "checksum": "1:7783a2731af7e9e7aee448c4caea4913007dea6f03ba6447f60a899269417c79",
+  "operations": [
+    {
+      "addColumn": {
+        "column": {
+          "name": "ctaText",
+          "type": "string"
+        },
+        "table": "ActivityLog"
+      }
+    }
+  ]
+}
