@@ -26,10 +26,14 @@ export const addNewTeamMember = async (payload: AddNewMemberPayload) => {
         throw new Error("Only the project owner can add team mates")
     }
 
-    (await userRepository.filter({ email: payload.email }).getFirst()) || await createUser({
-        email: payload.email,
-        walletAddress: "",
-    });
+    const userExists = await userRepository.filter({ email: payload.email }).getFirst();
+
+    if (!userExists) {
+        await createUser({
+            email: payload.email,
+            walletAddress: "",
+        });
+    }
 
     const existingTeamMember = await projectTeamRepository.filter({ id: `${payload.projectId}-${payload.email}` }).getFirst();
 
