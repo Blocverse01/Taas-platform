@@ -12,7 +12,7 @@ const handleAuthRequest = async (
   DIDToken: string
 ): Promise<AuthenticatedUser> => {
   const magicUser = await validateDIDToken(DIDToken);
-  let dbUser = await userRepository().read(magicUser.issuer);
+  let dbUser = await userRepository().filter("email", magicUser.email).getFirst();
 
   if (!dbUser) {
     dbUser = await createUser({
