@@ -37,9 +37,9 @@ const TeamMember: FC<TeamMembersProps> = ({ teamMembers }) => {
             <th className="w-[300px]">Activity</th>
           </tr>
         </thead>
-        <tbody className="text-t-black">
+        <tbody className="text-t-black relative top-4">
           {teamMembers.map((member) => (
-            <tr key={member.id} className="relative top-4  bg-t-gray-2 ">
+            <tr key={member.id} className="  bg-t-gray-2  ">
               <td className=" py-3 pl-3">
                 <Checkbox.Root
                   className="  flex h-[25px] w-[25px] border border-black appearance-none items-center justify-center rounded-[4px] bg-white  outline-none "
