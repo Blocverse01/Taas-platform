@@ -29,8 +29,8 @@ const Input = (props: FormElement & FieldHookConfig<string | number>) => {
   );
   return (
     <div>
-      <label className="block mb-3" htmlFor={props.id}>
-        {props.label}
+      <label className="block mb-3 text-t-black" htmlFor={props.id}>
+        {props.customLabel ?? props.label}
       </label>
       <input
         className={inputClasses}

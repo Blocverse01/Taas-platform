@@ -1,0 +1,19 @@
+{
+  "id": "mig_ckfboogv2e8b9mca28qg",
+  "parentID": "mig_ckfboagv2e8b9mca28pg",
+  "checksum": "1:2e9065c7351367e143f005a6f2717892fd328dd60e3a581716ed598496e49878",
+  "operations": [
+    {
+      "addColumn": {
+        "column": {
+          "name": "user",
+          "type": "link",
+          "link": {
+            "table": "User"
+          }
+        },
+        "table": "ApiKey"
+      }
+    }
+  ]
+}

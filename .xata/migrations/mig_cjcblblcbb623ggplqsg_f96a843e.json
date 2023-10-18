@@ -1,0 +1,18 @@
+{
+  "id": "mig_cjcblblcbb623ggplqsg",
+  "parentID": "mig_cjcbl45cbb623ggplqrg",
+  "checksum": "1:f96a843e4520af90d636076b2705103fbd1728fd9a113702db13a271e171227a",
+  "operations": [
+    {
+      "addColumn": {
+        "column": {
+          "name": "tokenFactory",
+          "type": "string",
+          "notNull": true,
+          "defaultValue": ""
+        },
+        "table": "Project"
+      }
+    }
+  ]
+}

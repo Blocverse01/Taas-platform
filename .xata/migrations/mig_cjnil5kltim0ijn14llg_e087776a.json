@@ -1,0 +1,18 @@
+{
+  "id": "mig_cjnil5kltim0ijn14llg",
+  "parentID": "mig_cjnikvkltim0ijn14lkg",
+  "checksum": "1:e087776a4cb6a828f1603a9f4efd5a89531bb5b0f1f525e569ce7a7d9ff079aa",
+  "operations": [
+    {
+      "addColumn": {
+        "column": {
+          "name": "pricePerToken",
+          "type": "float",
+          "notNull": true,
+          "defaultValue": "0"
+        },
+        "table": "TokenizedProperty"
+      }
+    }
+  ]
+}

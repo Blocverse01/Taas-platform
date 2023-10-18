@@ -1,0 +1,16 @@
+{
+  "id": "mig_cjnils9qmp04ac32jmvg",
+  "parentID": "mig_cjnil5kltim0ijn14llg",
+  "checksum": "1:d5c434f1e4773632a13345c728950872fae90c50fba6855a57a5ee3461c16224",
+  "operations": [
+    {
+      "addColumn": {
+        "column": {
+          "name": "photos",
+          "type": "multiple"
+        },
+        "table": "TokenizedProperty"
+      }
+    }
+  ]
+}

@@ -1,0 +1,18 @@
+{
+  "id": "mig_cjcbl45cbb623ggplqrg",
+  "parentID": "mig_cjcbke5cbb623ggplqqg",
+  "checksum": "1:9acc73b97db5cad21c30c75dcd337106022a6223776bb8cc72d0a97dfef92a08",
+  "operations": [
+    {
+      "addColumn": {
+        "column": {
+          "name": "safeAddress",
+          "type": "string",
+          "notNull": true,
+          "defaultValue": ""
+        },
+        "table": "Project"
+      }
+    }
+  ]
+}

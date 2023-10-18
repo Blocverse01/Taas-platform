@@ -1,0 +1,16 @@
+{
+  "id": "mig_ckfbpcgv2e8b9mca28sg",
+  "parentID": "mig_ckfbov3hv67m4dos05j0",
+  "checksum": "1:4a29b96ace6791fd128914f9735cb0da8c530a117b323fb669fb96f65c44b921",
+  "operations": [
+    {
+      "addColumn": {
+        "column": {
+          "name": "expiresAt",
+          "type": "datetime"
+        },
+        "table": "ApiKey"
+      }
+    }
+  ]
+}
