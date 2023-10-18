@@ -1,5 +1,7 @@
 import { PlusSign, SearchIcon } from "@/assets/icon";
 import React from "react";
+import { TeamMember } from "../teamMember";
+import { TeamMembers } from "../teamMember/teamMemberDemoData";
 
 const TeamPage = () => {
   return (
@@ -13,10 +15,13 @@ const TeamPage = () => {
             type="text"
           />
         </div>
-        <button className="flex text-white p-4 bg-t-purple items-center space-x-2">
+        <button className="flex text-white p-4 bg-t-purple rounded items-center space-x-2">
           <PlusSign />
           Add New Member
         </button>
+      </div>
+      <div className="mt-12">
+        <TeamMember teamMembers={TeamMembers} />
       </div>
     </div>
   );

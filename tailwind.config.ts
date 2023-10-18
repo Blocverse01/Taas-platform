@@ -22,9 +22,10 @@ const config: Config = {
       colors: {
         t: {
           black: "#1A1A1A",
-          purple: "#371B89",
+          purple: TAAS_PURPLE,
           purple2: "rgba(55, 27, 137, 0.6)",
           purple3: "rgba(55, 27, 137, 0.15)",
+          purple4: "rgba(55, 27, 137, 0.2)",
           gray: {
             1: "#F9FAFB",
             2: "#FAFAFA",
