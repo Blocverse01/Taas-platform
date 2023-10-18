@@ -1,6 +1,7 @@
 import { ComponentProps, FC } from "react";
 import { EmailSignInForm } from "./emailSignInForm";
 import Link from "next/link";
+import { useRouter } from "next/router";
 
 type EmailSignInFormProps = ComponentProps<typeof EmailSignInForm>;
 
@@ -28,6 +29,10 @@ const authActionPageCopy: {
 };
 
 const AuthPage: FC<AuthPageProps> = ({ authAction, handleSignIn }) => {
+  const router = useRouter();
+
+  const REDIRECT_TO = "/dashboard";
+
   return (
     <section className="flex flex-col items-center gap-[54px]">
       <div className="flex flex-col items-center gap-4">
@@ -38,7 +43,13 @@ const AuthPage: FC<AuthPageProps> = ({ authAction, handleSignIn }) => {
           {authActionPageCopy[authAction].description}
         </p>
       </div>
-      <EmailSignInForm authAction={authAction} handleSignIn={handleSignIn} />
+      <EmailSignInForm
+        authAction={authAction}
+        handleSignIn={async (email) => {
+          await handleSignIn(email);
+          router.push(REDIRECT_TO);
+        }}
+      />
       <div className="text-sm flex justify-end w-full">
         {authAction === "login" ? (
           <span className="text-t-black/70">
