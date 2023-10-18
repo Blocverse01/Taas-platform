@@ -1,0 +1,14 @@
+{
+  "id": "mig_cjnir0kltim0ijn14mb0",
+  "parentID": "mig_cjninisltim0ijn14lng",
+  "checksum": "1:7919095b8daee3ea02da0a9cb1212fcbdbbf7d4524b8a8dbde8aa31ba407c496",
+  "operations": [
+    {
+      "renameColumn": {
+        "newName": "tokenPrice",
+        "oldName": "pricePerToken",
+        "table": "TokenizedProperty"
+      }
+    }
+  ]
+}

@@ -1,0 +1,13 @@
+{
+  "id": "mig_ckik7p79553br6fcub60",
+  "parentID": "mig_ckik7873u7h5rrps7qa0",
+  "checksum": "1:2958a073ef162175399b7bd805400112a84f885b0bfd0a29c823ac9a7c39e5cd",
+  "operations": [
+    {
+      "removeColumn": {
+        "column": "projectId",
+        "table": "ApiKey"
+      }
+    }
+  ]
+}

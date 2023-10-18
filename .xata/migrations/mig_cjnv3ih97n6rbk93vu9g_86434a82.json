@@ -1,0 +1,19 @@
+{
+  "id": "mig_cjnv3ih97n6rbk93vu9g",
+  "parentID": "mig_cjnugs30as87nmc1374g",
+  "checksum": "1:86434a82441f0db67eeef27a85fdb3904ecbad84d9f895269c6bf2bdd5bbc463",
+  "operations": [
+    {
+      "addColumn": {
+        "column": {
+          "name": "project",
+          "type": "link",
+          "link": {
+            "table": "Project"
+          }
+        },
+        "table": "ActivityLog"
+      }
+    }
+  ]
+}

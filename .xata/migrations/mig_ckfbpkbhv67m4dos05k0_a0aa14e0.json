@@ -1,0 +1,18 @@
+{
+  "id": "mig_ckfbpkbhv67m4dos05k0",
+  "parentID": "mig_ckfbpcgv2e8b9mca28sg",
+  "checksum": "1:a0aa14e038166542d996e82038285996b49837cd889a50629b17d2b8e7dc39d1",
+  "operations": [
+    {
+      "addColumn": {
+        "column": {
+          "name": "isRevoked",
+          "type": "bool",
+          "notNull": true,
+          "defaultValue": "false"
+        },
+        "table": "ApiKey"
+      }
+    }
+  ]
+}

@@ -1,0 +1,13 @@
+{
+  "id": "mig_ckfc9h480rf798f6gerg",
+  "parentID": "mig_ckfbpkbhv67m4dos05k0",
+  "checksum": "1:2e40a20ac10c3b718b84689a3317b14d9bff63c3e83d165d0d68d016846ace7a",
+  "operations": [
+    {
+      "removeColumn": {
+        "column": "expiresAt",
+        "table": "ApiKey"
+      }
+    }
+  ]
+}

@@ -1,0 +1,19 @@
+{
+  "id": "mig_ckn3ojrnk0772bdlhscg",
+  "parentID": "mig_ckn3ocjnk0772bdlhrv0",
+  "checksum": "1:bce82404bda906cbf4703a9d6be0b027a05c9a8049e076634cb8a02af73552a0",
+  "operations": [
+    {
+      "addColumn": {
+        "column": {
+          "name": "ProjectId",
+          "type": "link",
+          "link": {
+            "table": "Project"
+          }
+        },
+        "table": "ProjectTeamMembers"
+      }
+    }
+  ]
+}

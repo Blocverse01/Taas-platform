@@ -1,0 +1,13 @@
+{
+  "id": "mig_ckkmpqrc3j43km6hav1g",
+  "parentID": "mig_ckkmp93c3j43km6hav0g",
+  "checksum": "1:f8aa8b2e4aa53b7b3071acc40719ef688beecc31d7f5f455be0ffe02922d2f41",
+  "operations": [
+    {
+      "removeColumn": {
+        "column": "project",
+        "table": "AssetDocument"
+      }
+    }
+  ]
+}
