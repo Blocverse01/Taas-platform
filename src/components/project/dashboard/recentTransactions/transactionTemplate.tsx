@@ -9,15 +9,21 @@ interface TransactionProps {
   }[];
 }
 
+const tableHeaders = ["Customer", "Txn ID", "Tokens Bought", "Amount Paid"];
+
 const TransactionTemplate: FC<TransactionProps> = ({ transaction }) => {
   return (
-    <table className="table-fixed border-separate border-spacing-y-4">
-      <thead className="border-2  border-b-t-gray-4">
+    <table className="table-fixed border-separate border-spacing-y-5">
+      <thead>
         <tr className="text-t-gray-4">
-          <th className="w-[400px]  text-left">Customer</th>
-          <th className="w-[400px]   text-left">Txn ID</th>
-          <th className="w-[400px]  text-left">Tokens Bought</th>
-          <th className="w-[400px]  text-left">Amount Paid</th>
+          {tableHeaders.map((header) => (
+            <th
+              key={header}
+              className="w-[400px] pb-1.5 border-t-gray-4 border-b text-left !font-normal"
+            >
+              {header}
+            </th>
+          ))}
         </tr>
       </thead>
       <tbody>

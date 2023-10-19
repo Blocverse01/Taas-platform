@@ -13,13 +13,13 @@ const DataCard: FC<DataCardProps> = ({ type, data }) => {
   const dollarSign = type === "assets" ? "" : "$";
 
   return (
-    <div className=" bg-t-gray-10  flex flex-col space-y-4 rounded-xl w-[300px]   text-t-black/70         py-7 px-5">
+    <div className="bg-t-gray-10 flex flex-col space-y-4 rounded-xl w-[300px] text-t-black/70 py-7 px-5">
       <div className="flex justify-between items-center">
         <p className="text-sm">{title}</p>
         <ArrowRight />
       </div>
 
-      <p className="text-[32px] font-medium">
+      <p className="text-[32px] text-t-black font-medium">
         {dollarSign}
         {data.amount}
       </p>
