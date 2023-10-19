@@ -1,7 +1,7 @@
 import { FC } from "react";
 import { CreateRealEstateAssetForm } from "./form";
 import { Address } from "viem";
-import { tokenizeAsset } from "@/lib/taas-api/tokenizeAsset";
+import { tokenizeAsset } from "@/lib/taas-api/tokenFactory/tokenizeAsset";
 import { useRouter } from "next/router";
 
 interface CreateRealEstateAssetProps {
