@@ -1,6 +1,6 @@
 import { EthersAdapter } from "@safe-global/protocol-kit";
 import { ethers } from "ethers";
-import { getMagicClient } from "@/taas-lib/magic/client";
+import { getMagicClient } from "../../lib/magic/clients/web";
 
 let ethAdapterInstance: EthersAdapter | undefined;
 
@@ -11,10 +11,12 @@ const getEthersAdapter = () => {
   const magic = getMagicClient();
 
   const provider = new ethers.providers.Web3Provider(magic.rpcProvider as any);
+
   //We retrieve the currently logged in user as a signer
   const signer = provider.getSigner();
-//We create an EthersAdapter that is basically a wrapper around ethers library.
-//In our case any request made fron this wrapper is tied to the currenlty logged in user 
+
+  //We create an EthersAdapter that is basically a wrapper around ethers library.
+  //In our case any request made from this wrapper is tied to the currently logged in user 
   ethAdapterInstance = new EthersAdapter({
     ethers,
     signerOrProvider: signer,
