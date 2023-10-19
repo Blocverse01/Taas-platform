@@ -84,7 +84,7 @@ export default function Home() {
         <Navbar menuItems={menuItems} isLoggedIn={false} />
         <main className="lg:mt-[100px] mt-20 overflow-x-hidden text-t-black">
           <section className="text-center px-6 md:px-12 xl:px-[102px] flex flex-col relative">
-            <p className="text-center text-t-purple text-sm rounded-[32px] h-[32px] shadow-[0px_2px_4px_0px_rgba(0,0,0,0.25)] py-[7px] px-[18px] bg-t-faded-purple2 w-fit mx-auto mb-5">
+            <p className="text-center text-t-purple text-sm rounded-[32px] h-[32px] shadow-[0px_2px_4px_0px_rgba(0,0,0,0.25)] py-[7px] px-[18px] bg-t-purple/10 w-fit mx-auto mb-5">
               The best asset tokenization platform
             </p>
             <h1 className="text-[40px] md:text-[60px] lg:text-[80px] font-bold max-w-[1000px] mx-auto leading-[55x] md:leading-[80px] lg:leading-[96px]">
@@ -161,7 +161,7 @@ export default function Home() {
             />
 
             <div className="grid  md:grid-cols-2 xl:grid-cols-4 mt-12 gap-6">
-              <div className="bg-t-faded-purple hover:-translate-y-[3px] duration-200 p-7 rounded-xl ">
+              <div className="bg-t-purple/20 hover:-translate-y-[3px] duration-200 p-7 rounded-xl ">
                 <p className=" text-2xl ">Startup Investment</p>
                 <p className="text-base mt-2 leading-[28px] opacity-70">
                   TAAS offers the opportunity to create tokens for your startup
@@ -169,7 +169,7 @@ export default function Home() {
                   looking to raise funds.{" "}
                 </p>
               </div>
-              <div className="border hover:-translate-y-[3px] duration-200 border-[#ECECEC] p-7 rounded-xl ">
+              <div className="border hover:-translate-y-[3px] duration-200 border-t-gray-12 p-7 rounded-xl ">
                 <p className=" text-2xl ">Real Estate</p>
                 <p className="text-base mt-2 leading-[28px] opacity-70">
                   Create and manage tokens for your real estate projects with
@@ -177,14 +177,14 @@ export default function Home() {
                   investments.
                 </p>
               </div>
-              <div className="bg-t-faded-purple p-7 hover:-translate-y-[3px] duration-200 rounded-xl">
+              <div className="bg-t-purple/20 p-7 hover:-translate-y-[3px] duration-200 rounded-xl">
                 <p className=" text-2xl ">Blue/Green Bonds</p>
                 <p className="text-base mt-2 leading-[28px] opacity-70">
                   TAAS helps you support sustainable projects, and invest in
                   blue or green bonds with digital tokens.
                 </p>
               </div>
-              <div className="border border-[#ECECEC] p-7 hover:-translate-y-[3px] duration-200 rounded-xl ">
+              <div className="border border-t-gray-12 p-7 hover:-translate-y-[3px] duration-200 rounded-xl ">
                 <p className=" text-2xl ">Antiques</p>
                 <p className="text-base mt-2 leading-[28px] opacity-70">
                   On TAAS, you are able to diversify your portfolio, and trade

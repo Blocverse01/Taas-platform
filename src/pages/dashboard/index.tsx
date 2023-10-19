@@ -14,10 +14,10 @@ const DashboardPage: NextPageWithLayout = () => {
   return (
     <div>
       <div className="flex items-center justify-between mb-6">
-        <p className="font-medium text-t-purple4">All Projects</p>
+        <p className="font-medium text-t-black text-base">All Projects</p>
         <Link
           href={"/projects/create-project"}
-          className="px-3 py-4 rounded flex items-center  text-white  w-max bg-t-purple"
+          className="px-3 py-4 rounded flex items-center text-white w-max bg-t-purple"
         >
           <Plus width="16" height="16" />
           <span className="ml-2">Create new project</span>

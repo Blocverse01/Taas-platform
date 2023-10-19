@@ -1,6 +1,6 @@
 import React, { FC } from "react";
 import * as Popover from "@radix-ui/react-popover";
-import { EditIcon, Ellipsis  } from "@/assets/icon";
+import { EditIcon, Ellipsis } from "@/assets/icon";
 import { RemoveTeamMemberDialog } from "./removeTeamMember";
 
 interface TeamMembersProps {
@@ -19,7 +19,6 @@ const TeamMember: FC<TeamMembersProps> = ({ teamMembers }) => {
       <table className="table-fixed border-separate border-spacing-y-8  ">
         <thead>
           <tr className="text-left  text-[#1A1A1AB2] ">
-          
             <th className="w-[300px] px-6 font-medium  ">Name</th>
             <th className="w-[300px] font-medium ">Email Address</th>
             <th className="w-[400px] font-medium ">Wallet Address</th>
@@ -30,7 +29,6 @@ const TeamMember: FC<TeamMembersProps> = ({ teamMembers }) => {
         <tbody className="text-t-black relative top-4">
           {teamMembers.map((member) => (
             <tr key={member.id} className="bg-t-gray-2 rounded  ">
-             
               <td className=" p-6 font-medium">{member.name}</td>
               <td className=" font-medium">{member.email}</td>
               <td className=" truncate font-medium">
@@ -38,7 +36,7 @@ const TeamMember: FC<TeamMembersProps> = ({ teamMembers }) => {
               </td>
               <td className=" font-medium">{member.role}</td>
               <td>
-                <span className="text-t-purple py-1 px-4 rounded-full bg-t-purple4 ">
+                <span className="text-t-purple py-1 px-4 rounded-full bg-t-purple/20">
                   {" "}
                   Active
                 </span>

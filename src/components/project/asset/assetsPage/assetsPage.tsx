@@ -25,7 +25,7 @@ const AssetsPage: FC<AssetsPageProps> = ({ assetType, assets }) => {
   return (
     <section>
       <div className="mb-[44px] flex items-center justify-between">
-        <h3 className="capitalize bg-t-faded-purple w-fit py-4 px-8 text-t-purple text-sm rounded bg-opacity-70">
+        <h3 className="capitalize bg-t-purple/20 w-fit py-4 px-8 text-t-purple text-sm rounded bg-opacity-70">
           {assetType}
         </h3>
         <button className="bg-t-purple py-[18px] px-[19px] rounded text-base text-white flex items-center gap-[9.05px]">

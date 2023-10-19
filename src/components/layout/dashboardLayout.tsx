@@ -11,7 +11,7 @@ export default function DashboardLayout({ children }: DashboardLayoutProps) {
       <Sidebar />
       <main className="bg-white">
         <Header />
-        <div className="p-6">{children}</div>
+        <div className="p-6 lg:p-10">{children}</div>
       </main>
     </section>
   );
