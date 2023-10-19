@@ -14,8 +14,8 @@ const config: HardhatUserConfig = {
       url: `https://rpc.ankr.com/polygon_mumbai`,
       accounts: [`${process.env.SECRET_KEY}`],
     },
-    optimism: {
-      url: `https://rpc.ankr.com/optimism_testnet`,
+    optimism_goerli: {
+      url: `https://goerli.optimism.io`,
       accounts: [`${process.env.SECRET_KEY}`],
     },
     scroll: {
