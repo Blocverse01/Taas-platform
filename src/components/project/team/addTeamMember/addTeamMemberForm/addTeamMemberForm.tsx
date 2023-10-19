@@ -1,7 +1,7 @@
 import { Formik, Form, Field, ErrorMessage } from "formik";
 import * as Yup from "yup";
-import { Address, isAddress } from "viem";
-import { FC, useEffect } from "react";
+import { FC } from "react";
+import Select from "react-select";
 import { Input } from "@/components/formPrimitives/input";
 import classNames from "classnames";
 
@@ -16,6 +16,12 @@ const validationSchema = Yup.object({
     .required("Email is required"),
   role: Yup.string().required("Role is required"),
 });
+
+const roleOptions = [
+  { value: 'admin', label: 'Admin' },
+  { value: 'developer', label: 'Developer' },
+  { value: 'owner', label: 'Owner' },
+];
 
 const handleSubmit = (values: any) => {
   // Handle form submission here
@@ -34,10 +40,10 @@ const AddTeamMemberForm: FC<AddTeamMemberDialogProps> = ({ backButton }) => {
       validationSchema={validationSchema}
       onSubmit={handleSubmit}
     >
-      {({ isValid, isSubmitting }) => (
+      {({ isValid, isSubmitting, setFieldValue }) => (
         <Form className=" space-y-4">
           <Input
-            className="text-t-black"
+            className="text-t-black text-sm"
             placeholder="Johnny Jones"
             label="Name"
             type="text"
@@ -45,7 +51,7 @@ const AddTeamMemberForm: FC<AddTeamMemberDialogProps> = ({ backButton }) => {
             id="name"
           />
           <Input
-            className="text-t-black"
+            className="text-t-black text-sm"
             placeholder="johnny@gmail.com"
             label="Email"
             type="text"
@@ -56,30 +62,37 @@ const AddTeamMemberForm: FC<AddTeamMemberDialogProps> = ({ backButton }) => {
           <div>
             <label
               htmlFor="role"
-              className="block text-sm font-medium text-gray-700"
+              className="block text-sm mb-4 text-t-black"
             >
               Role(select Role)
             </label>
-            <Field
-              as="select"
-              id="role"
-              name="role"
-              className="block w-full p-2 border mt-4 rounded-md"
-            >
-              <option className="text-t-black" value="" disabled>
-                Select Role
-              </option>
-              <option value="admin">Admin</option>
-              <option value="developer">Developer</option>
-              <option value="owner">Owner</option>
-            </Field>
+            <Select
+              styles={{
+                control(base) {
+                  return {
+                    ...base,
+                    backgroundColor: "#FAFAFA",
+                    padding: "16px",
+                    borderRadius: "4px",
+                    border: "none",
+                    color: "#1A1A1A",
+                  };
+                },
+              }}
+              placeholder="Select role"
+              options={roleOptions}
+              onChange={(roleOption) => {
+                if (!roleOption) return null;
+                setFieldValue("role", roleOption.value);
+              }}
+            />
             <ErrorMessage
               name="role"
               component="div"
               className="text-red-500"
             />
           </div>
-
+         
           <div
             className={classNames({
               "grid grid-cols-2 gap-2.5": Boolean(backButton),
@@ -89,7 +102,7 @@ const AddTeamMemberForm: FC<AddTeamMemberDialogProps> = ({ backButton }) => {
             <button
               type="submit"
               disabled={isSubmitting}
-              className="bg-t-purple text-white text-[18px] py-[18px] px-8 rounded w-full"
+              className="bg-t-purple text-white cursor-pointer text-[18px] py-[18px] px-x rounded w-full"
             >
               Add Team Member
             </button>
