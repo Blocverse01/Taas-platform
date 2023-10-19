@@ -7,7 +7,7 @@ const RecentTransactions = () => {
     <div>
       <div className="flex items-center justify-between">
         <h1 className=" text-xl font-medium ">Recent Transactions</h1>
-        <p className="font-sm text-t-gray-13">View All</p>
+        <p className="font-sm  text-t-gray-11 ">View All</p>
       </div>
       <div className="mt-4">
         <TransactionTemplate transaction={TransactionData} />
