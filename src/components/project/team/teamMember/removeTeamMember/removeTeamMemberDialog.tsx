@@ -33,17 +33,16 @@ const RemoveTeamMemberDialog = () => {
                 <CrossIcon />
               </button>
             </AlertDialog.Cancel>
-            <div className="flex flex-col space-y-[24px]">
-              <AlertDialog.Title className="  text-[20px] font-medium text-center text-black">
+            <div className="flex flex-col space-y-[28px]">
+              <AlertDialog.Title className=" text-[20px]  text-center text-black">
                 Are you sure you want to remove this team member?
               </AlertDialog.Title>
-              <div className="w-fit mx-auto text-center">
-                <p className="flex text-sm space-x-2 items-center">
+             
+                <p className="flex text-sm w-fit mx-auto text-center space-x-2 items-center">
                   <Exclamation />
-                  This action is permanent; you cannot undo it.
+                 <span> This action is permanent; you cannot undo it.</span>
                 </p>
-              </div>
-
+             
               <div className="grid  grid-cols-2 gap-x-6">
                 <AlertDialog.Cancel asChild>
                   <button
