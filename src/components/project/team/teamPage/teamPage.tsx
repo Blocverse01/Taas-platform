@@ -1,10 +1,25 @@
 import { SearchIcon } from "@/assets/icon";
-import React from "react";
+import React, { useState } from "react";
 import { TeamMember } from "../teamMember";
 import { TeamMembers } from "../teamMember/teamMemberDemoData";
 import { AddTeamMemberDialog } from "../addTeamMember/addTeamMemberDialog";
 
 const TeamPage = () => {
+  const [searchInput, setSearchInput] = useState("");
+  const [filteredTeamMembers, setFilteredTeamMembers] = useState(TeamMembers);
+
+  
+  const handleSearchInputChange = (event) => {
+    const inputValue = event.target.value;
+    setSearchInput(inputValue);
+
+    const filteredMembers = TeamMembers.filter((member) =>
+      member.name.toLowerCase().includes(inputValue.toLowerCase())
+    );
+
+    setFilteredTeamMembers(filteredMembers);
+  };
+
   return (
     <div>
       <div className="flex justify-between items-center">
@@ -14,12 +29,14 @@ const TeamPage = () => {
             placeholder="Search member"
             className="bg-transparent w-full text-t-black border-none outline-none"
             type="text"
+            value={searchInput}
+            onChange={handleSearchInputChange}
           />
         </div>
         <AddTeamMemberDialog />
       </div>
       <div className="mt-12">
-        <TeamMember teamMembers={TeamMembers} />
+        <TeamMember teamMembers={filteredTeamMembers} />
       </div>
     </div>
   );
