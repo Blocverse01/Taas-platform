@@ -11,20 +11,21 @@ const Settings = () => {
     <div>
       <div className="flex text-t-black justify-between">
         <div className="p-8 rounded-xl border w-[494px] flex flex-col space-y-8 border-[#EFEFEF]">
+          <p className="text-[20px] font-medium">Token Factory</p>
           <div className="flex flex-col space-y-2">
-            <p className="text-[20px] font-medium">Token Factory</p>
+            <p>Token Factory</p>
             <p className="text-sm p-3 rounded bg-t-gray-2">
               0x1C9ABA03fDC540386241c59Cbe8
             </p>
           </div>
           <div className="flex flex-col space-y-2">
-            <p className="text-[20px] font-medium">Treasury Wallet</p>
+            <p>Treasury Wallet</p>
             <p className="text-sm p-3 rounded bg-t-gray-2">
               0x1C9ABA03fDC540386241c59Cbe8
             </p>
           </div>
         </div>
-        <div className="p-8 rounded-xl border w-[494px] flex flex-col space-y-8 border-[#EFEFEF]">
+        <div className="p-8 rounded-xl border w-[494px] flex flex-col h-fit space-y-6 border-[#EFEFEF]">
           <p className="text-[20px] font-medium">Payment Methods</p>
           <div className="flex justify-between items-center">
             <label
@@ -72,12 +73,6 @@ const Settings = () => {
             </Switch.Root>
           </div>
         </div>
-      </div>
-
-      <div className="mt-20 flex items-center">
-        <div className="w-[633px] h-[1px] bg-[#F0F2F5]"></div>
-        <Plus />
-        <div className="w-[633px] h-[1px] bg-[#F0F2F5]"></div>
       </div>
     </div>
   );
