@@ -20,7 +20,7 @@ const TeamMember: FC<TeamMembersProps> = ({ teamMembers }) => {
     <div>
       <table className="table-fixed">
         <thead>
-          <tr className="text-left text-[#1A1A1AB2] ">
+          <tr className="text-left  text-[#1A1A1AB2] ">
             <th className="w-[200px]">
               <Checkbox.Root
                 className="flex h-[25px] w-[25px] border border-black appearance-none items-center justify-center rounded-[4px] bg-white  outline-none "
@@ -31,16 +31,16 @@ const TeamMember: FC<TeamMembersProps> = ({ teamMembers }) => {
                 </Checkbox.Indicator>
               </Checkbox.Root>
             </th>
-            <th className="w-[300px]">Name</th>
-            <th className="w-[300px]">Email Address</th>
-            <th className="w-[400px]">Wallet Address</th>
-            <th className="w-[300px]">Role</th>
-            <th className="w-[300px]">Activity</th>
+            <th className="w-[300px] font-medium">Name</th>
+            <th className="w-[300px] font-medium">Email Address</th>
+            <th className="w-[400px] font-medium">Wallet Address</th>
+            <th className="w-[300px] font-medium">Role</th>
+            <th className="w-[300px] font-medium">Activity</th>
           </tr>
         </thead>
         <tbody className="text-t-black relative top-4">
           {teamMembers.map((member) => (
-            <tr key={member.id} className="  bg-t-gray-2  ">
+            <tr key={member.id} className="bg-t-gray-2  ">
               <td className=" py-4 px-4">
                 <Checkbox.Root
                   className="  flex h-[25px] w-[25px] border border-black appearance-none items-center justify-center rounded-[4px] bg-white  outline-none "
@@ -51,10 +51,12 @@ const TeamMember: FC<TeamMembersProps> = ({ teamMembers }) => {
                   </Checkbox.Indicator>
                 </Checkbox.Root>
               </td>
-              <td>{member.name}</td>
-              <td>{member.email}</td>
-              <td className="w-[100px] truncate">{member.walletAddress}</td>
-              <td>{member.role}</td>
+              <td className=" font-medium">{member.name}</td>
+              <td className=" font-medium">{member.email}</td>
+              <td className=" truncate font-medium">
+                <p className="w-[141px] truncate">{member.walletAddress}</p>
+              </td>
+              <td className=" font-medium">{member.role}</td>
               <td>
                 <span className="text-t-purple py-1 px-4 rounded-full bg-t-purple4 ">
                   {" "}
