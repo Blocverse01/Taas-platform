@@ -21,7 +21,7 @@ const TeamMember: FC<TeamMembersProps> = ({ teamMembers }) => {
       <table className="table-fixed border-separate border-spacing-y-8  ">
         <thead>
           <tr className="text-left  text-[#1A1A1AB2] ">
-            <th className="w-[200px]">
+          <th className="w-[200px]">
               <Checkbox.Root
                 className="flex h-[25px] w-[25px] border border-black appearance-none items-center justify-center rounded-[4px] bg-white  outline-none "
                 id="c1"
@@ -35,7 +35,7 @@ const TeamMember: FC<TeamMembersProps> = ({ teamMembers }) => {
             <th className="w-[300px] font-medium ">Email Address</th>
             <th className="w-[400px] font-medium ">Wallet Address</th>
             <th className="w-[300px] font-medium ">Role</th>
-            <th className="w-[300px] font-medium  ">Activity</th>
+            <th className="w-[300px] font-medium  ">Status</th>
           </tr>
         </thead>
         <tbody className="text-t-black relative top-4">
