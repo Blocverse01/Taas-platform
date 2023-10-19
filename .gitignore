@@ -42,3 +42,4 @@ build-storybook.log
 solidity/artifacts
 solidity/typechain-types
 solidity/cache
+typechain-types

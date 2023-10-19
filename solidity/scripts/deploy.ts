@@ -1,22 +1,33 @@
 import { ethers } from "hardhat";
 
 async function main() {
-  const currentTimestampInSeconds = Math.round(Date.now() / 1000);
-  const unlockTime = currentTimestampInSeconds + 60;
-
-  const lockedAmount = ethers.parseEther("0.001");
-
-  const lock = await ethers.deployContract("Lock", [unlockTime], {
-    value: lockedAmount,
-  });
-
-  await lock.waitForDeployment();
-
-  console.log(
-    `Lock with ${ethers.formatEther(
-      lockedAmount
-    )}ETH and unlock timestamp ${unlockTime} deployed to ${lock.target}`
+  //Asset Token
+  const assetFactory = await ethers.getContractFactory(
+    "AssetToken"
   );
+  const assetContract = await assetFactory.deploy();
+
+  await assetContract.waitForDeployment();
+  console.log("Asset Token Contract deployed to:", assetContract.target);
+
+  //Asset Token Factory
+  const assetTokenFactoryFactory = await ethers.getContractFactory(
+    "AssetTokenFactory"
+  );
+  const assetTokenFactoryContract = await assetTokenFactoryFactory.deploy();
+
+  await assetTokenFactoryContract.waitForDeployment();
+  console.log("Token Factory Contract deployed to:", assetTokenFactoryContract.target);
+  
+  // //Platform Entry Point
+  // const platformEntryPointFactory = await ethers.getContractFactory(
+  //   "platformEntryPoint"
+  // );
+  // const platformEntryPointContract = await platformEntryPointFactory.deploy();
+
+  // await platformEntryPointContract.deployed();
+  // console.log("Contract deployed to:", platformEntryPointContract.address);
+
 }
 
 // We recommend this pattern to be able to use async/await everywhere
