@@ -3,21 +3,21 @@ import { ethers } from "hardhat";
 async function main() {
   //Asset Token
   const assetFactory = await ethers.getContractFactory(
-    "assetToken"
+    "AssetToken"
   );
   const assetContract = await assetFactory.deploy();
 
-  await assetContract.deployed();
-  console.log("Contract deployed to:", assetContract.address);
+  await assetContract.waitForDeployment();
+  console.log("Asset Token Contract deployed to:", assetContract.target);
 
   //Asset Token Factory
   const assetTokenFactoryFactory = await ethers.getContractFactory(
-    "assetTokenFactory"
+    "AssetTokenFactory"
   );
   const assetTokenFactoryContract = await assetTokenFactoryFactory.deploy();
 
-  await assetTokenFactoryContract.deployed();
-  console.log("Contract deployed to:", assetTokenFactoryContract.address);
+  await assetTokenFactoryContract.waitForDeployment();
+  console.log("Token Factory Contract deployed to:", assetTokenFactoryContract.target);
   
   // //Platform Entry Point
   // const platformEntryPointFactory = await ethers.getContractFactory(
