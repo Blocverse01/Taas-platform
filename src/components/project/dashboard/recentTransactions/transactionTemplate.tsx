@@ -11,11 +11,11 @@ interface TransactionProps {
 
 const TransactionTemplate: FC<TransactionProps> = ({ transaction }) => {
   return (
-    <table className="table-fixed">
-      <thead className="border-b border-b-t-gray-4 mb-4">
+    <table className="table-fixed border-separate border-spacing-y-4">
+      <thead className="border-2  border-b-t-gray-4">
         <tr className="text-t-gray-4">
           <th className="w-[400px]  text-left">Customer</th>
-          <th className="w-[400px] 4  text-left">Txn ID</th>
+          <th className="w-[400px]   text-left">Txn ID</th>
           <th className="w-[400px]  text-left">Tokens Bought</th>
           <th className="w-[400px]  text-left">Amount Paid</th>
         </tr>
