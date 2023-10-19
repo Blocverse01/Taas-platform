@@ -64,7 +64,7 @@ const AddTeamMemberForm: FC<AddTeamMemberDialogProps> = ({ backButton }) => {
               htmlFor="role"
               className="block text-sm mb-4 text-t-black"
             >
-              Role(select Role)
+              Role(select role)
             </label>
             <Select
               styles={{
