@@ -72,7 +72,7 @@ const AddTeamMemberForm: FC<AddTeamMemberDialogProps> = ({ backButton }) => {
                   return {
                     ...base,
                     backgroundColor: "#FAFAFA",
-                    padding: "16px",
+                    padding: "8px",
                     borderRadius: "4px",
                     border: "none",
                     color: "#1A1A1A",
