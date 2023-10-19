@@ -19,3 +19,13 @@ export const createAddSignatoryTransaction =
         return await safe.createAddOwnerTx(params);
     }
 
+export const createUpdateSafeWalletThreshold =
+    async (safeAddress: Address, newThreshold: number): Promise<SafeTransaction> => {
+        const { safe } = await validateSignatory(safeAddress);
+
+        return await safe.createChangeThresholdTx(newThreshold);
+    }
+
+
+//TODO : BATCH REMOVAL
+//TODO : BATCH ADDITION
