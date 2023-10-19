@@ -11,3 +11,11 @@ export const createRemoveSignatoryTransaction =
         return safe.createRemoveOwnerTx(params);
     }
 
+export const createAddSignatoryTransaction =
+    async (safeAddress: Address, params: AddOwnerTxParams): Promise<SafeTransaction> => {
+
+        const { safe } = await validateSignatory(safeAddress);
+
+        return await safe.createAddOwnerTx(params);
+    }
+
