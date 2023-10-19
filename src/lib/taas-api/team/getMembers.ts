@@ -1,11 +1,8 @@
-import { getSession } from "next-auth/react";
+import type { Session } from "next-auth";
 import { Address } from "viem"
 
 const FEATURE_READY = false;
-const getTeamMembers = async (teamId: string) => {
-  const currentUser = await getSession();
-  if (!currentUser) throw new Error('No session');
-
+const getTeamMembers = async (currentUser: Session, teamId: string) => {
   if (!FEATURE_READY) {
     const dummyMembers = [{
       email: "toochukwukingz6@gmail.com",
@@ -22,7 +19,7 @@ const getTeamMembers = async (teamId: string) => {
     return dummyMembers.map((member) => ({
       ...member,
       walletAddress: member.walletAddress as Address,
-      isCurrentUser: member.email === currentUser.user?.email
+      isCurrentUser: member.email === currentUser.user.email
     }))
   }
   return [];
