@@ -8,9 +8,7 @@ const TeamPage = () => {
   const [searchInput, setSearchInput] = useState("");
   const [filteredTeamMembers, setFilteredTeamMembers] = useState(TeamMembers);
 
-  
-  const handleSearchInputChange = (event) => {
-    const inputValue = event.target.value;
+  const handleSearchInputChange = (inputValue: string) => {
     setSearchInput(inputValue);
 
     const filteredMembers = TeamMembers.filter((member) =>
@@ -30,7 +28,7 @@ const TeamPage = () => {
             className="bg-transparent w-full text-t-black border-none outline-none"
             type="text"
             value={searchInput}
-            onChange={handleSearchInputChange}
+            onChange={(e) => handleSearchInputChange(e.target.value)}
           />
         </div>
         <AddTeamMemberDialog />
