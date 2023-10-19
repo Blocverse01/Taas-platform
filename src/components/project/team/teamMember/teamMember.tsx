@@ -1,7 +1,5 @@
 import React, { FC } from "react";
 import * as Popover from "@radix-ui/react-popover";
-import * as Checkbox from "@radix-ui/react-checkbox";
-import { CheckIcon } from "@radix-ui/react-icons";
 import { EditIcon, MenuDots, TrashIcon } from "@/assets/icon";
 import { RemoveTeamMemberDialog } from "./removeTeamMember";
 
@@ -21,17 +19,8 @@ const TeamMember: FC<TeamMembersProps> = ({ teamMembers }) => {
       <table className="table-fixed border-separate border-spacing-y-8  ">
         <thead>
           <tr className="text-left  text-[#1A1A1AB2] ">
-          <th className="w-[200px]">
-              <Checkbox.Root
-                className="flex h-[25px] w-[25px] border border-black appearance-none items-center justify-center rounded-[4px] bg-white  outline-none "
-                id="c1"
-              >
-                <Checkbox.Indicator>
-                  <CheckIcon />
-                </Checkbox.Indicator>
-              </Checkbox.Root>
-            </th>
-            <th className="w-[300px] font-medium  ">Name</th>
+          
+            <th className="w-[300px] px-6 font-medium  ">Name</th>
             <th className="w-[300px] font-medium ">Email Address</th>
             <th className="w-[400px] font-medium ">Wallet Address</th>
             <th className="w-[300px] font-medium ">Role</th>
@@ -40,18 +29,9 @@ const TeamMember: FC<TeamMembersProps> = ({ teamMembers }) => {
         </thead>
         <tbody className="text-t-black relative top-4">
           {teamMembers.map((member) => (
-            <tr key={member.id} className="bg-t-gray-2  ">
-              <td className=" py-4 px-4">
-                <Checkbox.Root
-                  className="  flex h-[25px] w-[25px] border border-black appearance-none items-center justify-center rounded-[4px] bg-white  outline-none "
-                  id="c1"
-                >
-                  <Checkbox.Indicator className="text-violet11">
-                    <CheckIcon />
-                  </Checkbox.Indicator>
-                </Checkbox.Root>
-              </td>
-              <td className=" font-medium">{member.name}</td>
+            <tr key={member.id} className="bg-t-gray-2 rounded  ">
+             
+              <td className=" p-6 font-medium">{member.name}</td>
               <td className=" font-medium">{member.email}</td>
               <td className=" truncate font-medium">
                 <p className="w-[141px] truncate">{member.walletAddress}</p>
