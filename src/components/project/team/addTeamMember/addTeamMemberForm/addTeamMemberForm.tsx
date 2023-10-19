@@ -37,6 +37,7 @@ const AddTeamMemberForm: FC<AddTeamMemberDialogProps> = ({ backButton }) => {
       {({ isValid, isSubmitting }) => (
         <Form className=" space-y-4">
           <Input
+            className="text-t-black"
             placeholder="Johnny Jones"
             label="Name"
             type="text"
@@ -44,6 +45,7 @@ const AddTeamMemberForm: FC<AddTeamMemberDialogProps> = ({ backButton }) => {
             id="name"
           />
           <Input
+            className="text-t-black"
             placeholder="johnny@gmail.com"
             label="Email"
             type="text"
@@ -64,7 +66,7 @@ const AddTeamMemberForm: FC<AddTeamMemberDialogProps> = ({ backButton }) => {
               name="role"
               className="block w-full p-2 border mt-4 rounded-md"
             >
-              <option value="" disabled>
+              <option className="text-t-black" value="" disabled>
                 Select Role
               </option>
               <option value="admin">Admin</option>

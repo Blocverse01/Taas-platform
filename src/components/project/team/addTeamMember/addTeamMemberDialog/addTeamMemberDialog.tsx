@@ -34,7 +34,7 @@ const AddTeamMemberDialog = () => {
                 <CrossIcon />
               </button>
             </AlertDialog.Cancel>
-            <AlertDialog.Title className="mt-[19px] mb-6 text-[24px] font-medium text-center text-black">
+            <AlertDialog.Title className="mt-[19px] mb-6 text-[24px] font-medium text-center text-t-black">
               Add Team Member
             </AlertDialog.Title>
             <div className="w-full">
