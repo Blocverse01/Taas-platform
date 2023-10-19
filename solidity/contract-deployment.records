@@ -1,0 +1,20 @@
+Deployment for Polygon Mumbai
+
+
+npx hardhat run scripts/deploy.ts --network mumbai
+Asset Token Contract deployed to: 0x72f2f7184f4f9145091447bd9E8160482d40c6c6
+Token Factory Contract deployed to: 0x9b4109e859552299b1f45B9a2B22C79EE8c20025
+
+Deployment for 
+Optimism Goerli
+
+npx hardhat run scripts/deploy.ts --network optimism_goerli
+Asset Token Contract deployed to: 0xa13bB313660ad1C533EfB05d116a790a2E28EFB2
+Token Factory Contract deployed to: 0x1241b06b1db47328770beA57Af832615176A296d
+
+Deployment for 
+Scroll
+
+npx hardhat run scripts/deploy.ts --network scroll
+Asset Token Contract deployed to: 0x207f5823440bcd7a518048e931a1e1dc5f72fa97
+Token Factory Contract deployed to: 0xf966ab8f1a608faa5ae545473d6ffacba638a263

@@ -43,6 +43,7 @@ storybook-static
 solidity/artifacts
 solidity/typechain-types
 solidity/cache
+typechain-types
 
 # Yarn 3 files
 .pnp.*

@@ -1,62 +1,78 @@
-import { getSession } from "next-auth/react";
-import { deactivateMemberRolePayload, updateMemberRolePayload } from "./teamTypes";
-import { projectRepository, projectTeamRepository } from "@/utils/constants";
+import {
+  deactivateMemberRolePayload,
+  updateMemberRolePayload,
+} from "./teamTypes";
+import {
+  projectRepository,
+  projectTeamRepository,
+} from "@/utils/constants";
 import { getProjectTeamMemberId } from "@/utils/helperfunctions";
+import type { Session } from "next-auth";
 
-export const updateTeamMemberRole = async (payload: updateMemberRolePayload) => {
+export const updateTeamMemberRole = async (
+  currentUser: Session,
+  payload: updateMemberRolePayload
+) => {
+  try {
+    const project = await projectRepository()
+      .filter({
+        id: payload.projectId,
+      })
+      .getFirstOrThrow();
 
-    try {
-        const currentUser = await getSession();
-
-        if (!currentUser) throw new Error('Unauthorized action');
-
-        const project = await projectRepository.filter({
-            id: payload.projectId
-        }).getFirstOrThrow();
-
-        if (project.owner?.id != currentUser.user?.email) {
-            throw new Error("Only the project owner can update team member role")
-        }
-
-        const projectTeamId = getProjectTeamMemberId(project.id, payload.teamMemberUserId);
-
-        const exisitingProjectTeamMember = await projectTeamRepository.filter({ id: projectTeamId, isActive: true }).getFirst();
-
-        if (!exisitingProjectTeamMember) {
-            throw new Error("User is not a current team member")
-        }
-
-        exisitingProjectTeamMember.update({ roleId: payload.newRole });
-    } catch (error: any) {
-        throw error;
+    if (project.owner?.id != currentUser.user.id) {
+      throw new Error("Only the project owner can update team member role");
     }
-}
 
-export const removeTeamMember = async (payload: deactivateMemberRolePayload) => {
+    const projectTeamId = getProjectTeamMemberId(
+      project.id,
+      payload.teamMemberUserId
+    );
 
-    try {
-        const currentUser = await getSession();
+    const existingProjectTeamMember = await projectTeamRepository()
+      .filter({ id: projectTeamId, isActive: true })
+      .getFirst();
 
-        if (!currentUser) throw new Error('Unauthorized action');
-
-        const project = await projectRepository.filter({
-            id: payload.projectId
-        }).getFirstOrThrow();
-
-        if (project.owner?.id != currentUser.user?.email) {
-            throw new Error("Only the project owner can update team member role")
-        }
-
-        const projectTeamId = getProjectTeamMemberId(project.id, payload.teamMemberUserId);
-
-        const exisitingProjectTeamMember = await projectTeamRepository.filter({ id: projectTeamId, isActive: true }).getFirst();
-
-        if (!exisitingProjectTeamMember) {
-            throw new Error("User is not a current team member")
-        }
-
-        exisitingProjectTeamMember.update({ isActive: false });
-    } catch (error: any) {
-        throw error;
+    if (!existingProjectTeamMember) {
+      throw new Error("User is not a current team member");
     }
-}
+
+    existingProjectTeamMember.update({ roleId: payload.newRole });
+  } catch (error: any) {
+    throw error;
+  }
+};
+
+export const removeTeamMember = async (
+  currentUser: Session,
+  payload: deactivateMemberRolePayload
+) => {
+  try {
+    const project = await projectRepository()
+      .filter({
+        id: payload.projectId,
+      })
+      .getFirstOrThrow();
+
+    if (project.owner?.id != currentUser.user.id) {
+      throw new Error("Only the project owner can update team member role");
+    }
+
+    const projectTeamId = getProjectTeamMemberId(
+      project.id,
+      payload.teamMemberUserId
+    );
+
+    const existingProjectTeamMember = await projectTeamRepository()
+      .filter({ id: projectTeamId, isActive: true })
+      .getFirst();
+
+    if (!existingProjectTeamMember) {
+      throw new Error("User is not a current team member");
+    }
+
+    existingProjectTeamMember.update({ isActive: false });
+  } catch (error: any) {
+    throw error;
+  }
+};
