@@ -4,7 +4,7 @@ import usdt from "@/assets/usdt.png";
 import usdc from "@/assets/usdc.png";
 import euroc from "@/assets/euroc.png";
 import * as Switch from "@radix-ui/react-switch";
-import { Plus } from "@/assets/icon";
+
 
 const Settings = () => {
   return (
