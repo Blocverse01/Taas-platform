@@ -1,6 +1,6 @@
 import React, { FC } from "react";
 import * as Popover from "@radix-ui/react-popover";
-import { EditIcon, MenuDots, TrashIcon } from "@/assets/icon";
+import { EditIcon, Ellipsis  } from "@/assets/icon";
 import { RemoveTeamMemberDialog } from "./removeTeamMember";
 
 interface TeamMembersProps {
@@ -50,7 +50,7 @@ const TeamMember: FC<TeamMembersProps> = ({ teamMembers }) => {
                       className=" w-[35px] cursor-pointer h-[35px] inline-flex items-center justify-center text-violet11   shadow-blackA4    outline-none"
                       aria-label="Update dimensions"
                     >
-                      <MenuDots />
+                      <Ellipsis />
                     </button>
                   </Popover.Trigger>
                   <Popover.Portal>
