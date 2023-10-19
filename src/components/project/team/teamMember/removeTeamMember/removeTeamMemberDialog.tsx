@@ -1,6 +1,6 @@
 import * as AlertDialog from "@radix-ui/react-alert-dialog";
 import { motion } from "framer-motion";
-import { CrossIcon, Exclamation, PlusSign, TrashIcon } from "@/assets/icon";
+import { CrossIcon, Exclamation, PlusSign, DeleteIcon } from "@/assets/icon";
 import { useModalParent } from "@/lib/zustand/modalSlice";
 
 const RemoveTeamMemberDialog = () => {
@@ -11,7 +11,7 @@ const RemoveTeamMemberDialog = () => {
       <AlertDialog.Trigger asChild>
         <button className="flex hover:bg-t-gray-2 rounded p-3 items-center  space-x-2">
           {" "}
-          <TrashIcon /> <span>Remove Team Member</span>
+          <DeleteIcon /> <span>Remove Team Member</span>
         </button>
       </AlertDialog.Trigger>
       <AlertDialog.Portal container={dialogContainer}>
