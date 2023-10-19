@@ -18,7 +18,7 @@ interface TeamMembersProps {
 const TeamMember: FC<TeamMembersProps> = ({ teamMembers }) => {
   return (
     <div>
-      <table className="table-fixed">
+      <table className="table-fixed border-separate border-spacing-y-8  ">
         <thead>
           <tr className="text-left  text-[#1A1A1AB2] ">
             <th className="w-[200px]">
@@ -31,11 +31,11 @@ const TeamMember: FC<TeamMembersProps> = ({ teamMembers }) => {
                 </Checkbox.Indicator>
               </Checkbox.Root>
             </th>
-            <th className="w-[300px] font-medium">Name</th>
-            <th className="w-[300px] font-medium">Email Address</th>
-            <th className="w-[400px] font-medium">Wallet Address</th>
-            <th className="w-[300px] font-medium">Role</th>
-            <th className="w-[300px] font-medium">Activity</th>
+            <th className="w-[300px] font-medium  ">Name</th>
+            <th className="w-[300px] font-medium ">Email Address</th>
+            <th className="w-[400px] font-medium ">Wallet Address</th>
+            <th className="w-[300px] font-medium ">Role</th>
+            <th className="w-[300px] font-medium  ">Activity</th>
           </tr>
         </thead>
         <tbody className="text-t-black relative top-4">
