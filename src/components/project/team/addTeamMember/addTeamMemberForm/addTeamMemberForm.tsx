@@ -89,7 +89,7 @@ const AddTeamMemberForm: FC<AddTeamMemberDialogProps> = ({ backButton }) => {
             <button
               type="submit"
               disabled={isSubmitting}
-              className="bg-t-purple text-white py-[18px] px-8 rounded w-full"
+              className="bg-t-purple text-white text-[18px] py-[18px] px-8 rounded w-full"
             >
               Add Team Member
             </button>

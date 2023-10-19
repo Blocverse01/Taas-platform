@@ -43,7 +43,7 @@ const AddTeamMemberDialog = () => {
                   <AlertDialog.Cancel asChild>
                     <button
                       type="button"
-                      className="text-white py-[18px] px-[70px] rounded bg-t-black"
+                      className="text-white py-[18px] px-[70px] text-[18px] rounded bg-t-black"
                     >
                       Back
                     </button>
