@@ -1,4 +1,4 @@
-import { Magic } from "@magic-sdk/admin";
+import { Magic } from "@magic-sdk";
 import { MissingEnvVariableError } from "../../errors";
 
 let instance: Magic | undefined = undefined;
