@@ -1,0 +1,13 @@
+{
+  "id": "mig_ckp2b7fkv9et5mt92cmg",
+  "parentID": "mig_ckp2a57kv9et5mt92clg",
+  "checksum": "1:a7d55d8467a82c12868775efe757d7993ee1f3247cd7fea5f61b1bbb4f6b890c",
+  "operations": [
+    {
+      "removeColumn": {
+        "column": "nonce",
+        "table": "AssetTransaction"
+      }
+    }
+  ]
+}

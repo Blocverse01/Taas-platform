@@ -1,0 +1,14 @@
+{
+  "id": "mig_ckp1fr7kv9et5mt92840",
+  "parentID": "mig_ckp1befkv9et5mt92830",
+  "checksum": "1:f1ab2ec37a17100cc5c368106d18df0dab7e84585909c5fae56aa99597f604ad",
+  "operations": [
+    {
+      "renameColumn": {
+        "newName": "safeTransactionHash",
+        "oldName": "safeTransaction",
+        "table": "AssetTransaction"
+      }
+    }
+  ]
+}

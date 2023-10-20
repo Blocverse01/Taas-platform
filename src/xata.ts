@@ -143,6 +143,13 @@ const tables = [
       { name: "type", type: "int", notNull: true, defaultValue: "1" },
       { name: "createdBy", type: "link", link: { table: "User" } },
       { name: "amount", type: "float" },
+      {
+        name: "safeTransactionHash",
+        type: "string",
+        notNull: true,
+        defaultValue: "null",
+      },
+      { name: "safeTransactionNonce", type: "int" },
     ],
     revLinks: [{ column: "transaction", table: "AuthorizationRequest" }],
   },
