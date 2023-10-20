@@ -5,6 +5,9 @@ const meta = {
   title: "Project/Team Page",
   component: TeamPage,
   tags: ["autodocs"],
+  args: {
+    teamMembers: [],
+  },
 } satisfies Meta<typeof TeamPage>;
 
 export default meta;

@@ -6,7 +6,7 @@ const meta = {
   component: ProjectHeader,
   tags: ["autodocs"],
   args: {
-    projectName: "Eko Hotel",
+    breadcrumbs: ["Sample Project", "Assets"],
   },
 } satisfies Meta<typeof ProjectHeader>;
 

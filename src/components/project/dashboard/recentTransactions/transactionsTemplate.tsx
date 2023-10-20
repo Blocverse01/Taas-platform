@@ -1,7 +1,7 @@
 import React, { FC } from "react";
 
-interface TransactionProps {
-  transaction: {
+interface TransactionsProps {
+  transactions: {
     name: string;
     id: string;
     tokensBought: string;
@@ -11,7 +11,7 @@ interface TransactionProps {
 
 const tableHeaders = ["Customer", "Txn ID", "Tokens Bought", "Amount Paid"];
 
-const TransactionTemplate: FC<TransactionProps> = ({ transaction }) => {
+const TransactionsTemplate: FC<TransactionsProps> = ({ transactions }) => {
   return (
     <table className="table-fixed border-separate border-spacing-y-5">
       <thead>
@@ -27,7 +27,7 @@ const TransactionTemplate: FC<TransactionProps> = ({ transaction }) => {
         </tr>
       </thead>
       <tbody>
-        {transaction.map((item) => (
+        {transactions.map((item) => (
           <tr className="text-t-black" key={item.id}>
             <td className="w-[400px] ">
               <p className="max-w-[132px] truncate">{item.name}</p>
@@ -47,4 +47,4 @@ const TransactionTemplate: FC<TransactionProps> = ({ transaction }) => {
   );
 };
 
-export { TransactionTemplate };
+export { TransactionsTemplate };

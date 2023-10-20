@@ -404,7 +404,7 @@ const AssetDocumentCard: FC<AssetDocumentCardProps> = ({
       <div className="flex items-center justify-between">
         <h3 className="text-t-gray-4 text-sm">{label}</h3>
       </div>
-      <div className="bg-t-faded-purple rounded-lg py-[18px] px-4 flex items-center justify-between gap-3">
+      <div className="bg-t-purple/20 rounded-lg py-[18px] px-4 flex items-center justify-between gap-3">
         <div className="w-[calc(100%-36px)]">
           <h4 className="text-t-black text-sm truncate">{fileName}</h4>
           <span className="text-t-gray-4 text-xs mt-[7px]">

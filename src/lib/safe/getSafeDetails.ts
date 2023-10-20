@@ -2,6 +2,8 @@ import { Address } from "viem"
 import { getTeamMembers } from "../taas-api/team/getMembers";
 import { SafeTransaction } from "@safe-global/safe-core-sdk-types";
 import { validateSignatory } from "./validateSafeSigner";
+import { getSession } from "next-auth/react";
+import type { Session } from "next-auth";
 
 export const getSafeDetails = async (safeAddress: Address) => {
 

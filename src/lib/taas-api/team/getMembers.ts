@@ -1,34 +1,24 @@
+import { HttpError } from "@/lib/errors";
+import { BAD_REQUEST, projectTeamRepository } from "@/utils/constants";
 import type { Session } from "next-auth";
 import { Address } from "viem"
 
-const FEATURE_READY = false;
-const getTeamMembers = async (currentUser: Session, teamId: string) => {
-  if (!FEATURE_READY) {
-    const dummyMembers = [{
-      email: "toochukwukingz6@gmail.com",
-      walletAddress: "0x2525D2694A862Bb03e143Ad8B10695177EBC6CF0",
-      firstname: "",
-      userId: ""
-    },
-    {
-      email: "adelekekehinde06@gmail.com",
-      walletAddress: "0x4AA4b9EAF070DBeDBF1ED7709e330C2118C7CF16",
-      firstname: "",
-      userId: ""
-    },
-    {
-      email: "avoajajoshua@gmail.com",
-      walletAddress: "0xaBeDc0A70237A82482F4c6E48623005d80E2b95C",
-      firstname: "",
-      userId: ""
-    }]
-    return dummyMembers.map((member) => ({
-      ...member,
-      walletAddress: member.walletAddress as Address,
-      isCurrentUser: member.email === currentUser.user.email
-    }))
+const getTeamMembers = async (currentUser: Session["user"], projectId: string) => {
+  if (!currentUser.id.trim() || !projectId.trim()) {
+    throw new HttpError(BAD_REQUEST, "Args cannot be empty string");
   }
-  return [];
+
+  const teamMemberships = await projectTeamRepository().filter("project.id", projectId).select(["user.email", "user.walletAddress", "roleId", "isActive"]).getAll();
+
+  const teamMembers = teamMemberships.map((membership) => ({
+    name: "Name cannot be blank", // Todo: figure out how names should be retrieved
+    email: membership.user!.email!,
+    walletAddress: membership.user!.walletAddress! as Address,
+    role: membership.roleId!,
+    isActive: membership.isActive!
+  }));
+
+  return teamMembers;
 }
 
 export { getTeamMembers }

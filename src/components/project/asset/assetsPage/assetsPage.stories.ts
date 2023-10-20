@@ -16,6 +16,7 @@ const meta = {
         displayImage:
           "https://ipfs.moralis.io:2053/ipfs/QmeMtpZPDQk9CJV2V7hnCMbG6DYuKkJjxRiH6Kmwja4tkE/demo-real-estate-asset-image.jpeg",
         tokenPrice: 100,
+        assetLink: "/"
       },
       {
         id: "asset-2",
@@ -24,6 +25,7 @@ const meta = {
         displayImage:
           "https://ipfs.moralis.io:2053/ipfs/QmeMtpZPDQk9CJV2V7hnCMbG6DYuKkJjxRiH6Kmwja4tkE/demo-real-estate-asset-image.jpeg",
         tokenPrice: 100,
+        assetLink: "/"
       },
       {
         id: "asset-3",
@@ -32,6 +34,7 @@ const meta = {
         displayImage:
           "https://ipfs.moralis.io:2053/ipfs/QmeMtpZPDQk9CJV2V7hnCMbG6DYuKkJjxRiH6Kmwja4tkE/demo-real-estate-asset-image.jpeg",
         tokenPrice: 100,
+        assetLink: "/"
       },
       {
         id: "asset-3",
@@ -40,6 +43,7 @@ const meta = {
         displayImage:
           "https://ipfs.moralis.io:2053/ipfs/QmeMtpZPDQk9CJV2V7hnCMbG6DYuKkJjxRiH6Kmwja4tkE/demo-real-estate-asset-image.jpeg",
         tokenPrice: 100,
+        assetLink: "/"
       },
       {
         id: "asset-4",
@@ -48,6 +52,7 @@ const meta = {
         displayImage:
           "https://ipfs.moralis.io:2053/ipfs/QmeMtpZPDQk9CJV2V7hnCMbG6DYuKkJjxRiH6Kmwja4tkE/demo-real-estate-asset-image.jpeg",
         tokenPrice: 100,
+        assetLink: "/"
       },
     ],
   },
