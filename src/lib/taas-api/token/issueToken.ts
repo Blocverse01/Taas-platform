@@ -8,7 +8,7 @@ import { PLATFORM_ENTRY } from "@/utils/web3/abis";
 import { utils } from "@/utils/web3/utils";
 import { getContractAddress } from "@/utils/web3/contracts";
 import { sponsorTransaction } from "@/lib/biconomy";
-import { SPONSOR_TRANSACTIONS } from "@/utils/constants";
+import { SPONSOR_TRANSACTION } from "@/utils/constants";
 
 const CONTRACT_FUNCTION_NAME = "issueToken" as const;
 interface TxResponse {
@@ -35,7 +35,7 @@ const issueToken = async (
         "0x00000000000000000",
     ] as const;
 
-    if (SPONSOR_TRANSACTIONS) {
+    if (SPONSOR_TRANSACTION) {
         const encodedData = encodeFunctionData({
             abi: PLATFORM_ENTRY,
             functionName: CONTRACT_FUNCTION_NAME,
