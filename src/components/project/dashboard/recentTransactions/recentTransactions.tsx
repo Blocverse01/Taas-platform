@@ -1,8 +1,11 @@
-import React from "react";
-import { TransactionTemplate } from "./transactionTemplate";
-import { TransactionData } from "./demodata";
+import React, { ComponentProps, FC } from "react";
+import { TransactionsTemplate } from "./transactionsTemplate";
 
-const RecentTransactions = () => {
+interface RecentTransactionsProps {
+  transactions: ComponentProps<typeof TransactionsTemplate>["transactions"];
+}
+
+const RecentTransactions: FC<RecentTransactionsProps> = ({transactions}) => {
   return (
     <div>
       <div className="flex items-center justify-between">
@@ -12,7 +15,7 @@ const RecentTransactions = () => {
         <p className="font-sm text-t-gray-11">View All</p>
       </div>
       <div className="mt-4">
-        <TransactionTemplate transaction={TransactionData} />
+        <TransactionsTemplate transactions={transactions} />
       </div>
     </div>
   );

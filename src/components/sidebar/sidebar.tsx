@@ -29,16 +29,16 @@ const Sidebar = () => {
           <p className="text-[12px] font-medium flex items-center text-t-purple  w-fit mx-auto">
             <Image className="mr-2" src={logo} alt="logo" /> TAAS
           </p>
-          <div className="mt-6 px-2">
+          <div className="mt-6 px-[23px] flex flex-col gap-4">
             {navItems.map((item) => (
               <Link
-                className={`flex relative rounded gap-2 p-4 pl-16 items-center ${
+                className={`flex relative justify-center rounded gap-2 py-[10.5px] px-[19px] items-center ${
                   router.pathname === item.href ? "bg-t-purple text-white" : ""
                 }`}
                 key={item.href}
                 href={item.href}
               >
-                <span className="absolute left-8">{item.icon}</span>
+                <span>{item.icon}</span>
                 <span className="capitalize">{item.name}</span>
               </Link>
             ))}

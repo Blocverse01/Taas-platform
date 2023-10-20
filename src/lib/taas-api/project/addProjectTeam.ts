@@ -13,8 +13,8 @@ const createProjectTeammate = async (payload: CreateProjectTeammatePayload) => {
     const projectTeamMemberId = getProjectTeamMemberId(payload.projectId, payload.userId);
 
     return await projectTeamRepository().create(projectTeamMemberId, {
-        projectId: payload.projectId,
-        userId: payload.userId,
+        project: payload.projectId,
+        user: payload.userId,
         roleId: payload.role,
         isActive: payload.isActive
     });

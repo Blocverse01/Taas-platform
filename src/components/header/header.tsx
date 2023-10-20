@@ -9,7 +9,7 @@ const Header: FC = () => {
   const pageTitle = lastPathname === "dashboard" ? "Overview" : lastPathname;
 
   return (
-    <header className="relative flex justify-between items-center p-6 pt-12 capitalize  border-t-grey-3">
+    <header className="relative flex justify-between items-center p-6 lg:px-10 pt-12 capitalize border-t-grey-3">
       <p className="text-[20px] font-medium">{pageTitle}</p>
       <div className="flex items-center space-x-5">
         <Notification />

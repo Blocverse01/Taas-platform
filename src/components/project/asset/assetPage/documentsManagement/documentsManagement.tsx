@@ -53,7 +53,7 @@ const DocumentCard: FC<{
           <Popover.Portal container={modalParent}>
             <Popover.Content
               align="center"
-              className="rounded p-5 w-[260px] bg-white shadow-[0_10px_38px_-10px_hsla(206,22%,7%,.35),0_10px_20px_-15px_hsla(206,22%,7%,.2)] focus:shadow-[0_10px_38px_-10px_hsla(206,22%,7%,.35),0_10px_20px_-15px_hsla(206,22%,7%,.2),0_0_0_2px_theme(colors.violet7)] will-change-[transform,opacity] data-[state=open]:data-[side=top]:animate-slideDownAndFade data-[state=open]:data-[side=right]:animate-slideLeftAndFade data-[state=open]:data-[side=bottom]:animate-slideUpAndFade data-[state=open]:data-[side=left]:animate-slideRightAndFade"
+              className="rounded p-5 w-[260px] bg-white shadow-[0_10px_38px_-10px_hsla(206,22%,7%,.35),0_10px_20px_-15px_hsla(206,22%,7%,.2)] focus:shadow-[0_10px_38px_-10px_hsla(206,22%,7%,.35),0_10px_20px_-15px_hsla(206,22%,7%,.2),0_0_0_2px_theme(colors.t.black)] will-change-[transform,opacity] data-[state=open]:data-[side=top]:animate-slideDownAndFade data-[state=open]:data-[side=right]:animate-slideLeftAndFade data-[state=open]:data-[side=bottom]:animate-slideUpAndFade data-[state=open]:data-[side=left]:animate-slideRightAndFade"
               sideOffset={5}
             >
               <div className="flex flex-col gap-4">
@@ -70,11 +70,11 @@ const DocumentCard: FC<{
           </Popover.Portal>
         </Popover.Root>
       </div>
-      <div className="bg-t-faded-purple rounded-lg py-[18px] px-4 flex items-start justify-between gap-3">
-        <p className="w-[calc(100%-48px)]">
+      <div className="bg-t-purple/20 rounded-lg py-[18px] px-4 flex items-start justify-between gap-3">
+        <div className="w-[calc(100%-48px)]">
           <h4 className="text-t-black text-sm truncate">{fileName}</h4>
           <span className="text-t-gray-4 text-xs mt-[7px]">{formatFileSize(fileSize)}</span>
-        </p>
+        </div>
         <div className="shrink-0 w-[36px]">
           <DownloadCircle />
         </div>
