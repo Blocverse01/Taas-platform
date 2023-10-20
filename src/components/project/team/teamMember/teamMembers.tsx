@@ -13,40 +13,37 @@ interface TeamMembersProps {
   }[];
 }
 
-const TeamMember: FC<TeamMembersProps> = ({ teamMembers }) => {
+const TeamMembers: FC<TeamMembersProps> = ({ teamMembers }) => {
   return (
     <div>
-      <table className="table-fixed border-separate border-spacing-y-8  ">
+      <table className="table-fixed border-separate border-spacing-y-8">
         <thead>
-          <tr className="text-left  text-[#1A1A1AB2] ">
-            <th className="w-[300px] px-6 font-medium  ">Name</th>
-            <th className="w-[300px] font-medium ">Email Address</th>
-            <th className="w-[400px] font-medium ">Wallet Address</th>
-            <th className="w-[300px] font-medium ">Role</th>
-            <th className="w-[300px] font-medium  ">Status</th>
+          <tr className="text-left text-t-black/70">
+            <th className="w-[300px] px-6 font-medium">Name</th>
+            <th className="w-[300px] font-medium">Email Address</th>
+            <th className="w-[400px] font-medium">Wallet Address</th>
+            <th className="w-[300px] font-medium">Role</th>
+            <th className="w-[300px] font-medium">Status</th>
           </tr>
         </thead>
-        <tbody className="text-t-black relative top-4">
+        <tbody className="text-t-black text-sm">
           {teamMembers.map((member) => (
-            <tr key={member.id} className="bg-t-gray-2 rounded  ">
-              <td className=" p-6 font-medium">{member.name}</td>
-              <td className=" font-medium">{member.email}</td>
-              <td className=" truncate font-medium">
+            <tr key={member.id} className="bg-t-gray-2 rounded">
+              <td className="p-6 font-medium">{member.name}</td>
+              <td className="font-medium">{member.email}</td>
+              <td className="font-medium">
                 <p className="w-[141px] truncate">{member.walletAddress}</p>
               </td>
-              <td className=" font-medium">{member.role}</td>
+              <td className="font-medium">{member.role}</td>
               <td>
-                <span className="text-t-purple py-1 px-4 rounded-full bg-t-purple/20">
-                  {" "}
-                  Active
-                </span>
+                <span className="text-t-purple py-1 px-4 rounded-full bg-t-purple/20">Active</span>
               </td>
-              <td className="w-[300px]">
+              <td className="text-right pr-12">
                 <Popover.Root>
                   <Popover.Trigger asChild>
                     <button
-                      className=" w-[35px] cursor-pointer h-[35px] inline-flex items-center justify-center text-violet11   shadow-blackA4    outline-none"
-                      aria-label="Update dimensions"
+                      className="w-[35px] cursor-pointer h-[35px] inline-flex items-center justify-center text-t-black shadow-black/40 outline-none"
+                      aria-label="manage team member"
                     >
                       <Ellipsis />
                     </button>
@@ -69,8 +66,9 @@ const TeamMember: FC<TeamMembersProps> = ({ teamMembers }) => {
           ))}
         </tbody>
       </table>
+      {teamMembers.length === 0 && <div className="text-center text-sm text-t-black/70">No items to display</div>}
     </div>
   );
 };
 
-export { TeamMember };
+export { TeamMembers };

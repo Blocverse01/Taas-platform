@@ -1,18 +1,23 @@
 import { SearchIcon } from "@/assets/icon";
-import React, { useState } from "react";
-import { TeamMember } from "../teamMember";
-import { TeamMembers } from "../teamMember/teamMemberDemoData";
+import React, { ComponentProps, FC, useState } from "react";
+import { TeamMembers } from "../teamMember";
 import { AddTeamMemberDialog } from "../addTeamMember/addTeamMemberDialog";
 
-const TeamPage = () => {
+interface TeamPageProps {
+  teamMembers: ComponentProps<typeof TeamMembers>["teamMembers"];
+}
+
+const TeamPage: FC<TeamPageProps> = ({ teamMembers }) => {
   const [searchInput, setSearchInput] = useState("");
-  const [filteredTeamMembers, setFilteredTeamMembers] = useState(TeamMembers);
+  const [filteredTeamMembers, setFilteredTeamMembers] = useState(teamMembers);
 
   const handleSearchInputChange = (inputValue: string) => {
     setSearchInput(inputValue);
 
-    const filteredMembers = TeamMembers.filter((member) =>
-      member.name.toLowerCase().includes(inputValue.toLowerCase())
+    const filteredMembers = teamMembers.filter(
+      (member) =>
+        member.name.toLowerCase().includes(inputValue.toLowerCase()) ||
+        member.email.toLowerCase().includes(inputValue.toLowerCase())
     );
 
     setFilteredTeamMembers(filteredMembers);
@@ -34,7 +39,7 @@ const TeamPage = () => {
         <AddTeamMemberDialog />
       </div>
       <div className="mt-12">
-        <TeamMember teamMembers={filteredTeamMembers} />
+        <TeamMembers teamMembers={filteredTeamMembers} />
       </div>
     </div>
   );
