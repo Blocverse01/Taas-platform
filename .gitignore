@@ -37,9 +37,19 @@ next-env.d.ts
 
 # storybook
 build-storybook.log
+storybook-static
 
 # hardhat
 solidity/artifacts
 solidity/typechain-types
 solidity/cache
 typechain-types
+
+# Yarn 3 files
+.pnp.*
+.yarn/*
+!.yarn/patches
+!.yarn/plugins
+!.yarn/releases
+!.yarn/sdks
+!.yarn/versions
