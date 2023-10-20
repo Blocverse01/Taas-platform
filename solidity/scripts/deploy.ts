@@ -18,19 +18,18 @@ async function main() {
 
   await assetTokenFactoryContract.waitForDeployment();
   console.log("Token Factory Contract deployed to:", assetTokenFactoryContract.target);
-
+  
   //Platform Entry Point
   const platformEntryPointFactory = await ethers.getContractFactory(
-    "platformEntryPoint"
+    "PlatformEntryPoint"
   );
-
   const platformEntryPointContract = await platformEntryPointFactory.deploy(
-    assetTokenFactoryContract.target,
     assetContract.target,
+    assetTokenFactoryContract.target
   );
 
-  await platformEntryPointContract.deployed();
-  console.log("Contract deployed to:", platformEntryPointContract.address);
+  await platformEntryPointContract.waitForDeployment();
+  console.log("Platform Entry Contract deployed to:", platformEntryPointContract.target);
 
 }
 
