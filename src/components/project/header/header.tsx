@@ -1,18 +1,22 @@
-"use client";
 import { Avatar, CaretIcon, Notification } from "@/assets/icon";
 import { FC } from "react";
 
 interface ProjectHeaderProps {
-  projectName: string;
+  breadcrumbs: string[];
 }
 
-const ProjectHeader: FC<ProjectHeaderProps> = ({ projectName }) => {
+const ProjectHeader: FC<ProjectHeaderProps> = ({ breadcrumbs }) => {
   return (
     <header className="relative flex justify-between items-center px-10 pb-6 pt-12 capitalize ">
       <p className="flex text-[20px] font-medium items-center space-x-2">
-        <span className="text-t-gray-11  ">{projectName}</span>
-        <CaretIcon />
-        <span className="text-t-purple">Dashboard</span>
+        {breadcrumbs.map((breadcrumb, i) => (
+          <>
+            <span key={breadcrumb} className="text-t-gray-11 capitalize last:text-t-purple">
+              {breadcrumb}
+            </span>
+            {i !== breadcrumbs.length - 1 && <CaretIcon />}
+          </>
+        ))}
       </p>
       <div className="flex items-center space-x-2.5">
         <Avatar />
