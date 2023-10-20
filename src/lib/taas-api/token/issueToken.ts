@@ -1,4 +1,4 @@
-import { Address, TransactionReceipt, encodeFunctionData } from "viem";
+import { Address, Transaction, TransactionReceipt, encodeFunctionData } from "viem";
 import {
     getAccount,
     getPublicClient,
@@ -9,6 +9,9 @@ import { utils } from "@/utils/web3/utils";
 import { getContractAddress } from "@/utils/web3/contracts";
 import { sponsorTransaction } from "@/lib/biconomy";
 import { SPONSOR_TRANSACTION } from "@/utils/constants";
+import { getSafeOwnersWhoHaveApproved, getSafeThreshold } from "@/lib/safe/getSafeDetails";
+import { SafeTransaction } from "@safe-global/safe-core-sdk-types";
+import { validateSignatory } from "@/lib/safe/validateSafeSigner";
 
 const CONTRACT_FUNCTION_NAME = "issueToken" as const;
 interface TxResponse {
@@ -16,7 +19,9 @@ interface TxResponse {
     txHash: Address;
 }
 
-const issueToken = async (
+const executeIssueTokenTransaction = async (
+    safeAddress: Address,
+    transaction: SafeTransaction,
     tokenFactoryAddress: Address,
     tokenAddress: Address,
     destinationWallet: Address,
@@ -26,6 +31,14 @@ const issueToken = async (
     const publicClient = getPublicClient();
     const walletClient = getWalletClient();
     const platformEntryAddress = getContractAddress("PLATFORM_ENTRY");
+
+    const safeThreshold = await getSafeThreshold(safeAddress);
+
+    const numberOfConfirmations = await getSafeOwnersWhoHaveApproved(transaction, safeAddress);
+    
+    if(numberOfConfirmations.length < safeThreshold){
+        throw new Error(`Issuing a token requires ${safeThreshold} signatures. This transaction has only ${numberOfConfirmations.length} signatures`);
+    }
 
     const functionArgs = [
         tokenFactoryAddress,
@@ -70,8 +83,9 @@ const issueToken = async (
     const receipt = await publicClient.waitForTransactionReceipt({
         hash: txHash,
     });
+
     if (receipt.status === "reverted") throw new Error("Transaction failed");
     return { status: receipt.status, txHash };
 };
 
-export { issueToken };
+export { executeIssueTokenTransaction };
