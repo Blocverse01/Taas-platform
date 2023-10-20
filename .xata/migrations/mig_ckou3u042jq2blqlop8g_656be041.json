@@ -1,0 +1,12 @@
+{
+  "id": "mig_ckou3u042jq2blqlop8g",
+  "parentID": "mig_ckou3cnguhdrr0dgcrv0",
+  "checksum": "1:656be041dc3ab62fc93d05d153b9b283725c4c777c275c1baaa039227baead60",
+  "operations": [
+    {
+      "addTable": {
+        "table": "AuthorizationRequest"
+      }
+    }
+  ]
+}

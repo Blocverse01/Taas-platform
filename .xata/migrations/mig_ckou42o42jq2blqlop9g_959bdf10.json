@@ -1,0 +1,19 @@
+{
+  "id": "mig_ckou42o42jq2blqlop9g",
+  "parentID": "mig_ckou3u042jq2blqlop8g",
+  "checksum": "1:959bdf10fae1439392ed6d2feed3f4d9bef21e7022acecf8160d4b64d4b65c17",
+  "operations": [
+    {
+      "addColumn": {
+        "column": {
+          "name": "transaction",
+          "type": "link",
+          "link": {
+            "table": "AssetTransaction"
+          }
+        },
+        "table": "AuthorizationRequest"
+      }
+    }
+  ]
+}

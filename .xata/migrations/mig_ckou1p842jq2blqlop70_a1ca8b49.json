@@ -1,0 +1,18 @@
+{
+  "id": "mig_ckou1p842jq2blqlop70",
+  "parentID": "mig_ckolppvkv9et5mt90krg",
+  "checksum": "1:a1ca8b4976c5113b8b50780632988854ef35a91efe5419bccc9f9a7d6c05466f",
+  "operations": [
+    {
+      "addColumn": {
+        "column": {
+          "name": "valuation",
+          "type": "float",
+          "notNull": true,
+          "defaultValue": "0"
+        },
+        "table": "TokenizedProperty"
+      }
+    }
+  ]
+}

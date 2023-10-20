@@ -1,0 +1,19 @@
+{
+  "id": "mig_ckolllg42jq2blqlnj00",
+  "parentID": "mig_ckoll7fkv9et5mt90jqg",
+  "checksum": "1:bd3445dfaa46f5be2c5b9d30976ef8175815347e78cf42382198d453acd4717e",
+  "operations": [
+    {
+      "addColumn": {
+        "column": {
+          "name": "createdBy",
+          "type": "link",
+          "link": {
+            "table": "User"
+          }
+        },
+        "table": "AssetTransaction"
+      }
+    }
+  ]
+}

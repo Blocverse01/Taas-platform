@@ -1,0 +1,19 @@
+{
+  "id": "mig_ckou4e842jq2blqlopag",
+  "parentID": "mig_ckou45vkv9et5mt91oj0",
+  "checksum": "1:0f404d9544c76089b2b0ff3d35df960777521c94d8d16b76c78a6f62b9239acc",
+  "operations": [
+    {
+      "addColumn": {
+        "column": {
+          "name": "signer",
+          "type": "link",
+          "link": {
+            "table": "User"
+          }
+        },
+        "table": "AuthorizationRequest"
+      }
+    }
+  ]
+}

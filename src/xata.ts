@@ -27,7 +27,9 @@ const tables = [
     revLinks: [
       { column: "owner", table: "Project" },
       { column: "user", table: "ApiKey" },
-      { column: "userId", table: "ProjectTeamMembers" },
+      { column: "user", table: "ProjectTeamMembers" },
+      { column: "createdBy", table: "AssetTransaction" },
+      { column: "signer", table: "AuthorizationRequest" },
     ],
   },
   {
@@ -35,7 +37,7 @@ const tables = [
     columns: [
       { name: "name", type: "string", notNull: true, defaultValue: "" },
       {
-        name: "assetController",
+        name: "multisigController",
         type: "string",
         notNull: true,
         defaultValue: "",
@@ -67,7 +69,7 @@ const tables = [
       { column: "project", table: "TokenizedProperty" },
       { column: "project", table: "ActivityLog" },
       { column: "project", table: "ApiKey" },
-      { column: "projectId", table: "ProjectTeamMembers" },
+      { column: "project", table: "ProjectTeamMembers" },
     ],
   },
   {
@@ -82,8 +84,12 @@ const tables = [
       { name: "tokenTicker", type: "string", notNull: true, defaultValue: "" },
       { name: "tokenPrice", type: "float", notNull: true, defaultValue: "0" },
       { name: "photos", type: "multiple" },
+      { name: "valuation", type: "float", notNull: true, defaultValue: "0" },
     ],
-    revLinks: [{ column: "property", table: "AssetDocument" }],
+    revLinks: [
+      { column: "property", table: "AssetDocument" },
+      { column: "asset", table: "AssetTransaction" },
+    ],
   },
   {
     name: "AssetDocument",
@@ -123,10 +129,33 @@ const tables = [
   {
     name: "ProjectTeamMembers",
     columns: [
-      { name: "projectId", type: "link", link: { table: "Project" } },
-      { name: "userId", type: "link", link: { table: "User" } },
+      { name: "project", type: "link", link: { table: "Project" } },
+      { name: "user", type: "link", link: { table: "User" } },
       { name: "isActive", type: "bool" },
       { name: "roleId", type: "int" },
+    ],
+  },
+  {
+    name: "AssetTransaction",
+    columns: [
+      { name: "asset", type: "link", link: { table: "TokenizedProperty" } },
+      { name: "status", type: "int", notNull: true, defaultValue: "1" },
+      { name: "type", type: "int", notNull: true, defaultValue: "1" },
+      { name: "createdBy", type: "link", link: { table: "User" } },
+      { name: "amount", type: "float" },
+    ],
+    revLinks: [{ column: "transaction", table: "AuthorizationRequest" }],
+  },
+  {
+    name: "AuthorizationRequest",
+    columns: [
+      {
+        name: "transaction",
+        type: "link",
+        link: { table: "AssetTransaction" },
+      },
+      { name: "status", type: "int" },
+      { name: "signer", type: "link", link: { table: "User" } },
     ],
   },
 ] as const;
@@ -155,6 +184,12 @@ export type ApiKeyRecord = ApiKey & XataRecord;
 export type ProjectTeamMembers = InferredTypes["ProjectTeamMembers"];
 export type ProjectTeamMembersRecord = ProjectTeamMembers & XataRecord;
 
+export type AssetTransaction = InferredTypes["AssetTransaction"];
+export type AssetTransactionRecord = AssetTransaction & XataRecord;
+
+export type AuthorizationRequest = InferredTypes["AuthorizationRequest"];
+export type AuthorizationRequestRecord = AuthorizationRequest & XataRecord;
+
 export type DatabaseSchema = {
   User: UserRecord;
   Project: ProjectRecord;
@@ -163,6 +198,8 @@ export type DatabaseSchema = {
   ActivityLog: ActivityLogRecord;
   ApiKey: ApiKeyRecord;
   ProjectTeamMembers: ProjectTeamMembersRecord;
+  AssetTransaction: AssetTransactionRecord;
+  AuthorizationRequest: AuthorizationRequestRecord;
 };
 
 const DatabaseClient = buildClient();

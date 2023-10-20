@@ -1,0 +1,16 @@
+{
+  "id": "mig_ckou3cnguhdrr0dgcrv0",
+  "parentID": "mig_ckou1p842jq2blqlop70",
+  "checksum": "1:8a55d61fc3a20aff6859551509f8f7b20c0de50c509b37a1561fd86f86368798",
+  "operations": [
+    {
+      "addColumn": {
+        "column": {
+          "name": "amount",
+          "type": "float"
+        },
+        "table": "AssetTransaction"
+      }
+    }
+  ]
+}
