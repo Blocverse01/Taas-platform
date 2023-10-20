@@ -10,3 +10,9 @@ export const authorizationRequestRepository = () => getXataClient().db.Authoriza
 
 //Boolean
 export const SPONSOR_TRANSACTION = true
+
+//Numbers
+export const ZERO = 0
+
+//Contract Function Name
+export const ISSUE_TOKEN_CONTRACT_FUNCTION_NAME = "issueToken" as const;
