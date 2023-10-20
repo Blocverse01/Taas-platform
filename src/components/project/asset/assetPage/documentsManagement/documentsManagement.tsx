@@ -20,9 +20,7 @@ const DocumentsManagement: FC<DocumentsManagementProps> = ({ documents }) => {
     <section className="bg-t-gray-2 p-6 rounded-xl">
       <div className="flex justify-between items-center mb-[31px]">
         <h3 className="text-t-black text-xl font-medium">Documents</h3>
-        <button className="underline text-t-purple text-base">
-          Add New Document
-        </button>
+        <button className="underline text-t-purple text-base">Add New Document</button>
       </div>
       <section className="grid grid-cols-3 gap-8">
         {documents.map((doc) => (
@@ -73,12 +71,10 @@ const DocumentCard: FC<{
         </Popover.Root>
       </div>
       <div className="bg-t-purple/20 rounded-lg py-[18px] px-4 flex items-start justify-between gap-3">
-        <p className="w-[calc(100%-48px)]">
+        <div className="w-[calc(100%-48px)]">
           <h4 className="text-t-black text-sm truncate">{fileName}</h4>
-          <span className="text-t-gray-4 text-xs mt-[7px]">
-            {formatFileSize(fileSize)}
-          </span>
-        </p>
+          <span className="text-t-gray-4 text-xs mt-[7px]">{formatFileSize(fileSize)}</span>
+        </div>
         <div className="shrink-0 w-[36px]">
           <DownloadCircle />
         </div>

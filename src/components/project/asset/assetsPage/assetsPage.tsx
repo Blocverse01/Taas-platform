@@ -2,9 +2,11 @@ import { ComponentProps, FC } from "react";
 import { RealEstateAssetCard } from "./assetCards";
 import { AssetsList } from "./assetsList";
 import { Plus } from "@/assets/icon";
+import Link from "next/link";
 
 type RealEstateAsset = ComponentProps<typeof RealEstateAssetCard>["asset"] & {
   id: string;
+  assetLink: string;
 };
 
 type Assets = Array<RealEstateAsset>; // Todo: add other possible asset types
@@ -16,7 +18,17 @@ interface AssetsPageProps {
 
 function renderAssetsPage(assetType: AssetType, assets: Assets) {
   if (assetType === "real estate") {
-    return <AssetsList<RealEstateAsset> items={assets} renderItem={(item) => <RealEstateAssetCard asset={item} />} />;
+    return (
+      <AssetsList<RealEstateAsset>
+        items={assets}
+        renderItem={(item) => (
+          <div className="relative">
+            <RealEstateAssetCard asset={item} />
+            <Link href={item.assetLink} className="absolute inset-0" />
+          </div>
+        )}
+      />
+    );
   }
   return <></>;
 }
