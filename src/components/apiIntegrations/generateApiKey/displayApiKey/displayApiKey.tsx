@@ -14,8 +14,8 @@ const DisplayApiKey: FC<DisplayApiKeyProps> = ({ apiKey }) => {
   return (
     <section>
       <div className="flex">
-        <span className="py-[15px] px-6 bg-t-purple/20 rounded-l">API Key</span>
-        <span className="rounded-r bg-t-purple/5 py-[15px] px-6 flex item-center gap-[13px]">
+        <span className="py-[15px] px-6 bg-t-purple/20 shrink-0 rounded-l">API Key</span>
+        <span className="rounded-r bg-t-purple/5 py-[15px] px-6 flex max-w-[78%] item-center gap-[13px]">
           <span className="w-[calc(100%-33px)] truncate">{apiKey}</span>
           <button
             type="button"
@@ -34,8 +34,7 @@ const DisplayApiKey: FC<DisplayApiKeyProps> = ({ apiKey }) => {
       <div className="flex items-start gap-0.5 w-fit mx-auto justify-center mt-[18px]">
         <InfoSolidCircleIcon />
         <span className="text-t-black/70 text-sm text-center max-w-[297px]">
-          Your API Key can only be viewed once. Copy API key before leaving this
-          page.
+          Your API Key can only be viewed once. Copy API key before leaving this page.
         </span>
       </div>
       <div className="mt-12 w-full">
