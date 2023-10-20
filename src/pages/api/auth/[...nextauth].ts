@@ -26,8 +26,23 @@ export const authOptions: AuthOptions = {
     signOut: "/",
   },
   session: {
+    strategy: "jwt",
     maxAge: 7 * 60 * 60, // 7 hours
   },
+  callbacks: {
+    async jwt({ token, account }) {
+      // Persist the user id to the token right after signin
+      if (account) {
+        token.id = account.providerAccountId;
+      }
+      return token
+    },
+    async session({ session, token }) {
+      session.user.id = token.id
+
+      return session
+    }
+  }
 };
 const handler = NextAuth(authOptions);
 
