@@ -9,7 +9,7 @@ export const getSafeDetails = async (safeAddress: Address) => {
 
   const { currentUser, safe } = await validateSignatory(safeAddress);
 
-  const teamMembers = await getTeamMembers(currentUser, 'sample-team-id');
+  const teamMembers = await getTeamMembers(currentUser.user, 'sample-team-id');
 
   const owners = await safe.getOwners();
 
