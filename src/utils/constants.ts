@@ -23,8 +23,6 @@ export const ZERO = 0
 //Contract Function Name
 export const ISSUE_TOKEN_CONTRACT_FUNCTION_NAME = "issueToken" as const;
 
-
-
 export const getCurrentAuthUser = (...args: [GetServerSidePropsContext["req"], GetServerSidePropsContext["res"]] | [NextApiRequest, NextApiResponse]) => getServerSession(...args, authOptions);
 export const fetcher = (input: RequestInfo) => fetch(input).then((r) => r.json());
 
