@@ -10,16 +10,17 @@ interface ProjectCardProps {
   project: {
     id: string;
     name: string;
-    assetType: string;
-    timeCreated: string;
-    link: string;
+    assetType: AssetType;
+    createdAt: string;
   };
 }
 
 const WHITE_COLOR = "#FFFFFF";
 
 const ProjectCard: FC<ProjectCardProps> = ({ project }) => {
-  const { name, assetType, timeCreated, link: projectLink } = project;
+  const PROJECT_LINK = `/dashboard/projects/${project.id}`;
+
+  const { name, assetType, createdAt } = project;
   const [isHovered, setIsHovered] = useState(false);
   const handleMouseEnter = () => {
     setIsHovered(true);
@@ -44,7 +45,7 @@ const ProjectCard: FC<ProjectCardProps> = ({ project }) => {
           />
         </div>
       </div>
-      <Link href={projectLink} className="absolute z-[999] inset-0" />
+      <Link href={PROJECT_LINK} className="absolute z-[999] inset-0" />
       <div className="flex z-10 items-center justify-between">
         <div className="group-hover:text-white">
           <House fill={isHovered ? WHITE_COLOR : TAAS_PURPLE} />
@@ -62,7 +63,7 @@ const ProjectCard: FC<ProjectCardProps> = ({ project }) => {
       <div className="h-[1.1px] w-full z-10 bg-t-gray-13"></div>
       <p className="z-10 text-xs text-t-black group-hover:text-white">
         Created{" "}
-        {formatDistance(new Date(timeCreated), new Date(), {
+        {formatDistance(new Date(createdAt), new Date(), {
           addSuffix: true,
         })}
       </p>
