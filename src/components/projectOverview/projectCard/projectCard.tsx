@@ -46,7 +46,7 @@ const ProjectCard: FC<ProjectCardProps> = ({ project }) => {
         </p>
       </div>
       <div className="flex z-10 items-center justify-between">
-        <p className=" text-[20px] text-t-purple4 duration-200 group-hover:text-white truncate max-w-[165px] ">
+        <p className=" text-[20px] text-t-black duration-200 group-hover:text-white truncate max-w-[165px] ">
           {name}
         </p>
         <Caret fill={isHovered ? "#FFFFFF" : "#371B89"} />
