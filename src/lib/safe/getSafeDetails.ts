@@ -18,13 +18,11 @@ export const getSafeDetails = async (safeAddress: Address) => {
   }
 }
 
-export const getSafeOwnersWhoHaveApproved = async (transaction: SafeTransaction, safeAddress: Address): Promise<string[]> => {
+export const getSafeOwnersWhoHaveApproved = async (transactionHash: Address, safeAddress: Address): Promise<string[]> => {
 
   const { safe } = await validateSignatory(safeAddress);
 
-  const txHash = await safe.getTransactionHash(transaction);
-
-  return await safe.getOwnersWhoApprovedTx(txHash);
+  return await safe.getOwnersWhoApprovedTx(transactionHash);
 }
 
 export const getSafeThreshold = async (safeAddress: Address): Promise<number> => {
