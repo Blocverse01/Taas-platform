@@ -77,9 +77,6 @@ export default function Home() {
 
   return (
     <div>
-      <div className="absolute opacity-20 flex justify-center inset-0 top-[12px]">
-        <HeroBg />
-      </div>
       <div className="max-w-[1440px] mx-auto">
         <Navbar menuItems={menuItems} isLoggedIn={false} />
         <main className="lg:mt-[100px] mt-20 overflow-x-hidden text-t-black">
@@ -105,7 +102,7 @@ export default function Home() {
               <Image
                 src={heroRaw}
                 alt="Image"
-                className="mx-auto max-w-[1103px] max-h-[600px] object-cover object-top border-t-purple border-[3px] rounded-[24px]"
+                className="mx-auto 2xl:max-w-[1103px] max-h-[600px] object-cover object-top border-t-purple border-[3px] rounded-[24px]"
               />
             </div>
           </section>
