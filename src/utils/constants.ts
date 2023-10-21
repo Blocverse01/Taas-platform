@@ -10,7 +10,6 @@ export const projectTeamRepository = () => getXataClient().db.ProjectTeamMembers
 export const assetTransactionRepository = () => getXataClient().db.AssetTransaction;
 export const assetPropertyRepository = () => getXataClient().db.TokenizedProperty;
 export const authorizationRequestRepository = () => getXataClient().db.AuthorizationRequest;
-//export const tokenizedPropertyRepository = () => getXataClient().db.TokenizedProperty;
 export const assetDocumentRepository = () => getXataClient().db.AssetDocument;
 export const apiKeyRepository = () => getXataClient().db.ApiKey;
 

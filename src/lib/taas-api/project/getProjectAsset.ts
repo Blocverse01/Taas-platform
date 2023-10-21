@@ -2,7 +2,7 @@ import type { Session } from "next-auth";
 import { TokenizedProperty } from "./types";
 import { getUserProject } from "./getUserProject";
 import { HttpError } from "@/lib/errors";
-import { BAD_REQUEST, NOT_FOUND, assetDocumentRepository, tokenizedPropertyRepository } from "@/utils/constants";
+import { BAD_REQUEST, NOT_FOUND, assetDocumentRepository, assetPropertyRepository } from "@/utils/constants";
 
 type ReturnedTokenizedProperty = Omit<TokenizedProperty, "media" | "displayImage"> & {
     project: {
@@ -18,15 +18,11 @@ export const getProjectAsset = async (currentUser: Session["user"], projectId: s
 
     const validProject = await getUserProject(currentUser, projectId);
 
-    if (!validProject) {
-        throw new HttpError(NOT_FOUND, "Project not found");
-    }
-
     if (validProject.assetType !== "real estate") {
         throw new HttpError(BAD_REQUEST, "Unsupported asset type");
     }
 
-    const asset = await tokenizedPropertyRepository().filter({
+    const asset = await assetPropertyRepository().filter({
         "project.owner.id": currentUser.id,
         "project.id": projectId,
         "id": assetId,
