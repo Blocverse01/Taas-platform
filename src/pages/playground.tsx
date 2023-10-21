@@ -29,7 +29,10 @@ interface PlaygroundConfig {
 }
 
 const PlayGround: NextPageWithLayout = () => {
-  const [playgroundConfig, setPlaygroundConfig] = useLocalStorage<Partial<PlaygroundConfig>>("playgroundConfig", {});
+  const [playgroundConfig, setPlaygroundConfig] = useLocalStorage<Partial<PlaygroundConfig>>(
+    "playgroundConfig",
+    {}
+  );
   const [playgroundError, setPlaygroundError] = useState<string>();
   const [issueTokenTxHash, setIssueTokenTxHash] = useLocalStorage<string>("issueTokenTxHash", "");
 
@@ -78,7 +81,8 @@ const PlayGround: NextPageWithLayout = () => {
   };
 
   const createIssueTokenTx = async (destinationWallet: Address, amount: number) => {
-    if (!playgroundConfig.safeAddress || !playgroundConfig.tokenAddress || !playgroundConfig.tokenFactory) return;
+    if (!playgroundConfig.safeAddress || !playgroundConfig.tokenAddress || !playgroundConfig.tokenFactory)
+      return;
 
     const toastId = toast.loading("Creating Transaction");
     try {
@@ -108,7 +112,10 @@ const PlayGround: NextPageWithLayout = () => {
 
     const toastId = toast.loading("Executing Transaction");
     try {
-      const { txHash } = await executeIssueTokenTransaction(playgroundConfig.safeAddress, issueTokenTxHash as Address);
+      const { txHash } = await executeIssueTokenTransaction(
+        playgroundConfig.safeAddress,
+        issueTokenTxHash as Address
+      );
 
       console.log(txHash);
 
@@ -141,19 +148,25 @@ const PlayGround: NextPageWithLayout = () => {
         )}
 
         {isInitialized && (
-          <>
+          <div className="flex flex-col gap-6">
             <div className="flex flex-col gap-5">
               <div>
                 <h3 className="mb-2">Safe Address</h3>
-                <p className="text-t-black p-5 bg-gray-200 rounded border-gray-400">{playgroundConfig.safeAddress}</p>
+                <p className="text-t-black p-5 bg-gray-200 rounded border-gray-400">
+                  {playgroundConfig.safeAddress}
+                </p>
               </div>
               <div>
                 <h3 className="mb-2">Token Factory</h3>
-                <p className="text-t-black p-5 bg-gray-200 rounded border-gray-400">{playgroundConfig.tokenFactory}</p>
+                <p className="text-t-black p-5 bg-gray-200 rounded border-gray-400">
+                  {playgroundConfig.tokenFactory}
+                </p>
               </div>
               <div>
                 <h3 className="mb-2">Token Address</h3>
-                <p className="text-t-black p-5 bg-gray-200 rounded border-gray-400">{playgroundConfig.tokenAddress}</p>
+                <p className="text-t-black p-5 bg-gray-200 rounded border-gray-400">
+                  {playgroundConfig.tokenAddress}
+                </p>
               </div>
             </div>
 
@@ -195,7 +208,7 @@ const PlayGround: NextPageWithLayout = () => {
                 Execute Issue Token Transaction
               </button>
             </section>
-          </>
+          </div>
         )}
       </section>
 

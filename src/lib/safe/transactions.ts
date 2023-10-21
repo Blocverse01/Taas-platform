@@ -3,6 +3,7 @@ import Safe, { AddOwnerTxParams, RemoveOwnerTxParams } from "@safe-global/protoc
 import { SafeTransaction, SafeTransactionDataPartial } from "@safe-global/safe-core-sdk-types";
 import { validateSignatory } from "./validateSafeSigner";
 import { getSafeService } from ".";
+import { executeTransaction } from "./executeTransaction";
 
 export const createRemoveSignatoryTransaction =
     async (safeAddress: Address, params: RemoveOwnerTxParams): Promise<SafeTransaction> => {
@@ -52,7 +53,28 @@ export const proposeTransaction = async (
         senderSignature: senderSignature.data,
     });
 
-    return { safeTxHash, nonce };
+    // Add confirmation and execute if proposer is the only signer
+    const threshold = await safe.getThreshold();
+
+    if (threshold === 1) {
+        const response = await getSafeService().confirmTransaction(safeTxHash, senderSignature.data);
+
+        if (!response) {
+            throw new Error("Error confirming transaction");
+        }
+
+        const txResult = await executeTransaction(safeAddress, safeTransaction);
+
+        const contractReceipt = await txResult.transactionResponse?.wait();
+
+        if (!contractReceipt || !txResult.transactionResponse) {
+            throw new Error("Error executing transaction");
+        }
+
+        return { txHash: contractReceipt.transactionHash, nonce: txResult.transactionResponse.nonce, autoExecuted: true }
+    }
+
+    return { txHash: safeTxHash, nonce, autoExecuted: false };
 }
 
 

@@ -1,12 +1,7 @@
-import { Address, TransactionReceipt, parseTransaction } from "viem";
-import {
-    getPublicClient,
-    getWalletClient,
-} from "@/utils/web3/connection";
-import { getContractAddress } from "@/utils/web3/contracts";
-import { sponsorTransaction } from "@/lib/biconomy";
-import { SPONSOR_TRANSACTION } from "@/utils/constants";
+import { Address, TransactionReceipt } from "viem";
 import { getSafeOwnersWhoHaveApproved, getSafeThreshold } from "@/lib/safe/getSafeDetails";
+import { getSafeService } from "@/lib/safe";
+import { executeTransaction } from "@/lib/safe/executeTransaction";
 
 interface TxResponse {
     status: TransactionReceipt["status"];
@@ -17,10 +12,6 @@ const executeIssueTokenTransaction = async (
     safeAddress: Address,
     transactionHash: Address
 ): Promise<TxResponse> => {
-    const publicClient = getPublicClient();
-    const walletClient = getWalletClient();
-    const platformEntryAddress = getContractAddress("PLATFORM_ENTRY");
-
     const safeThreshold = await getSafeThreshold(safeAddress);
 
     const numberOfConfirmations = await getSafeOwnersWhoHaveApproved(transactionHash, safeAddress);
@@ -29,34 +20,23 @@ const executeIssueTokenTransaction = async (
         throw new Error(`Issuing a token requires ${safeThreshold} signatures. This transaction has only ${numberOfConfirmations.length} signatures`);
     }
 
-    const parsedTransaction = parseTransaction(transactionHash);
+    const safeTransaction = await getSafeService().getTransaction(transactionHash);
 
-    if (SPONSOR_TRANSACTION) {
-        const txHash = await sponsorTransaction({
-            ...parsedTransaction,
-            to: platformEntryAddress
-        });
+    const txResult = await executeTransaction(safeAddress, safeTransaction);
 
-        const receipt = await publicClient.getTransactionReceipt({
-            hash: txHash,
-        });
-        if (receipt.status === "reverted") throw new Error("Transaction failed");
-        return {
-            status: receipt.status,
-            txHash,
-        };
+    const contractReceipt = await txResult.transactionResponse?.wait();
+
+    if (!contractReceipt || !txResult.transactionResponse) {
+        throw new Error("Error executing transaction");
     }
 
-    const txHash = await walletClient.sendRawTransaction({
-        serializedTransaction: transactionHash,
-    });
+    const receiptStatus: TxResponse["status"] = contractReceipt.status === 1 ? "success" : "reverted";
 
-    const receipt = await publicClient.waitForTransactionReceipt({
-        hash: txHash,
-    });
+    if (receiptStatus === "reverted") {
+        throw new Error("Transaction failed");
+    }
 
-    if (receipt.status === "reverted") throw new Error("Transaction failed");
-    return { status: receipt.status, txHash };
+    return { txHash: contractReceipt.transactionHash as Address, status: receiptStatus }
 };
 
 export { executeIssueTokenTransaction };

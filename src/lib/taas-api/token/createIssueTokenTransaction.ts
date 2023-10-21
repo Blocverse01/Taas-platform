@@ -1,6 +1,6 @@
 import { proposeTransaction } from "@/lib/safe/transactions";
 import { validateSignatory } from "@/lib/safe/validateSafeSigner";
-import { ISSUE_TOKEN_CONTRACT_FUNCTION_NAME, assetTransactionRepository, authorizationRequestRepository } from "@/utils/constants";
+import { ISSUE_TOKEN_CONTRACT_FUNCTION_NAME } from "@/utils/constants";
 import { PLATFORM_ENTRY } from "@/utils/web3/abis";
 import { getContractAddress } from "@/utils/web3/contracts";
 import { utils } from "@/utils/web3/utils";
@@ -19,6 +19,7 @@ export const createIssueTokenAssetTransaction = async (
     multisigController: Address,
     payload: IssueTokenPayload) => {
     const { currentUser, safe } = await validateSignatory(multisigController);
+
     const { tokenFactory, tokenAddress, destinationWallet, amount } = payload;
 
     const platformEntry = getContractAddress("PLATFORM_ENTRY");
@@ -45,20 +46,12 @@ export const createIssueTokenAssetTransaction = async (
         value: "0"
     };
 
-    const { safeTxHash, nonce } = await proposeTransaction(
+    const { txHash, nonce } = await proposeTransaction(
         safeTransactionData,
         safe,
         multisigController,
         currentUser.user.walletAddress
     );
 
-    const txResponse = await safe.approveTransactionHash(safeTxHash)
-
-    const contractReceipt = await txResponse.transactionResponse?.wait();
-
-    if (!contractReceipt) {
-        throw new Error("Error approving transaction");
-    }
-
-    return { txHash: safeTxHash, nonce };
+    return { txHash, nonce };
 }
