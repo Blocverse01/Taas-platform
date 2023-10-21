@@ -1,19 +1,13 @@
-import { Address, Transaction, TransactionReceipt, encodeFunctionData } from "viem";
+import { Address, TransactionReceipt, parseTransaction } from "viem";
 import {
-    getAccount,
     getPublicClient,
     getWalletClient,
 } from "@/utils/web3/connection";
-import { PLATFORM_ENTRY } from "@/utils/web3/abis";
-import { utils } from "@/utils/web3/utils";
 import { getContractAddress } from "@/utils/web3/contracts";
 import { sponsorTransaction } from "@/lib/biconomy";
 import { SPONSOR_TRANSACTION } from "@/utils/constants";
 import { getSafeOwnersWhoHaveApproved, getSafeThreshold } from "@/lib/safe/getSafeDetails";
-import { SafeTransaction } from "@safe-global/safe-core-sdk-types";
-import { validateSignatory } from "@/lib/safe/validateSafeSigner";
 
-const CONTRACT_FUNCTION_NAME = "issueToken" as const;
 interface TxResponse {
     status: TransactionReceipt["status"];
     txHash: Address;
@@ -21,43 +15,26 @@ interface TxResponse {
 
 const executeIssueTokenTransaction = async (
     safeAddress: Address,
-    transaction: SafeTransaction,
-    tokenFactoryAddress: Address,
-    tokenAddress: Address,
-    destinationWallet: Address,
-    amount: number
+    transactionHash: Address
 ): Promise<TxResponse> => {
-    const account = await getAccount();
     const publicClient = getPublicClient();
     const walletClient = getWalletClient();
     const platformEntryAddress = getContractAddress("PLATFORM_ENTRY");
 
     const safeThreshold = await getSafeThreshold(safeAddress);
 
-    const numberOfConfirmations = await getSafeOwnersWhoHaveApproved(transaction, safeAddress);
-    
-    if(numberOfConfirmations.length < safeThreshold){
+    const numberOfConfirmations = await getSafeOwnersWhoHaveApproved(transactionHash, safeAddress);
+
+    if (numberOfConfirmations.length < safeThreshold) {
         throw new Error(`Issuing a token requires ${safeThreshold} signatures. This transaction has only ${numberOfConfirmations.length} signatures`);
     }
 
-    const functionArgs = [
-        tokenFactoryAddress,
-        tokenAddress,
-        destinationWallet,
-        utils.parseEther(`${amount}`),
-        "0x00000000000000000",
-    ] as const;
+    const parsedTransaction = parseTransaction(transactionHash);
 
     if (SPONSOR_TRANSACTION) {
-        const encodedData = encodeFunctionData({
-            abi: PLATFORM_ENTRY,
-            functionName: CONTRACT_FUNCTION_NAME,
-            args: functionArgs,
-        });
-
         const txHash = await sponsorTransaction({
-            data: encodedData,
-            to: platformEntryAddress,
+            ...parsedTransaction,
+            to: platformEntryAddress
         });
 
         const receipt = await publicClient.getTransactionReceipt({
@@ -70,15 +47,9 @@ const executeIssueTokenTransaction = async (
         };
     }
 
-    const { request } = await publicClient.simulateContract({
-        account,
-        address: platformEntryAddress,
-        abi: PLATFORM_ENTRY,
-        functionName: "issueToken",
-        args: functionArgs,
+    const txHash = await walletClient.sendRawTransaction({
+        serializedTransaction: transactionHash,
     });
-
-    const txHash = await walletClient.writeContract(request);
 
     const receipt = await publicClient.waitForTransactionReceipt({
         hash: txHash,
