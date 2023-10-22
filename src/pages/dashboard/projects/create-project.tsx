@@ -8,7 +8,7 @@ import { NextPageWithLayout } from "@/pages/_app";
 import Link from "next/link";
 import SubPageLayout from "@/components/layout/subPageLayout";
 import toast from "react-hot-toast";
-import { storeProjectItem } from "./projectIntegration";
+import { storeProjectItem } from "@/utils/projectIntegration";
 
 const validationSchema = Yup.object({
     name: Yup.string().required("Name is required"),

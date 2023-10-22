@@ -1,6 +1,5 @@
 import { HttpError } from "@/lib/errors";
 import { createNewProject } from "@/lib/taas-api/project/addProject";
-import { storeProjectItem } from "@/pages/dashboard/projects/projectIntegration";
 import { validateAuthInApiHandler } from "@/utils/auth";
 import { BAD_REQUEST, INTERNAL_SERVER_ERROR, OK, UNAUTHORIZED } from "@/utils/constants";
 import { NextApiHandler, NextApiRequest, NextApiResponse } from "next";
