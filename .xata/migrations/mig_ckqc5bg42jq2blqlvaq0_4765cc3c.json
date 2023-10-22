@@ -1,0 +1,13 @@
+{
+  "id": "mig_ckqc5bg42jq2blqlvaq0",
+  "parentID": "mig_ckqbf2nkv9et5mt95hvg",
+  "checksum": "1:4765cc3cc44e4a8767c33be9b5c7cf82aa0e8b6bd57b9081e0f66a02fe1afff9",
+  "operations": [
+    {
+      "removeColumn": {
+        "column": "chainId",
+        "table": "Project"
+      }
+    }
+  ]
+}
