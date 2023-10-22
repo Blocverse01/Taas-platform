@@ -22,10 +22,11 @@ export const ZERO = 0
 //Contract Function Name
 export const ISSUE_TOKEN_CONTRACT_FUNCTION_NAME = "issueToken" as const;
 
-//
+//Endpoints
 export const UPLOAD_SERVICE_ENDPOINT = "https://web3storage-service.vercel.app/upload-file";
 export const GET_ACTIVITY_LOG_ENDPOINT = "/api/activityLog/getActivityLog";
 export const CREATE_ACTIVITY_LOG_ENDPOINT = "/api/activityLog/storeActivityLog";
+export const CREATE_PROJECT_ENDPOINT = "/api/project/create-project";
 
 //helpers
 export const getCurrentAuthUser = (...args: [GetServerSidePropsContext["req"], GetServerSidePropsContext["res"]] | [NextApiRequest, NextApiResponse]) => getServerSession(...args, authOptions);

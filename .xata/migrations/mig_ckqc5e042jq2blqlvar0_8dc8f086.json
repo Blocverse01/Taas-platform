@@ -1,0 +1,16 @@
+{
+  "id": "mig_ckqc5e042jq2blqlvar0",
+  "parentID": "mig_ckqc5bg42jq2blqlvaq0",
+  "checksum": "1:8dc8f086e995c175a6b8496af1fb561755f3d8d8e176e930edcdace18a3c8d14",
+  "operations": [
+    {
+      "addColumn": {
+        "column": {
+          "name": "blockchain",
+          "type": "string"
+        },
+        "table": "Project"
+      }
+    }
+  ]
+}

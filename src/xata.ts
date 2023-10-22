@@ -63,6 +63,7 @@ const tables = [
       },
       { name: "treasuryWallet", type: "text", notNull: true, defaultValue: "" },
       { name: "enabledPaymentMethods", type: "multiple" },
+      { name: "blockchain", type: "string" },
     ],
     revLinks: [
       { column: "project", table: "TokenizedProperty" },
