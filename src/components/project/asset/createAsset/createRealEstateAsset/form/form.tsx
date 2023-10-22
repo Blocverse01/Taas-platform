@@ -135,6 +135,8 @@ const CreateRealEstateAssetForm: FC<CreateAssetFormProps> = ({
                 ...prev,
                 [step]: values,
               }));
+
+              //submit the first oart
               setSubmitting(false);
               resetForm();
               setStep(2);

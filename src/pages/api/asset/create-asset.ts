@@ -1,5 +1,6 @@
 import { HttpError } from "@/lib/errors";
-import { createNewProject } from "@/lib/taas-api/project/addProject";
+import { storeTokenizedRealEstate } from "@/lib/taas-api/token/createToken";
+import { storeProjectAssetFormData } from "@/utils/assetIntegrations";
 import { validateAuthInApiHandler } from "@/utils/auth";
 import { BAD_REQUEST, INTERNAL_SERVER_ERROR, OK, UNAUTHORIZED } from "@/utils/constants";
 import { NextApiHandler, NextApiRequest, NextApiResponse } from "next";
@@ -13,23 +14,13 @@ const handler: NextApiHandler = async (req: NextApiRequest, res: NextApiResponse
             res.status(UNAUTHORIZED).send({});
         }
 
-        const userId = session.user.id;
+        const { projectId, tokenAddress, realestateData } = req.body;
 
-        const { name, blockchain, treasuryWallet, tokenFactory, multiSigControlller } = req.body;
-
-        if (!name.trim() || !blockchain || !treasuryWallet) {
+        if (!projectId.trim() || !tokenAddress.trim() || !realestateData) {
             throw new HttpError(BAD_REQUEST, "Invalid Body Properties");
         }
 
-        await createNewProject({
-            name,
-            blockchain,
-            treasuryWallet,
-            userId,
-            assetType: "real estate",
-            tokenFactory,
-            multiSigControlller
-        });
+        await storeTokenizedRealEstate(projectId, tokenAddress as Address, realestateData);
 
         res.status(OK).json({ message: "Project Created Successfully" });
     } catch (error: any) {

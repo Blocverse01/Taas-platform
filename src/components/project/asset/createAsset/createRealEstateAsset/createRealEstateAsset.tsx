@@ -3,6 +3,8 @@ import { CreateRealEstateAssetForm } from "./form";
 import { Address } from "viem";
 import { tokenizeAsset } from "@/lib/taas-api/tokenFactory/tokenizeAsset";
 import { useRouter } from "next/router";
+import { storeProjectAssetFormData } from "@/utils/assetIntegrations";
+import { AssetDocument } from "@/xata";
 
 interface CreateRealEstateAssetProps {
   projectId: string;
@@ -30,14 +32,27 @@ const CreateRealEstateAsset: FC<CreateRealEstateAssetProps> = ({
 
       <CreateRealEstateAssetForm
         handleCreateAsset={async (values) => {
-          const { tokenTicker, pricePerToken, propertyName } = values;
+          try{
+            const { tokenTicker, pricePerToken, propertyName } = values;
+
+            console.log(projectTokenFactory, "FACTOR")
+
           const { tokenAddress, txHash } = await tokenizeAsset(
             projectTokenFactory,
             tokenTicker,
             pricePerToken,
             propertyName
           );
+
+          await storeProjectAssetFormData(projectId, tokenAddress as Address, {...values, documents: values.documents as AssetDocument[]});
+            console.log(values, "VALUES")
+            console.log(tokenAddress, "Address")
+            console.log(txHash, "Hash")
           router.push(assetsPageLink);
+          }catch(error: any){
+            console.log(error)
+          }
+          
         }}
         backLink={assetsPageLink}
       />

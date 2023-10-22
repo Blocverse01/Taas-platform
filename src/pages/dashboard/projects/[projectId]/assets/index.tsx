@@ -45,7 +45,7 @@ const ProjectAssetsPage: NextPageWithLayout<InferGetServerSidePropsType<typeof g
       </div>
     );
   }
-  return <AssetsPage assetType={project.assetType} assets={assets} />;
+  return <AssetsPage assetType={project.assetType} assets={assets} projectId={project.id} />;
 };
 
 ProjectAssetsPage.getLayout = (page) => (
