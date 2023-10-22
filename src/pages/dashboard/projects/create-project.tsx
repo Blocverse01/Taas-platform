@@ -60,7 +60,7 @@ const CreateProject: NextPageWithLayout = () => {
 
                     const { tokenFactory } = await deployTokenFactory(safeAddress, values.treasuryWallet as Address);
 
-                    await storeProjectItem({ ...values, multiSigControlller: safeAddress, tokenFactory });
+                    await storeProjectItem({ ...values, multiSigController: safeAddress, tokenFactory });
 
                     toast.success("Project generated successfully", toastOptions);
 
@@ -109,6 +109,7 @@ const CreateProject: NextPageWithLayout = () => {
                             }}
                             placeholder="Select an asset"
                             options={assetOptions}
+                            isOptionDisabled={(option) => option.value !== "realestate"}
                             onChange={(assetOption) => {
                                 if (!assetOption) return null;
                                 setFieldValue("assetType", assetOption.value);

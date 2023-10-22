@@ -15,7 +15,7 @@ const handler: NextApiHandler = async (req: NextApiRequest, res: NextApiResponse
 
         const userId = session.user.id;
 
-        const { name, blockchain, treasuryWallet, tokenFactory, multiSigControlller } = req.body;
+        const { name, blockchain, treasuryWallet, tokenFactory, multiSigController } = req.body;
 
         if (!name.trim() || !blockchain || !treasuryWallet) {
             throw new HttpError(BAD_REQUEST, "Invalid Body Properties");
@@ -28,7 +28,7 @@ const handler: NextApiHandler = async (req: NextApiRequest, res: NextApiResponse
             userId,
             assetType: "real estate",
             tokenFactory,
-            multiSigControlller
+            multiSigController
         });
 
         res.status(OK).json({ message: "Project Created Successfully" });

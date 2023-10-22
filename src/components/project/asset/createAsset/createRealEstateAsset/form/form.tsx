@@ -10,6 +10,7 @@ import { ErrorMessage, Form, Formik } from "formik";
 import Image from "next/image";
 import Link from "next/link";
 import { FC, useState } from "react";
+import toast from "react-hot-toast";
 import { useLocalStorage } from "usehooks-ts";
 import * as Yup from "yup";
 
@@ -221,13 +222,17 @@ const CreateRealEstateAssetForm: FC<CreateAssetFormProps> = ({
             initialValues={initialValues[step]}
             validationSchema={formStepSchemas[step]}
             onSubmit={async (values, { setSubmitting, resetForm }) => {
+              const toastOptions = { id: "create token" };
               try {
+                toast.loading("Tokenizing asset", toastOptions)
                 await handleCreateAsset({ ...initialValues[1], ...values });
+                toast.success("Tokenized asset", toastOptions);
                 resetForm();
                 setInitialValues(defaultInitialValues);
                 // Todo: add toast
               } catch (error) {
                 // Todo: add toast
+                toast.error("Tokenizing asset failed", toastOptions);
               } finally {
                 setSubmitting(false);
               }

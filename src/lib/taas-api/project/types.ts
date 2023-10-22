@@ -42,6 +42,6 @@ export interface CreateNewProjectOptions {
     name: string;
     blockchain: string,
     treasuryWallet: string,
-    multiSigControlller: Address,
+    multiSigController: Address,
     tokenFactory: Address
 }

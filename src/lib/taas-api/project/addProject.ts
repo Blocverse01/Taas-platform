@@ -10,6 +10,8 @@ export async function createNewProject(options: CreateNewProjectOptions) {
         owner: options.userId,
         blockchain: options.blockchain,
         treasuryWallet: options.treasuryWallet,
+        multisigController: options.multiSigController,
+        tokenFactory: options.tokenFactory,
         web3Environment: WEB3_ENVIRONMENT,
     });
 

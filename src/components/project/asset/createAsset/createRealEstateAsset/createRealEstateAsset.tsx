@@ -17,7 +17,7 @@ const CreateRealEstateAsset: FC<CreateRealEstateAssetProps> = ({
 }) => {
   const router = useRouter();
 
-  const assetsPageLink = `/projects/${projectId}/assets`;
+  const assetsPageLink = `/dashboard/projects/${projectId}/assets`;
 
   return (
     <section>
@@ -32,10 +32,9 @@ const CreateRealEstateAsset: FC<CreateRealEstateAssetProps> = ({
 
       <CreateRealEstateAssetForm
         handleCreateAsset={async (values) => {
-          try{
-            const { tokenTicker, pricePerToken, propertyName } = values;
+          const { tokenTicker, pricePerToken, propertyName } = values;
 
-            console.log(projectTokenFactory, "FACTOR")
+          console.log(projectTokenFactory, "FACTOR")
 
           const { tokenAddress, txHash } = await tokenizeAsset(
             projectTokenFactory,
@@ -44,15 +43,11 @@ const CreateRealEstateAsset: FC<CreateRealEstateAssetProps> = ({
             propertyName
           );
 
-          await storeProjectAssetFormData(projectId, tokenAddress as Address, {...values, documents: values.documents as AssetDocument[]});
-            console.log(values, "VALUES")
-            console.log(tokenAddress, "Address")
-            console.log(txHash, "Hash")
+          await storeProjectAssetFormData(projectId, tokenAddress as Address, { ...values, documents: values.documents as AssetDocument[] });
+          console.log(values, "VALUES")
+          console.log(tokenAddress, "Address")
+          console.log(txHash, "Hash")
           router.push(assetsPageLink);
-          }catch(error: any){
-            console.log(error)
-          }
-          
         }}
         backLink={assetsPageLink}
       />
