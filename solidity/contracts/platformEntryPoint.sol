@@ -15,6 +15,11 @@ contract PlatformEntryPoint {
         _;
     }
 
+    modifier onlyFactoryAssetAdmin(AssetTokenFactory factory) {
+        require(msg.sender == factory.assetAdmin());
+        _;
+    }
+
     constructor(
         address _tokenFactoryImplementation,
         address _tokenImplementation
@@ -48,7 +53,13 @@ contract PlatformEntryPoint {
         string memory _tokenSymbol,
         uint256 _tokenOfferingPrice
     ) external onlyFactoryOwner(factory) {
-        factory.createToken(_salt, _interchainTokenServiceAddress, _tokenName, _tokenSymbol, _tokenOfferingPrice);
+        factory.createToken(
+            _salt,
+            _interchainTokenServiceAddress,
+            _tokenName,
+            _tokenSymbol,
+            _tokenOfferingPrice
+        );
     }
 
     function issueToken(
@@ -57,7 +68,7 @@ contract PlatformEntryPoint {
         address destinationWallet,
         uint256 amount,
         bytes calldata _data
-    ) external onlyFactoryOwner(factory) {
+    ) external onlyFactoryAssetAdmin(factory) {
         factory.issueToken(token, destinationWallet, amount, _data);
     }
 

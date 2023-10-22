@@ -36,4 +36,4 @@ Deployment for Polygon mainnet
 cd solidity && npx hardhat run scripts/deploy.ts --network polygon_mainnet
 Asset Token Contract deployed to: 0x802B1eE1Cd9CADbf39b432Dc6ac3759736e4A32D
 Token Factory Contract deployed to: 0x73Ce8b191AA3283b3845513fd351f4D60704d95b
-Platform Entry Contract deployed to: 0xcf25B4Aa97EB446D2E6a73fEf3068f6ed53D852E
+Platform Entry Contract deployed to: 0x59f2f026473aBc82a9e61286ca053175681C25E6
