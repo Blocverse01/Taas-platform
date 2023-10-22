@@ -41,7 +41,7 @@ const AddTeamMemberForm: FC<AddTeamMemberDialogProps> = ({ backButton }) => {
       onSubmit={handleSubmit}
     >
       {({ isValid, isSubmitting, setFieldValue }) => (
-        <Form className=" space-y-4">
+        <Form className=" space-y-4 max-w-[430px] w-full">
           <Input
             className="text-t-black text-sm"
             placeholder="Johnny Jones"
