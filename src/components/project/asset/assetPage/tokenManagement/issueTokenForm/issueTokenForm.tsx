@@ -4,6 +4,7 @@ import { Address, isAddress } from "viem";
 import { FC, useEffect } from "react";
 import { Input } from "@/components/formPrimitives/input";
 import classNames from "classnames";
+import toast from "react-hot-toast";
 
 interface IssueTokenFormProps {
   handleIssueToken: (
@@ -43,13 +44,18 @@ const IssueTokenForm: FC<IssueTokenFormProps> = ({
       initialValues={{ destinationWallet: "", amount: 0 }}
       validationSchema={issueTokenValidationSchema}
       onSubmit={async (values, { resetForm, setSubmitting }) => {
+        const toastOptions = { id: "toast" };
         try {
+          toast.loading("Issuing token", toastOptions);
           await handleIssueToken(
             values.destinationWallet as Address,
             values.amount
           );
+          toast.success("Issuing token transaction created", toastOptions);
           resetForm();
         } catch (error) {
+          console.log(error);
+          toast.error("Issuing token transaction failed", toastOptions);
         } finally {
           setSubmitting(false);
         }

@@ -64,7 +64,7 @@ const deleteApiKey = async (apiKeyId: string) => {
 };
 
 const IntegrationsPage: NextPageWithLayout<InferGetServerSidePropsType<typeof getServerSideProps>> = ({ projects }) => {
-  const { data, error } = useSWR<{
+  const { data, error, mutate } = useSWR<{
     data?: ApiIntegrationsProps["apiKeys"];
   }>(`/api/user/api-keys`, fetcher);
 
@@ -89,8 +89,15 @@ const IntegrationsPage: NextPageWithLayout<InferGetServerSidePropsType<typeof ge
 
   return (
     <ApiIntegrations
-      deleteApiKey={deleteApiKey}
-      generateApiKey={generateApiKey}
+      deleteApiKey={async (apiKeyId) => {
+        await deleteApiKey(apiKeyId);
+        mutate();
+      }}
+      generateApiKey={async (projectId) => {
+        const apiKey = await generateApiKey(projectId);
+        mutate();
+        return apiKey;
+      }}
       projects={projects}
       apiKeys={apiKeys}
     />

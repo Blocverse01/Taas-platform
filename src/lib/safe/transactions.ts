@@ -53,7 +53,9 @@ export const proposeTransaction = async (
         senderSignature: senderSignature.data,
     });
 
-    // Add confirmation and execute if proposer is the only signer
+    // TODO: Re-enable auto execution
+
+    /* // Add confirmation and execute if proposer is the only signer
     const threshold = await safe.getThreshold();
 
     if (threshold === 1) {
@@ -72,7 +74,7 @@ export const proposeTransaction = async (
         }
 
         return { txHash: contractReceipt.transactionHash, nonce: txResult.transactionResponse.nonce, autoExecuted: true }
-    }
+    } */
 
     return { txHash: safeTxHash, nonce, autoExecuted: false };
 }

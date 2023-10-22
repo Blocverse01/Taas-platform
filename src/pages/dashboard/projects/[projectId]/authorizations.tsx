@@ -14,6 +14,7 @@ import { AuthorizationBreakdown } from "@/components/project/pendingAuthorizatio
 import { acceptTransaction } from "@/lib/safe/executeTransaction";
 import { executeIssueTokenTransaction } from "@/lib/taas-api/token/issueToken";
 import { OLD_PLATFORM_ENTRY_CONTRACTS } from "@/utils/constants";
+import { getSafeOwnersWhoHaveApproved } from "@/lib/safe/getSafeDetails";
 
 type Project = Required<Awaited<ReturnType<typeof getProjectPageProp>>>["project"];
 
@@ -38,10 +39,11 @@ type AuthorizationsProps = InferGetServerSidePropsType<typeof getServerSideProps
 const AuthorizationsPage: NextPageWithLayout<AuthorizationsProps> = ({ teamMembers, project }) => {
   const key = `projects/${project.id}/authorizations`;
 
-  const { data } = useSWR(key, () => getSafeService().getPendingTransactions(project.multisigController));
+  const { data, mutate } = useSWR(key, () => getSafeService().getPendingTransactions(project.multisigController));
   const [selectedAuthorization, setSelectedAuthorization] = useState<
     ReturnType<typeof parseTransaction> & {
       assetDetails: Awaited<ReturnType<typeof getAssetDetails>>;
+      approvals: string[];
     }
   >();
 
@@ -130,12 +132,15 @@ const AuthorizationsPage: NextPageWithLayout<AuthorizationsProps> = ({ teamMembe
       handleBack={() => setSelectedAuthorization(undefined)}
       authorization={selectedAuthorization}
       assetDetails={selectedAuthorization.assetDetails}
+      approvals={selectedAuthorization.approvals}
       approveTransaction={async (safeTxHash) => {
         const receipt = await acceptTransaction(project.multisigController, safeTxHash);
         if (!receipt.status) throw new Error("Transaction reverted");
+        mutate();
       }}
       executeTransaction={async (safeTxHash) => {
         await executeIssueTokenTransaction(project.multisigController, safeTxHash);
+        mutate();
       }}
     />
   ) : (
@@ -146,6 +151,7 @@ const AuthorizationsPage: NextPageWithLayout<AuthorizationsProps> = ({ teamMembe
       getAssetDetails={getAssetDetails}
       safeTransactions={safeTransactions}
       parseTransaction={parseTransaction}
+      getOwnersWhoApproved={(safeTxHash) => getSafeOwnersWhoHaveApproved(safeTxHash, project.multisigController)}
     />
   );
 };

@@ -39,12 +39,14 @@ interface AuthorizationCardProps {
     name: string;
     assetLink: string;
   }>;
+  getApprovals: (safeTxHash: Address) => Promise<string[]>;
   selectAuthorization: (
     authorization: ParsedAuthorization & {
       assetDetails: {
         name: string;
         assetLink: string;
       };
+      approvals: string[]
     }
   ) => void;
 }
@@ -54,13 +56,16 @@ const AuthorizationCard: FC<AuthorizationCardProps> = ({
   parseAuthorization,
   getAssetDetails,
   selectAuthorization,
+  getApprovals
 }) => {
   const parsedAuthorization = parseAuthorization(safeTransaction);
 
   const key = `/asset-details/${parsedAuthorization.assetAddress}`;
   const { data: assetDetails } = useSWR(key, () => getAssetDetails(parsedAuthorization.assetAddress));
 
-  if (!assetDetails)
+  const { data: approvedOwners } = useSWR(`/approvals/${parsedAuthorization.safeTxHash}`, () => getApprovals(parsedAuthorization.safeTxHash));
+
+  if (!assetDetails || !approvedOwners)
     return (
       <tr className="bg-t-gray-2 text-t-gray-5 rounded">
         <td className="pr-6">
@@ -84,6 +89,7 @@ const AuthorizationCard: FC<AuthorizationCardProps> = ({
         selectAuthorization({
           ...parsedAuthorization,
           assetDetails: assetDetails,
+          approvals: approvedOwners
         })
       }
       className="bg-t-gray-2 text-t-gray-5 rounded cursor-pointer"
@@ -96,7 +102,7 @@ const AuthorizationCard: FC<AuthorizationCardProps> = ({
       <td className="px-6">
         <span className="text-t-purple p-2 px-4 rounded bg-t-purple/20 flex gap-[9px] items-center">
           <TeamIcon />
-          {parsedAuthorization.confirmations?.length ?? 0}/{parsedAuthorization.confirmationsRequired}
+          {approvedOwners.length}/{parsedAuthorization.confirmationsRequired}
           <Caret />
         </span>
       </td>
