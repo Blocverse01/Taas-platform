@@ -35,3 +35,11 @@ export interface TokenizedProperty extends TokenizedAsset {
     size: number;
     displayImage: string;
 }
+
+export interface CreateNewProjectOptions {
+    assetType: string;
+    userId: string
+    name: string;
+    blockchain: string,
+    treasuryWallet: string
+}
