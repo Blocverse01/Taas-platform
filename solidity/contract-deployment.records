@@ -1,10 +1,9 @@
 Deployment for Polygon Mumbai
 
-
-npx hardhat run scripts/deploy.ts --network mumbai
-Asset Token Contract deployed to: 0xd219C839bF3d534b146A9AEB16f618eE70ac9ae8
-Token Factory Contract deployed to: 0xAa1661b8b0616ce3FB211D5ECB6B1135bd3F76Aa
-Platform Entry Contract deployed to: 0x2082647Fea7e74d804eBCE3179e8EA1846f17c53
+cd solidity && npx hardhat run scripts/deploy.ts --network mumbai
+Asset Token Contract deployed to: 0xf113bF948ca3C80f20BE3Cadedd8Cc95E3f4Be67
+Token Factory Contract deployed to: 0x25547ca1c142C0683759E469BcC635461E7f28b2
+Platform Entry Contract deployed to: 0xf2037D313eDC9238ABa59DAdb16869b93d579173
 
 Deployment for 
 Optimism Goerli
@@ -21,3 +20,20 @@ npx hardhat run scripts/deploy.ts --network scroll
 Asset Token Contract deployed to: 0x6B85cd2A9c65ED11001d3366ed6C32843074feC8
 Token Factory Contract deployed to: 0xB74203917eC4e28F692Dc5420a514528f3e77bf4
 Platform Entry Contract deployed to: 0x29F111850545969ed52a8809B7bE5FFEe936B111
+
+
+Deployment for Polygon mainnet
+
+cd solidity && npx hardhat run scripts/deploy.ts --network polygon_mainnet
+Asset Token Contract deployed to: 0xBF995B609Aa44CFBAdd4C6ffcD30e1f3d085084e
+Token Factory Contract deployed to: 0xc7E0f3c819075B001d67b68fb745C395008cBdd8
+Platform Entry Contract deployed to: 0x3876459018ea0F851d0f76D7d37Fc08554783a2B
+
+
+==================== Axelar commented out ========================
+Deployment for Polygon mainnet
+
+cd solidity && npx hardhat run scripts/deploy.ts --network polygon_mainnet
+Asset Token Contract deployed to: 0x802B1eE1Cd9CADbf39b432Dc6ac3759736e4A32D
+Token Factory Contract deployed to: 0x73Ce8b191AA3283b3845513fd351f4D60704d95b
+Platform Entry Contract deployed to: 0xcf25B4Aa97EB446D2E6a73fEf3068f6ed53D852E

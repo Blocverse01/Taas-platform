@@ -1,0 +1,16 @@
+{
+  "id": "mig_ckou45vkv9et5mt91oj0",
+  "parentID": "mig_ckou42o42jq2blqlop9g",
+  "checksum": "1:dd07d128939103af67db754ce41bc8f50833cd58a1be1126fbd3549ad8a98340",
+  "operations": [
+    {
+      "addColumn": {
+        "column": {
+          "name": "status",
+          "type": "int"
+        },
+        "table": "AuthorizationRequest"
+      }
+    }
+  ]
+}

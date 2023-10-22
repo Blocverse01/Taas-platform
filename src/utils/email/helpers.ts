@@ -6,6 +6,21 @@ type AddTeamMemberEmailPayload = {
     link: string
 }
 
+type AuthorizationRequestPayload = {
+    firstname: string,
+    link: string,
+    projectName: string,
+    assetName: string,
+    email: string
+}
+
+type RejectionAuthorizationRequestPayload = {
+    link: string,
+    projectName: string,
+    assetName: string,
+    email: string
+}
+
 export function getAddTeamMemberMailOption({ firstname, email, link, senderEmail }: AddTeamMemberEmailPayload) {
     let body = `
   <h3>Hey ${firstname}!</h3>
@@ -21,3 +36,37 @@ export function getAddTeamMemberMailOption({ firstname, email, link, senderEmail
         from: process.env.EMAIL_ADDRESS,
     };
 };
+
+export function getAuthorizationRequestMailOption(payload: AuthorizationRequestPayload) {
+    let body = `
+  <h3>Hello ${payload.firstname}!</h3>
+  <p>Your team member created an issue token request for project: ${payload.projectName}, asset: ${payload.assetName}</p>
+  <p>Your authorization is required for the request to be granted</p>
+  <p><a href="${payload.link}">View this authorization invite!</a></p>
+  <br /> 
+  <p>Team TAAS</p>`;
+    return {
+        body,
+        subject: "Authorization Invite",
+        to: payload.email,
+        html: body,
+        from: process.env.EMAIL_ADDRESS,
+    };
+};
+
+export const getSafeTxnRejectionMailOption = (payload: RejectionAuthorizationRequestPayload) => {
+    let body = `
+  <h3>Hello!</h3>
+  <p>A transaction you created for project: ${payload.projectName}, asset: ${payload.assetName} was just rejected</p>
+  <p>Your authorization is required for the request to be granted</p>
+  <p><a href="${payload.link}">View for more info</a></p>
+  <br /> 
+  <p>Team TAAS</p>`;
+    return {
+        body,
+        subject: "Transaction Rejection Notice",
+        to: payload.email,
+        html: body,
+        from: process.env.EMAIL_ADDRESS,
+    };
+}

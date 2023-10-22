@@ -1,0 +1,14 @@
+{
+  "id": "mig_ckolkc7kv9et5mt90jng",
+  "parentID": "mig_ckoljonkv9et5mt90jmg",
+  "checksum": "1:09368bc5f05109211567d08a62d70e5432d527fbaab8865ee0d84bd2bf45e836",
+  "operations": [
+    {
+      "renameColumn": {
+        "newName": "user",
+        "oldName": "userId",
+        "table": "ProjectTeamMembers"
+      }
+    }
+  ]
+}

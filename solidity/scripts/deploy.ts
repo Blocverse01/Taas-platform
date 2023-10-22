@@ -18,14 +18,16 @@ async function main() {
 
   await assetTokenFactoryContract.waitForDeployment();
   console.log("Token Factory Contract deployed to:", assetTokenFactoryContract.target);
-  
+
   //Platform Entry Point
   const platformEntryPointFactory = await ethers.getContractFactory(
     "PlatformEntryPoint"
   );
+
+  // The order of constructor arguments has to be: assetTokenFactoryContract.target, assetContract.target
   const platformEntryPointContract = await platformEntryPointFactory.deploy(
-    assetContract.target,
-    assetTokenFactoryContract.target
+    assetTokenFactoryContract.target,
+    assetContract.target
   );
 
   await platformEntryPointContract.waitForDeployment();

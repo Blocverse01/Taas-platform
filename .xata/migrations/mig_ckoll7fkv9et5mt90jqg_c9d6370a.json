@@ -1,0 +1,18 @@
+{
+  "id": "mig_ckoll7fkv9et5mt90jqg",
+  "parentID": "mig_ckoll0fkv9et5mt90jpg",
+  "checksum": "1:c9d6370a60650fd491545168f356613f81e8ff578c73be76b5383759f92ff775",
+  "operations": [
+    {
+      "addColumn": {
+        "column": {
+          "name": "type",
+          "type": "int",
+          "notNull": true,
+          "defaultValue": "1"
+        },
+        "table": "AssetTransaction"
+      }
+    }
+  ]
+}

@@ -1,5 +1,5 @@
-import { getProjectTeamMemberId } from "@/utils/helperfunctions";
-import { projectRepository, projectTeamRepository } from "@/utils/constants";
+import { getConcatenatedId } from "@/utils/helperfunctions";
+import { projectTeamRepository } from "@/utils/constants";
 
 type CreateProjectTeammatePayload = {
     projectId: string;
@@ -10,7 +10,7 @@ type CreateProjectTeammatePayload = {
 
 const createProjectTeammate = async (payload: CreateProjectTeammatePayload) => {
 
-    const projectTeamMemberId = getProjectTeamMemberId(payload.projectId, payload.userId);
+    const projectTeamMemberId = getConcatenatedId(payload.projectId, payload.userId);
 
     return await projectTeamRepository().create(projectTeamMemberId, {
         project: payload.projectId,

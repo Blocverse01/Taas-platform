@@ -1,5 +1,7 @@
 import NextAuth from "next-auth";
 import { JWT } from "next-auth/jwt"
+import { Address } from "viem";
+
 declare module "next-auth" {
   /**
    * Returned by `useSession`, `getSession` and received as a prop on the `SessionProvider` React Context
@@ -8,7 +10,13 @@ declare module "next-auth" {
     user: {
       id: string;
       email: string;
+      walletAddress: Address
     };
+  }
+  interface User {
+    id: string;
+    email: string;
+    walletAddress: string;
   }
 }
 
@@ -17,5 +25,6 @@ declare module "next-auth/jwt" {
   interface JWT {
     id: string;
     email: string;
+    walletAddress: Address
   }
 }

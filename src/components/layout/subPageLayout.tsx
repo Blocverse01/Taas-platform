@@ -15,12 +15,10 @@ export default function SubPageLayout({ children }: SubPageLayoutProps) {
       <header className="px-6 py-5 md:px-24 md:py-[50px]">
         <Link href="/" className="flex items-center gap-1">
           <Image src={logo} alt="logo" />
-          <span className="text-t-purple text-xs font-medium tracking-[1.2px]">
-            {APP_NAME}
-          </span>
+          <span className="text-t-purple text-xs font-medium tracking-[1.2px]">{APP_NAME}</span>
         </Link>
       </header>
-      <main className="flex items-center justify-center h-[calc(100vh-80px)] md:h-[calc(100vh-200px)]">
+      <main className="flex items-center justify-center min-h-[calc(100vh-80px)] md:min-h-[calc(100vh-200px)]">
         {children}
       </main>
     </section>

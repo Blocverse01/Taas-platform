@@ -46,8 +46,7 @@ contract AssetTokenFactory is
         defaultTokenController = _tokenController;
         treasury = _treasury;
         factory = msg.sender;
-        __Ownable_init(msg.sender);
-        transferOwnership(_owner);
+        __Ownable_init(_owner);
     }
 
     function createToken(

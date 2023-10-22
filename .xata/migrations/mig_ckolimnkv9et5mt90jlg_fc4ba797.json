@@ -1,0 +1,19 @@
+{
+  "id": "mig_ckolimnkv9et5mt90jlg",
+  "parentID": "mig_ckoli9g42jq2blqlnin0",
+  "checksum": "1:fc4ba797b9fd55af166a9e1d77815b724c00fd1f390b95937a56a6469b48e0e8",
+  "operations": [
+    {
+      "addColumn": {
+        "column": {
+          "name": "AssetId",
+          "type": "link",
+          "link": {
+            "table": "TokenizedProperty"
+          }
+        },
+        "table": "AssetTransaction"
+      }
+    }
+  ]
+}

@@ -6,7 +6,7 @@ import {
   projectRepository,
   projectTeamRepository,
 } from "@/utils/constants";
-import { getProjectTeamMemberId } from "@/utils/helperfunctions";
+import { getConcatenatedId } from "@/utils/helperfunctions";
 import type { Session } from "next-auth";
 
 export const updateTeamMemberRole = async (
@@ -24,7 +24,7 @@ export const updateTeamMemberRole = async (
       throw new Error("Only the project owner can update team member role");
     }
 
-    const projectTeamId = getProjectTeamMemberId(
+    const projectTeamId = getConcatenatedId(
       project.id,
       payload.teamMemberUserId
     );
@@ -58,7 +58,7 @@ export const removeTeamMember = async (
       throw new Error("Only the project owner can update team member role");
     }
 
-    const projectTeamId = getProjectTeamMemberId(
+    const projectTeamId = getConcatenatedId(
       project.id,
       payload.teamMemberUserId
     );
