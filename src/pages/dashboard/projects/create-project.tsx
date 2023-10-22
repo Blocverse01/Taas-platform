@@ -165,7 +165,6 @@ const CreateProject: NextPageWithLayout = () => {
                         type="text"
                         name="treasuryWallet"
                         id="treasuryWallet"
-                    //={Formik.handleChange}
                     />
                     <div
                         className="grid grid-cols-2 gap-4"
