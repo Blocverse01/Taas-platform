@@ -6,10 +6,9 @@ const meta = {
   component: DataCard,
   tags: ["autodocs"],
   args: {
-    type: "investments",
-    data: {
-      amount: "30.12",
-    },
+    title: "Gross Investment Volume",
+    value: "$50000.00",
+    weeklyTrend: 4,
   },
 } satisfies Meta<typeof DataCard>;
 
@@ -20,9 +19,8 @@ export const InvestmentCard: Story = {};
 
 export const AssetsCard: Story = {
   args: {
-    type: "assets",
-    data: {
-      amount: "10",
-    },
+    title: "Total Assets",
+    value: "10",
+    weeklyTrend: 4,
   },
 };

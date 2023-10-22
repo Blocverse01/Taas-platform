@@ -1,182 +1,197 @@
 export const PLATFORM_ENTRY = [
   {
-    inputs: [
+    "inputs": [
       {
-        internalType: "address",
-        name: "_tokenFactoryImplementation",
-        type: "address",
+        "internalType": "address",
+        "name": "_tokenFactoryImplementation",
+        "type": "address"
       },
       {
-        internalType: "address",
-        name: "_tokenImplementation",
-        type: "address",
-      },
+        "internalType": "address",
+        "name": "_tokenImplementation",
+        "type": "address"
+      }
     ],
-    stateMutability: "nonpayable",
-    type: "constructor",
+    "stateMutability": "nonpayable",
+    "type": "constructor"
   },
   {
-    anonymous: false,
-    inputs: [
-      {
-        indexed: false,
-        internalType: "address",
-        name: "contractAddress",
-        type: "address",
-      },
-    ],
-    name: "FactoryCreated",
-    type: "event",
+    "inputs": [],
+    "name": "ERC1167FailedCreateClone",
+    "type": "error"
   },
   {
-    inputs: [],
-    name: "tokenFactoryImplementation",
-    outputs: [
+    "anonymous": false,
+    "inputs": [
       {
-        internalType: "address",
-        name: "",
-        type: "address",
-      },
+        "indexed": false,
+        "internalType": "address",
+        "name": "contractAddress",
+        "type": "address"
+      }
     ],
-    stateMutability: "view",
-    type: "function",
+    "name": "FactoryCreated",
+    "type": "event"
   },
   {
-    inputs: [],
-    name: "tokenImplementation",
-    outputs: [
+    "inputs": [
       {
-        internalType: "address",
-        name: "",
-        type: "address",
+        "internalType": "contract AssetTokenFactory",
+        "name": "factory",
+        "type": "address"
       },
+      {
+        "internalType": "address",
+        "name": "implementation",
+        "type": "address"
+      },
+      {
+        "internalType": "string",
+        "name": "symbol",
+        "type": "string"
+      }
     ],
-    stateMutability: "view",
-    type: "function",
+    "name": "addERC20PaymentMethod",
+    "outputs": [],
+    "stateMutability": "nonpayable",
+    "type": "function"
   },
   {
-    inputs: [
+    "inputs": [
       {
-        internalType: "address",
-        name: "_assetAdmin",
-        type: "address",
+        "internalType": "contract AssetTokenFactory",
+        "name": "factory",
+        "type": "address"
       },
       {
-        internalType: "address",
-        name: "_tokenController",
-        type: "address",
+        "internalType": "bytes32",
+        "name": "_salt",
+        "type": "bytes32"
       },
       {
-        internalType: "address",
-        name: "_treasury",
-        type: "address",
+        "internalType": "address",
+        "name": "_interchainTokenServiceAddress",
+        "type": "address"
       },
+      {
+        "internalType": "string",
+        "name": "_tokenName",
+        "type": "string"
+      },
+      {
+        "internalType": "string",
+        "name": "_tokenSymbol",
+        "type": "string"
+      },
+      {
+        "internalType": "uint256",
+        "name": "_tokenOfferingPrice",
+        "type": "uint256"
+      }
     ],
-    name: "createTokenFactory",
-    outputs: [],
-    stateMutability: "nonpayable",
-    type: "function",
+    "name": "createToken",
+    "outputs": [],
+    "stateMutability": "nonpayable",
+    "type": "function"
   },
   {
-    inputs: [
+    "inputs": [
       {
-        internalType: "contract AssetTokenFactory",
-        name: "factory",
-        type: "address",
+        "internalType": "address",
+        "name": "_assetAdmin",
+        "type": "address"
       },
       {
-        internalType: "string",
-        name: "_tokenName",
-        type: "string",
+        "internalType": "address",
+        "name": "_tokenController",
+        "type": "address"
       },
       {
-        internalType: "string",
-        name: "_tokenSymbol",
-        type: "string",
-      },
-      {
-        internalType: "uint256",
-        name: "_tokenOfferingPrice",
-        type: "uint256",
-      },
+        "internalType": "address",
+        "name": "_treasury",
+        "type": "address"
+      }
     ],
-    name: "createToken",
-    outputs: [],
-    stateMutability: "nonpayable",
-    type: "function",
+    "name": "createTokenFactory",
+    "outputs": [],
+    "stateMutability": "nonpayable",
+    "type": "function"
   },
   {
-    inputs: [
+    "inputs": [
       {
-        internalType: "contract AssetTokenFactory",
-        name: "factory",
-        type: "address",
+        "internalType": "contract AssetTokenFactory",
+        "name": "factory",
+        "type": "address"
       },
       {
-        internalType: "address",
-        name: "token",
-        type: "address",
+        "internalType": "address",
+        "name": "token",
+        "type": "address"
       },
       {
-        internalType: "address",
-        name: "destinationWallet",
-        type: "address",
+        "internalType": "address",
+        "name": "destinationWallet",
+        "type": "address"
       },
       {
-        internalType: "uint256",
-        name: "amount",
-        type: "uint256",
+        "internalType": "uint256",
+        "name": "amount",
+        "type": "uint256"
       },
       {
-        internalType: "bytes",
-        name: "_data",
-        type: "bytes",
-      },
+        "internalType": "bytes",
+        "name": "_data",
+        "type": "bytes"
+      }
     ],
-    name: "issueToken",
-    outputs: [],
-    stateMutability: "nonpayable",
-    type: "function",
+    "name": "issueToken",
+    "outputs": [],
+    "stateMutability": "nonpayable",
+    "type": "function"
   },
   {
-    inputs: [
+    "inputs": [
       {
-        internalType: "contract AssetTokenFactory",
-        name: "factory",
-        type: "address",
+        "internalType": "contract AssetTokenFactory",
+        "name": "factory",
+        "type": "address"
       },
       {
-        internalType: "address",
-        name: "implementation",
-        type: "address",
-      },
-      {
-        internalType: "string",
-        name: "symbol",
-        type: "string",
-      },
+        "internalType": "address",
+        "name": "implementation",
+        "type": "address"
+      }
     ],
-    name: "addERC20PaymentMethod",
-    outputs: [],
-    stateMutability: "nonpayable",
-    type: "function",
+    "name": "removeERC20PaymentMethod",
+    "outputs": [],
+    "stateMutability": "nonpayable",
+    "type": "function"
   },
   {
-    inputs: [
+    "inputs": [],
+    "name": "tokenFactoryImplementation",
+    "outputs": [
       {
-        internalType: "contract AssetTokenFactory",
-        name: "factory",
-        type: "address",
-      },
-      {
-        internalType: "address",
-        name: "implementation",
-        type: "address",
-      },
+        "internalType": "address",
+        "name": "",
+        "type": "address"
+      }
     ],
-    name: "removeERC20PaymentMethod",
-    outputs: [],
-    stateMutability: "nonpayable",
-    type: "function",
+    "stateMutability": "view",
+    "type": "function"
   },
+  {
+    "inputs": [],
+    "name": "tokenImplementation",
+    "outputs": [
+      {
+        "internalType": "address",
+        "name": "",
+        "type": "address"
+      }
+    ],
+    "stateMutability": "view",
+    "type": "function"
+  }
 ] as const;

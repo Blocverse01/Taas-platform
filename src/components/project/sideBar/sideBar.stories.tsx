@@ -6,7 +6,6 @@ const meta = {
   component: ProjectSidebar,
   tags: ["autodocs"],
   args: {
-    projectName: "Eko Hotel",
     projectId: "1123433",
   },
 } satisfies Meta<typeof ProjectSidebar>;

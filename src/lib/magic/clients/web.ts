@@ -1,5 +1,6 @@
 import { Magic } from "magic-sdk";
 import { MissingEnvVariableError, MisuseError } from "../../errors";
+import { getNetworkConfig } from "@/utils/web3/connection";
 
 let instance: Magic | undefined = undefined;
 
@@ -16,8 +17,11 @@ export const getMagicClient = () => {
   }
 
   if (!instance) {
+    const networkConfig = getNetworkConfig();
     // Todo: setup chain config
-    instance = new Magic(magicPubKey);
+    instance = new Magic(magicPubKey, {
+      network: networkConfig
+    });
   }
 
   return instance;

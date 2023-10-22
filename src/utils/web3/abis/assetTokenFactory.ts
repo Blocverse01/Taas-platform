@@ -1,295 +1,347 @@
 const TOKEN_FACTORY = [
   {
-    anonymous: false,
-    inputs: [
-      {
-        indexed: false,
-        internalType: "uint8",
-        name: "version",
-        type: "uint8",
-      },
-    ],
-    name: "Initialized",
-    type: "event",
+    "inputs": [],
+    "name": "ERC1167FailedCreateClone",
+    "type": "error"
   },
   {
-    anonymous: false,
-    inputs: [
-      {
-        indexed: true,
-        internalType: "address",
-        name: "previousOwner",
-        type: "address",
-      },
-      {
-        indexed: true,
-        internalType: "address",
-        name: "newOwner",
-        type: "address",
-      },
-    ],
-    name: "OwnershipTransferred",
-    type: "event",
+    "inputs": [],
+    "name": "InvalidInitialization",
+    "type": "error"
   },
   {
-    anonymous: false,
-    inputs: [
-      {
-        indexed: false,
-        internalType: "address",
-        name: "contractAddress",
-        type: "address",
-      },
-    ],
-    name: "TokenCreated",
-    type: "event",
+    "inputs": [],
+    "name": "NotInitializing",
+    "type": "error"
   },
   {
-    inputs: [],
-    name: "assetAdmin",
-    outputs: [
+    "inputs": [
       {
-        internalType: "address",
-        name: "",
-        type: "address",
-      },
+        "internalType": "address",
+        "name": "owner",
+        "type": "address"
+      }
     ],
-    stateMutability: "view",
-    type: "function",
+    "name": "OwnableInvalidOwner",
+    "type": "error"
   },
   {
-    inputs: [],
-    name: "defaultTokenController",
-    outputs: [
+    "inputs": [
       {
-        internalType: "address",
-        name: "",
-        type: "address",
-      },
+        "internalType": "address",
+        "name": "account",
+        "type": "address"
+      }
     ],
-    stateMutability: "view",
-    type: "function",
+    "name": "OwnableUnauthorizedAccount",
+    "type": "error"
   },
   {
-    inputs: [],
-    name: "owner",
-    outputs: [
-      {
-        internalType: "address",
-        name: "",
-        type: "address",
-      },
-    ],
-    stateMutability: "view",
-    type: "function",
+    "inputs": [],
+    "name": "ReentrancyGuardReentrantCall",
+    "type": "error"
   },
   {
-    inputs: [],
-    name: "renounceOwnership",
-    outputs: [],
-    stateMutability: "nonpayable",
-    type: "function",
+    "anonymous": false,
+    "inputs": [
+      {
+        "indexed": false,
+        "internalType": "uint64",
+        "name": "version",
+        "type": "uint64"
+      }
+    ],
+    "name": "Initialized",
+    "type": "event"
   },
   {
-    inputs: [],
-    name: "tokenImplementation",
-    outputs: [
+    "anonymous": false,
+    "inputs": [
       {
-        internalType: "address",
-        name: "",
-        type: "address",
+        "indexed": true,
+        "internalType": "address",
+        "name": "previousOwner",
+        "type": "address"
       },
+      {
+        "indexed": true,
+        "internalType": "address",
+        "name": "newOwner",
+        "type": "address"
+      }
     ],
-    stateMutability: "view",
-    type: "function",
+    "name": "OwnershipTransferred",
+    "type": "event"
   },
   {
-    inputs: [
+    "anonymous": false,
+    "inputs": [
       {
-        internalType: "address",
-        name: "newOwner",
-        type: "address",
-      },
+        "indexed": false,
+        "internalType": "address",
+        "name": "contractAddress",
+        "type": "address"
+      }
     ],
-    name: "transferOwnership",
-    outputs: [],
-    stateMutability: "nonpayable",
-    type: "function",
+    "name": "TokenCreated",
+    "type": "event"
   },
   {
-    inputs: [],
-    name: "treasury",
-    outputs: [
+    "inputs": [
       {
-        internalType: "address",
-        name: "",
-        type: "address",
+        "internalType": "address",
+        "name": "implementation",
+        "type": "address"
       },
+      {
+        "internalType": "string",
+        "name": "symbol",
+        "type": "string"
+      }
     ],
-    stateMutability: "view",
-    type: "function",
+    "name": "addERC20PaymentMethod",
+    "outputs": [],
+    "stateMutability": "nonpayable",
+    "type": "function"
   },
   {
-    inputs: [
+    "inputs": [],
+    "name": "assetAdmin",
+    "outputs": [
       {
-        internalType: "address",
-        name: "_assetAdmin",
-        type: "address",
-      },
-      {
-        internalType: "address",
-        name: "_tokenClone",
-        type: "address",
-      },
-      {
-        internalType: "address",
-        name: "_tokenController",
-        type: "address",
-      },
-      {
-        internalType: "address",
-        name: "_treasury",
-        type: "address",
-      },
-      {
-        internalType: "address",
-        name: "_owner",
-        type: "address",
-      },
+        "internalType": "address",
+        "name": "",
+        "type": "address"
+      }
     ],
-    name: "initialize",
-    outputs: [],
-    stateMutability: "nonpayable",
-    type: "function",
+    "stateMutability": "view",
+    "type": "function"
   },
   {
-    inputs: [
+    "inputs": [
       {
-        internalType: "string",
-        name: "_tokenName",
-        type: "string",
+        "internalType": "bytes32",
+        "name": "_salt",
+        "type": "bytes32"
       },
       {
-        internalType: "string",
-        name: "_tokenSymbol",
-        type: "string",
+        "internalType": "address",
+        "name": "_interchainTokenServiceAddress",
+        "type": "address"
       },
       {
-        internalType: "uint256",
-        name: "_tokenOfferingPrice",
-        type: "uint256",
+        "internalType": "string",
+        "name": "_tokenName",
+        "type": "string"
       },
+      {
+        "internalType": "string",
+        "name": "_tokenSymbol",
+        "type": "string"
+      },
+      {
+        "internalType": "uint256",
+        "name": "_tokenOfferingPrice",
+        "type": "uint256"
+      }
     ],
-    name: "createToken",
-    outputs: [],
-    stateMutability: "nonpayable",
-    type: "function",
+    "name": "createToken",
+    "outputs": [],
+    "stateMutability": "nonpayable",
+    "type": "function"
   },
   {
-    inputs: [
+    "inputs": [],
+    "name": "defaultTokenController",
+    "outputs": [
       {
-        internalType: "address",
-        name: "_token",
-        type: "address",
-      },
-      {
-        internalType: "address",
-        name: "_tokenHolder",
-        type: "address",
-      },
-      {
-        internalType: "uint256",
-        name: "_value",
-        type: "uint256",
-      },
-      {
-        internalType: "bytes",
-        name: "_data",
-        type: "bytes",
-      },
+        "internalType": "address",
+        "name": "",
+        "type": "address"
+      }
     ],
-    name: "issueToken",
-    outputs: [],
-    stateMutability: "nonpayable",
-    type: "function",
+    "stateMutability": "view",
+    "type": "function"
   },
   {
-    inputs: [
+    "inputs": [
       {
-        internalType: "uint256",
-        name: "_tokenAmount",
-        type: "uint256",
+        "internalType": "address",
+        "name": "_assetAdmin",
+        "type": "address"
       },
       {
-        internalType: "contract AssetToken",
-        name: "_token",
-        type: "address",
+        "internalType": "address",
+        "name": "_tokenClone",
+        "type": "address"
       },
       {
-        internalType: "address",
-        name: "_paymentMethod",
-        type: "address",
+        "internalType": "address",
+        "name": "_tokenController",
+        "type": "address"
       },
+      {
+        "internalType": "address",
+        "name": "_treasury",
+        "type": "address"
+      },
+      {
+        "internalType": "address",
+        "name": "_owner",
+        "type": "address"
+      }
     ],
-    name: "tokenOffering",
-    outputs: [],
-    stateMutability: "nonpayable",
-    type: "function",
+    "name": "initialize",
+    "outputs": [],
+    "stateMutability": "nonpayable",
+    "type": "function"
   },
   {
-    inputs: [
+    "inputs": [
       {
-        internalType: "contract IERC20",
-        name: "token",
-        type: "address",
+        "internalType": "address",
+        "name": "_token",
+        "type": "address"
       },
       {
-        internalType: "address",
-        name: "to",
-        type: "address",
+        "internalType": "address",
+        "name": "_tokenHolder",
+        "type": "address"
       },
       {
-        internalType: "uint256",
-        name: "amount",
-        type: "uint256",
+        "internalType": "uint256",
+        "name": "_value",
+        "type": "uint256"
       },
+      {
+        "internalType": "bytes",
+        "name": "_data",
+        "type": "bytes"
+      }
     ],
-    name: "transferERC20",
-    outputs: [],
-    stateMutability: "nonpayable",
-    type: "function",
+    "name": "issueToken",
+    "outputs": [],
+    "stateMutability": "nonpayable",
+    "type": "function"
   },
   {
-    inputs: [
+    "inputs": [],
+    "name": "owner",
+    "outputs": [
       {
-        internalType: "address",
-        name: "implementation",
-        type: "address",
-      },
-      {
-        internalType: "string",
-        name: "symbol",
-        type: "string",
-      },
+        "internalType": "address",
+        "name": "",
+        "type": "address"
+      }
     ],
-    name: "addERC20PaymentMethod",
-    outputs: [],
-    stateMutability: "nonpayable",
-    type: "function",
+    "stateMutability": "view",
+    "type": "function"
   },
   {
-    inputs: [
+    "inputs": [
       {
-        internalType: "address",
-        name: "implementation",
-        type: "address",
-      },
+        "internalType": "address",
+        "name": "implementation",
+        "type": "address"
+      }
     ],
-    name: "removeERC20PaymentMethod",
-    outputs: [],
-    stateMutability: "nonpayable",
-    type: "function",
+    "name": "removeERC20PaymentMethod",
+    "outputs": [],
+    "stateMutability": "nonpayable",
+    "type": "function"
   },
+  {
+    "inputs": [],
+    "name": "renounceOwnership",
+    "outputs": [],
+    "stateMutability": "nonpayable",
+    "type": "function"
+  },
+  {
+    "inputs": [],
+    "name": "tokenImplementation",
+    "outputs": [
+      {
+        "internalType": "address",
+        "name": "",
+        "type": "address"
+      }
+    ],
+    "stateMutability": "view",
+    "type": "function"
+  },
+  {
+    "inputs": [
+      {
+        "internalType": "uint256",
+        "name": "_tokenAmount",
+        "type": "uint256"
+      },
+      {
+        "internalType": "contract AssetToken",
+        "name": "_token",
+        "type": "address"
+      },
+      {
+        "internalType": "address",
+        "name": "_paymentMethod",
+        "type": "address"
+      }
+    ],
+    "name": "tokenOffering",
+    "outputs": [],
+    "stateMutability": "nonpayable",
+    "type": "function"
+  },
+  {
+    "inputs": [
+      {
+        "internalType": "contract IERC20",
+        "name": "token",
+        "type": "address"
+      },
+      {
+        "internalType": "address",
+        "name": "to",
+        "type": "address"
+      },
+      {
+        "internalType": "uint256",
+        "name": "amount",
+        "type": "uint256"
+      }
+    ],
+    "name": "transferERC20",
+    "outputs": [],
+    "stateMutability": "nonpayable",
+    "type": "function"
+  },
+  {
+    "inputs": [
+      {
+        "internalType": "address",
+        "name": "newOwner",
+        "type": "address"
+      }
+    ],
+    "name": "transferOwnership",
+    "outputs": [],
+    "stateMutability": "nonpayable",
+    "type": "function"
+  },
+  {
+    "inputs": [],
+    "name": "treasury",
+    "outputs": [
+      {
+        "internalType": "address",
+        "name": "",
+        "type": "address"
+      }
+    ],
+    "stateMutability": "view",
+    "type": "function"
+  }
 ] as const;
 
 export { TOKEN_FACTORY };

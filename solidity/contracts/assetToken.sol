@@ -479,9 +479,9 @@ contract AssetToken is
 
         controller = _controller;
 
-        service = IInterchainTokenService(interchainTokenServiceAddress);
+        // service = IInterchainTokenService(interchainTokenServiceAddress);
 
-        deployTokenManager(_salt);
+        // deployTokenManager(_salt);
     }
 
     /**
@@ -517,7 +517,7 @@ contract AssetToken is
      */
     function deployTokenManager(bytes32 salt) internal {
         bytes memory params = service.getParamsMintBurn(
-            abi.encodePacked(msg.sender),            
+            abi.encodePacked(msg.sender),
             address(this)
         );
 

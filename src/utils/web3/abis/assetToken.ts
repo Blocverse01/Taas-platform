@@ -1,971 +1,1129 @@
 const ASSET_TOKEN = [
   {
-    anonymous: false,
-    inputs: [
+    "inputs": [
       {
-        indexed: true,
-        internalType: "address",
-        name: "owner",
-        type: "address",
+        "internalType": "address",
+        "name": "spender",
+        "type": "address"
       },
       {
-        indexed: true,
-        internalType: "address",
-        name: "spender",
-        type: "address",
+        "internalType": "uint256",
+        "name": "allowance",
+        "type": "uint256"
       },
       {
-        indexed: false,
-        internalType: "uint256",
-        name: "value",
-        type: "uint256",
-      },
+        "internalType": "uint256",
+        "name": "needed",
+        "type": "uint256"
+      }
     ],
-    name: "Approval",
-    type: "event",
+    "name": "ERC20InsufficientAllowance",
+    "type": "error"
   },
   {
-    anonymous: false,
-    inputs: [
+    "inputs": [
       {
-        indexed: false,
-        internalType: "address",
-        name: "_controller",
-        type: "address",
+        "internalType": "address",
+        "name": "sender",
+        "type": "address"
       },
       {
-        indexed: true,
-        internalType: "address",
-        name: "_tokenHolder",
-        type: "address",
+        "internalType": "uint256",
+        "name": "balance",
+        "type": "uint256"
       },
       {
-        indexed: false,
-        internalType: "uint256",
-        name: "_value",
-        type: "uint256",
-      },
-      {
-        indexed: false,
-        internalType: "bytes",
-        name: "_data",
-        type: "bytes",
-      },
-      {
-        indexed: false,
-        internalType: "bytes",
-        name: "_operatorData",
-        type: "bytes",
-      },
+        "internalType": "uint256",
+        "name": "needed",
+        "type": "uint256"
+      }
     ],
-    name: "ControllerRedemption",
-    type: "event",
+    "name": "ERC20InsufficientBalance",
+    "type": "error"
   },
   {
-    anonymous: false,
-    inputs: [
+    "inputs": [
       {
-        indexed: false,
-        internalType: "address",
-        name: "_controller",
-        type: "address",
-      },
-      {
-        indexed: true,
-        internalType: "address",
-        name: "_from",
-        type: "address",
-      },
-      {
-        indexed: true,
-        internalType: "address",
-        name: "_to",
-        type: "address",
-      },
-      {
-        indexed: false,
-        internalType: "uint256",
-        name: "_value",
-        type: "uint256",
-      },
-      {
-        indexed: false,
-        internalType: "bytes",
-        name: "_data",
-        type: "bytes",
-      },
-      {
-        indexed: false,
-        internalType: "bytes",
-        name: "_operatorData",
-        type: "bytes",
-      },
+        "internalType": "address",
+        "name": "approver",
+        "type": "address"
+      }
     ],
-    name: "ControllerTransfer",
-    type: "event",
+    "name": "ERC20InvalidApprover",
+    "type": "error"
   },
   {
-    anonymous: false,
-    inputs: [
+    "inputs": [
       {
-        indexed: true,
-        internalType: "bytes32",
-        name: "_name",
-        type: "bytes32",
-      },
-      {
-        indexed: false,
-        internalType: "string",
-        name: "_uri",
-        type: "string",
-      },
-      {
-        indexed: false,
-        internalType: "bytes32",
-        name: "_documentHash",
-        type: "bytes32",
-      },
+        "internalType": "address",
+        "name": "receiver",
+        "type": "address"
+      }
     ],
-    name: "DocumentRemoved",
-    type: "event",
+    "name": "ERC20InvalidReceiver",
+    "type": "error"
   },
   {
-    anonymous: false,
-    inputs: [
+    "inputs": [
       {
-        indexed: true,
-        internalType: "bytes32",
-        name: "_name",
-        type: "bytes32",
-      },
-      {
-        indexed: false,
-        internalType: "string",
-        name: "_uri",
-        type: "string",
-      },
-      {
-        indexed: false,
-        internalType: "bytes32",
-        name: "_documentHash",
-        type: "bytes32",
-      },
+        "internalType": "address",
+        "name": "sender",
+        "type": "address"
+      }
     ],
-    name: "DocumentUpdated",
-    type: "event",
+    "name": "ERC20InvalidSender",
+    "type": "error"
   },
   {
-    anonymous: false,
-    inputs: [],
-    name: "FinalizedControllerFeature",
-    type: "event",
+    "inputs": [
+      {
+        "internalType": "address",
+        "name": "spender",
+        "type": "address"
+      }
+    ],
+    "name": "ERC20InvalidSpender",
+    "type": "error"
   },
   {
-    anonymous: false,
-    inputs: [
-      {
-        indexed: false,
-        internalType: "uint8",
-        name: "version",
-        type: "uint8",
-      },
-    ],
-    name: "Initialized",
-    type: "event",
+    "inputs": [],
+    "name": "InvalidInitialization",
+    "type": "error"
   },
   {
-    anonymous: false,
-    inputs: [
-      {
-        indexed: true,
-        internalType: "address",
-        name: "_operator",
-        type: "address",
-      },
-      {
-        indexed: true,
-        internalType: "address",
-        name: "_to",
-        type: "address",
-      },
-      {
-        indexed: false,
-        internalType: "uint256",
-        name: "_value",
-        type: "uint256",
-      },
-      {
-        indexed: false,
-        internalType: "bytes",
-        name: "_data",
-        type: "bytes",
-      },
-    ],
-    name: "Issued",
-    type: "event",
+    "inputs": [],
+    "name": "NotInitializing",
+    "type": "error"
   },
   {
-    anonymous: false,
-    inputs: [
+    "anonymous": false,
+    "inputs": [
       {
-        indexed: true,
-        internalType: "address",
-        name: "_operator",
-        type: "address",
+        "indexed": true,
+        "internalType": "address",
+        "name": "owner",
+        "type": "address"
       },
       {
-        indexed: true,
-        internalType: "address",
-        name: "_from",
-        type: "address",
+        "indexed": true,
+        "internalType": "address",
+        "name": "spender",
+        "type": "address"
       },
       {
-        indexed: false,
-        internalType: "uint256",
-        name: "_value",
-        type: "uint256",
-      },
-      {
-        indexed: false,
-        internalType: "bytes",
-        name: "_data",
-        type: "bytes",
-      },
+        "indexed": false,
+        "internalType": "uint256",
+        "name": "value",
+        "type": "uint256"
+      }
     ],
-    name: "Redeemed",
-    type: "event",
+    "name": "Approval",
+    "type": "event"
   },
   {
-    anonymous: false,
-    inputs: [
+    "anonymous": false,
+    "inputs": [
       {
-        indexed: true,
-        internalType: "address",
-        name: "from",
-        type: "address",
+        "indexed": false,
+        "internalType": "address",
+        "name": "_controller",
+        "type": "address"
       },
       {
-        indexed: true,
-        internalType: "address",
-        name: "to",
-        type: "address",
+        "indexed": true,
+        "internalType": "address",
+        "name": "_tokenHolder",
+        "type": "address"
       },
       {
-        indexed: false,
-        internalType: "uint256",
-        name: "value",
-        type: "uint256",
+        "indexed": false,
+        "internalType": "uint256",
+        "name": "_value",
+        "type": "uint256"
       },
+      {
+        "indexed": false,
+        "internalType": "bytes",
+        "name": "_data",
+        "type": "bytes"
+      },
+      {
+        "indexed": false,
+        "internalType": "bytes",
+        "name": "_operatorData",
+        "type": "bytes"
+      }
     ],
-    name: "Transfer",
-    type: "event",
+    "name": "ControllerRedemption",
+    "type": "event"
   },
   {
-    inputs: [
+    "anonymous": false,
+    "inputs": [
       {
-        internalType: "address",
-        name: "owner",
-        type: "address",
+        "indexed": false,
+        "internalType": "address",
+        "name": "_controller",
+        "type": "address"
       },
       {
-        internalType: "address",
-        name: "spender",
-        type: "address",
+        "indexed": true,
+        "internalType": "address",
+        "name": "_from",
+        "type": "address"
       },
+      {
+        "indexed": true,
+        "internalType": "address",
+        "name": "_to",
+        "type": "address"
+      },
+      {
+        "indexed": false,
+        "internalType": "uint256",
+        "name": "_value",
+        "type": "uint256"
+      },
+      {
+        "indexed": false,
+        "internalType": "bytes",
+        "name": "_data",
+        "type": "bytes"
+      },
+      {
+        "indexed": false,
+        "internalType": "bytes",
+        "name": "_operatorData",
+        "type": "bytes"
+      }
     ],
-    name: "allowance",
-    outputs: [
-      {
-        internalType: "uint256",
-        name: "",
-        type: "uint256",
-      },
-    ],
-    stateMutability: "view",
-    type: "function",
+    "name": "ControllerTransfer",
+    "type": "event"
   },
   {
-    inputs: [
+    "anonymous": false,
+    "inputs": [
       {
-        internalType: "address",
-        name: "spender",
-        type: "address",
+        "indexed": true,
+        "internalType": "bytes32",
+        "name": "_name",
+        "type": "bytes32"
       },
       {
-        internalType: "uint256",
-        name: "amount",
-        type: "uint256",
+        "indexed": false,
+        "internalType": "string",
+        "name": "_uri",
+        "type": "string"
       },
+      {
+        "indexed": false,
+        "internalType": "bytes32",
+        "name": "_documentHash",
+        "type": "bytes32"
+      }
     ],
-    name: "approve",
-    outputs: [
-      {
-        internalType: "bool",
-        name: "",
-        type: "bool",
-      },
-    ],
-    stateMutability: "nonpayable",
-    type: "function",
+    "name": "DocumentRemoved",
+    "type": "event"
   },
   {
-    inputs: [
+    "anonymous": false,
+    "inputs": [
       {
-        internalType: "address",
-        name: "account",
-        type: "address",
+        "indexed": true,
+        "internalType": "bytes32",
+        "name": "_name",
+        "type": "bytes32"
       },
-    ],
-    name: "balanceOf",
-    outputs: [
       {
-        internalType: "uint256",
-        name: "",
-        type: "uint256",
+        "indexed": false,
+        "internalType": "string",
+        "name": "_uri",
+        "type": "string"
       },
+      {
+        "indexed": false,
+        "internalType": "bytes32",
+        "name": "_documentHash",
+        "type": "bytes32"
+      }
     ],
-    stateMutability: "view",
-    type: "function",
+    "name": "DocumentUpdated",
+    "type": "event"
   },
   {
-    inputs: [
-      {
-        internalType: "uint256",
-        name: "amount",
-        type: "uint256",
-      },
-    ],
-    name: "burn",
-    outputs: [],
-    stateMutability: "nonpayable",
-    type: "function",
+    "anonymous": false,
+    "inputs": [],
+    "name": "FinalizedControllerFeature",
+    "type": "event"
   },
   {
-    inputs: [
+    "anonymous": false,
+    "inputs": [
       {
-        internalType: "address",
-        name: "account",
-        type: "address",
-      },
-      {
-        internalType: "uint256",
-        name: "amount",
-        type: "uint256",
-      },
+        "indexed": false,
+        "internalType": "uint64",
+        "name": "version",
+        "type": "uint64"
+      }
     ],
-    name: "burnFrom",
-    outputs: [],
-    stateMutability: "nonpayable",
-    type: "function",
+    "name": "Initialized",
+    "type": "event"
   },
   {
-    inputs: [],
-    name: "controller",
-    outputs: [
+    "anonymous": false,
+    "inputs": [
       {
-        internalType: "address",
-        name: "",
-        type: "address",
+        "indexed": true,
+        "internalType": "address",
+        "name": "_operator",
+        "type": "address"
       },
+      {
+        "indexed": true,
+        "internalType": "address",
+        "name": "_to",
+        "type": "address"
+      },
+      {
+        "indexed": false,
+        "internalType": "uint256",
+        "name": "_value",
+        "type": "uint256"
+      },
+      {
+        "indexed": false,
+        "internalType": "bytes",
+        "name": "_data",
+        "type": "bytes"
+      }
     ],
-    stateMutability: "view",
-    type: "function",
+    "name": "Issued",
+    "type": "event"
   },
   {
-    inputs: [],
-    name: "decimals",
-    outputs: [
+    "anonymous": false,
+    "inputs": [
       {
-        internalType: "uint8",
-        name: "",
-        type: "uint8",
+        "indexed": true,
+        "internalType": "address",
+        "name": "_operator",
+        "type": "address"
       },
+      {
+        "indexed": true,
+        "internalType": "address",
+        "name": "_from",
+        "type": "address"
+      },
+      {
+        "indexed": false,
+        "internalType": "uint256",
+        "name": "_value",
+        "type": "uint256"
+      },
+      {
+        "indexed": false,
+        "internalType": "bytes",
+        "name": "_data",
+        "type": "bytes"
+      }
     ],
-    stateMutability: "view",
-    type: "function",
+    "name": "Redeemed",
+    "type": "event"
   },
   {
-    inputs: [
+    "anonymous": false,
+    "inputs": [
       {
-        internalType: "address",
-        name: "spender",
-        type: "address",
+        "indexed": true,
+        "internalType": "address",
+        "name": "from",
+        "type": "address"
       },
       {
-        internalType: "uint256",
-        name: "subtractedValue",
-        type: "uint256",
+        "indexed": true,
+        "internalType": "address",
+        "name": "to",
+        "type": "address"
       },
+      {
+        "indexed": false,
+        "internalType": "uint256",
+        "name": "value",
+        "type": "uint256"
+      }
     ],
-    name: "decreaseAllowance",
-    outputs: [
-      {
-        internalType: "bool",
-        name: "",
-        type: "bool",
-      },
-    ],
-    stateMutability: "nonpayable",
-    type: "function",
+    "name": "Transfer",
+    "type": "event"
   },
   {
-    inputs: [
+    "inputs": [
       {
-        internalType: "address",
-        name: "spender",
-        type: "address",
+        "internalType": "address",
+        "name": "owner",
+        "type": "address"
       },
       {
-        internalType: "uint256",
-        name: "addedValue",
-        type: "uint256",
-      },
+        "internalType": "address",
+        "name": "spender",
+        "type": "address"
+      }
     ],
-    name: "increaseAllowance",
-    outputs: [
+    "name": "allowance",
+    "outputs": [
       {
-        internalType: "bool",
-        name: "",
-        type: "bool",
-      },
+        "internalType": "uint256",
+        "name": "",
+        "type": "uint256"
+      }
     ],
-    stateMutability: "nonpayable",
-    type: "function",
+    "stateMutability": "view",
+    "type": "function"
   },
   {
-    inputs: [],
-    name: "name",
-    outputs: [
+    "inputs": [
       {
-        internalType: "string",
-        name: "",
-        type: "string",
+        "internalType": "address",
+        "name": "spender",
+        "type": "address"
       },
+      {
+        "internalType": "uint256",
+        "name": "value",
+        "type": "uint256"
+      }
     ],
-    stateMutability: "view",
-    type: "function",
+    "name": "approve",
+    "outputs": [
+      {
+        "internalType": "bool",
+        "name": "",
+        "type": "bool"
+      }
+    ],
+    "stateMutability": "nonpayable",
+    "type": "function"
   },
   {
-    inputs: [],
-    name: "symbol",
-    outputs: [
+    "inputs": [
       {
-        internalType: "string",
-        name: "",
-        type: "string",
-      },
+        "internalType": "address",
+        "name": "_controller",
+        "type": "address"
+      }
     ],
-    stateMutability: "view",
-    type: "function",
+    "name": "assignController",
+    "outputs": [],
+    "stateMutability": "nonpayable",
+    "type": "function"
   },
   {
-    inputs: [],
-    name: "tokenOfferingPrice",
-    outputs: [
+    "inputs": [
       {
-        internalType: "uint256",
-        name: "",
-        type: "uint256",
-      },
+        "internalType": "address",
+        "name": "account",
+        "type": "address"
+      }
     ],
-    stateMutability: "view",
-    type: "function",
+    "name": "balanceOf",
+    "outputs": [
+      {
+        "internalType": "uint256",
+        "name": "",
+        "type": "uint256"
+      }
+    ],
+    "stateMutability": "view",
+    "type": "function"
   },
   {
-    inputs: [],
-    name: "totalSupply",
-    outputs: [
+    "inputs": [
       {
-        internalType: "uint256",
-        name: "",
-        type: "uint256",
-      },
+        "internalType": "uint256",
+        "name": "value",
+        "type": "uint256"
+      }
     ],
-    stateMutability: "view",
-    type: "function",
+    "name": "burn",
+    "outputs": [],
+    "stateMutability": "nonpayable",
+    "type": "function"
   },
   {
-    inputs: [
+    "inputs": [
       {
-        internalType: "address",
-        name: "to",
-        type: "address",
+        "internalType": "address",
+        "name": "account",
+        "type": "address"
       },
       {
-        internalType: "uint256",
-        name: "amount",
-        type: "uint256",
-      },
+        "internalType": "uint256",
+        "name": "value",
+        "type": "uint256"
+      }
     ],
-    name: "transfer",
-    outputs: [
-      {
-        internalType: "bool",
-        name: "",
-        type: "bool",
-      },
-    ],
-    stateMutability: "nonpayable",
-    type: "function",
+    "name": "burnFrom",
+    "outputs": [],
+    "stateMutability": "nonpayable",
+    "type": "function"
   },
   {
-    inputs: [
+    "inputs": [
       {
-        internalType: "address",
-        name: "from",
-        type: "address",
+        "internalType": "address",
+        "name": "_to",
+        "type": "address"
       },
       {
-        internalType: "address",
-        name: "to",
-        type: "address",
+        "internalType": "uint256",
+        "name": "_value",
+        "type": "uint256"
       },
       {
-        internalType: "uint256",
-        name: "amount",
-        type: "uint256",
-      },
+        "internalType": "bytes",
+        "name": "_data",
+        "type": "bytes"
+      }
     ],
-    name: "transferFrom",
-    outputs: [
+    "name": "canTransfer",
+    "outputs": [
       {
-        internalType: "bool",
-        name: "",
-        type: "bool",
+        "internalType": "bool",
+        "name": "",
+        "type": "bool"
       },
+      {
+        "internalType": "uint256",
+        "name": "",
+        "type": "uint256"
+      }
     ],
-    stateMutability: "nonpayable",
-    type: "function",
+    "stateMutability": "view",
+    "type": "function"
   },
   {
-    inputs: [
+    "inputs": [
       {
-        internalType: "string",
-        name: "_tokenName",
-        type: "string",
+        "internalType": "address",
+        "name": "_from",
+        "type": "address"
       },
       {
-        internalType: "string",
-        name: "_tokenSymbol",
-        type: "string",
+        "internalType": "address",
+        "name": "_to",
+        "type": "address"
       },
       {
-        internalType: "address",
-        name: "_assetAdmin",
-        type: "address",
+        "internalType": "uint256",
+        "name": "_value",
+        "type": "uint256"
       },
       {
-        internalType: "address",
-        name: "_controller",
-        type: "address",
-      },
-      {
-        internalType: "uint256",
-        name: "_tokenOfferingPrice",
-        type: "uint256",
-      },
+        "internalType": "bytes",
+        "name": "_data",
+        "type": "bytes"
+      }
     ],
-    name: "initialize",
-    outputs: [],
-    stateMutability: "nonpayable",
-    type: "function",
+    "name": "canTransferFrom",
+    "outputs": [
+      {
+        "internalType": "bool",
+        "name": "",
+        "type": "bool"
+      },
+      {
+        "internalType": "uint256",
+        "name": "",
+        "type": "uint256"
+      }
+    ],
+    "stateMutability": "view",
+    "type": "function"
   },
   {
-    inputs: [],
-    name: "isIssuable",
-    outputs: [
+    "inputs": [],
+    "name": "controller",
+    "outputs": [
       {
-        internalType: "bool",
-        name: "",
-        type: "bool",
-      },
+        "internalType": "address",
+        "name": "",
+        "type": "address"
+      }
     ],
-    stateMutability: "view",
-    type: "function",
+    "stateMutability": "view",
+    "type": "function"
   },
   {
-    inputs: [
+    "inputs": [
       {
-        internalType: "address",
-        name: "_tokenHolder",
-        type: "address",
+        "internalType": "address",
+        "name": "_tokenHolder",
+        "type": "address"
       },
       {
-        internalType: "uint256",
-        name: "_value",
-        type: "uint256",
+        "internalType": "uint256",
+        "name": "_value",
+        "type": "uint256"
       },
       {
-        internalType: "bytes",
-        name: "_data",
-        type: "bytes",
+        "internalType": "bytes",
+        "name": "_data",
+        "type": "bytes"
       },
+      {
+        "internalType": "bytes",
+        "name": "_operatorData",
+        "type": "bytes"
+      }
     ],
-    name: "issue",
-    outputs: [],
-    stateMutability: "nonpayable",
-    type: "function",
+    "name": "controllerRedeem",
+    "outputs": [],
+    "stateMutability": "nonpayable",
+    "type": "function"
   },
   {
-    inputs: [
+    "inputs": [
       {
-        internalType: "address",
-        name: "_buyer",
-        type: "address",
+        "internalType": "address",
+        "name": "_from",
+        "type": "address"
       },
       {
-        internalType: "uint256",
-        name: "_value",
-        type: "uint256",
+        "internalType": "address",
+        "name": "_to",
+        "type": "address"
       },
       {
-        internalType: "bytes",
-        name: "_data",
-        type: "bytes",
+        "internalType": "uint256",
+        "name": "_value",
+        "type": "uint256"
       },
+      {
+        "internalType": "bytes",
+        "name": "_data",
+        "type": "bytes"
+      },
+      {
+        "internalType": "bytes",
+        "name": "_operatorData",
+        "type": "bytes"
+      }
     ],
-    name: "tokenOffering",
-    outputs: [],
-    stateMutability: "nonpayable",
-    type: "function",
+    "name": "controllerTransfer",
+    "outputs": [],
+    "stateMutability": "nonpayable",
+    "type": "function"
   },
   {
-    inputs: [
+    "inputs": [],
+    "name": "decimals",
+    "outputs": [
       {
-        internalType: "address",
-        name: "_to",
-        type: "address",
-      },
-      {
-        internalType: "uint256",
-        name: "_value",
-        type: "uint256",
-      },
-      {
-        internalType: "bytes",
-        name: "_data",
-        type: "bytes",
-      },
+        "internalType": "uint8",
+        "name": "",
+        "type": "uint8"
+      }
     ],
-    name: "canTransfer",
-    outputs: [
-      {
-        internalType: "bool",
-        name: "",
-        type: "bool",
-      },
-      {
-        internalType: "uint256",
-        name: "",
-        type: "uint256",
-      },
-    ],
-    stateMutability: "view",
-    type: "function",
+    "stateMutability": "view",
+    "type": "function"
   },
   {
-    inputs: [
-      {
-        internalType: "address",
-        name: "_from",
-        type: "address",
-      },
-      {
-        internalType: "address",
-        name: "_to",
-        type: "address",
-      },
-      {
-        internalType: "uint256",
-        name: "_value",
-        type: "uint256",
-      },
-      {
-        internalType: "bytes",
-        name: "_data",
-        type: "bytes",
-      },
-    ],
-    name: "canTransferFrom",
-    outputs: [
-      {
-        internalType: "bool",
-        name: "",
-        type: "bool",
-      },
-      {
-        internalType: "uint256",
-        name: "",
-        type: "uint256",
-      },
-    ],
-    stateMutability: "view",
-    type: "function",
+    "inputs": [],
+    "name": "finalizeControllable",
+    "outputs": [],
+    "stateMutability": "nonpayable",
+    "type": "function"
   },
   {
-    inputs: [
+    "inputs": [],
+    "name": "getAllDocuments",
+    "outputs": [
       {
-        internalType: "address",
-        name: "_to",
-        type: "address",
-      },
-      {
-        internalType: "uint256",
-        name: "_value",
-        type: "uint256",
-      },
-      {
-        internalType: "bytes",
-        name: "_data",
-        type: "bytes",
-      },
+        "internalType": "bytes32[]",
+        "name": "",
+        "type": "bytes32[]"
+      }
     ],
-    name: "transferWithData",
-    outputs: [],
-    stateMutability: "nonpayable",
-    type: "function",
+    "stateMutability": "view",
+    "type": "function"
   },
   {
-    inputs: [
+    "inputs": [
       {
-        internalType: "address",
-        name: "_from",
-        type: "address",
-      },
-      {
-        internalType: "address",
-        name: "_to",
-        type: "address",
-      },
-      {
-        internalType: "uint256",
-        name: "_value",
-        type: "uint256",
-      },
-      {
-        internalType: "bytes",
-        name: "_data",
-        type: "bytes",
-      },
+        "internalType": "bytes32",
+        "name": "_name",
+        "type": "bytes32"
+      }
     ],
-    name: "transferFromWithData",
-    outputs: [],
-    stateMutability: "nonpayable",
-    type: "function",
+    "name": "getDocument",
+    "outputs": [
+      {
+        "internalType": "string",
+        "name": "",
+        "type": "string"
+      },
+      {
+        "internalType": "bytes32",
+        "name": "",
+        "type": "bytes32"
+      },
+      {
+        "internalType": "uint256",
+        "name": "",
+        "type": "uint256"
+      }
+    ],
+    "stateMutability": "view",
+    "type": "function"
   },
   {
-    inputs: [
+    "inputs": [
       {
-        internalType: "uint256",
-        name: "_value",
-        type: "uint256",
+        "internalType": "bytes32",
+        "name": "_salt",
+        "type": "bytes32"
       },
       {
-        internalType: "bytes",
-        name: "_data",
-        type: "bytes",
+        "internalType": "string",
+        "name": "_tokenName",
+        "type": "string"
       },
+      {
+        "internalType": "string",
+        "name": "_tokenSymbol",
+        "type": "string"
+      },
+      {
+        "internalType": "address",
+        "name": "_assetAdmin",
+        "type": "address"
+      },
+      {
+        "internalType": "address",
+        "name": "_controller",
+        "type": "address"
+      },
+      {
+        "internalType": "address",
+        "name": "interchainTokenServiceAddress",
+        "type": "address"
+      },
+      {
+        "internalType": "uint256",
+        "name": "_tokenOfferingPrice",
+        "type": "uint256"
+      }
     ],
-    name: "redeem",
-    outputs: [],
-    stateMutability: "nonpayable",
-    type: "function",
+    "name": "initialize",
+    "outputs": [],
+    "stateMutability": "nonpayable",
+    "type": "function"
   },
   {
-    inputs: [
+    "inputs": [
       {
-        internalType: "address",
-        name: "_tokenHolder",
-        type: "address",
+        "internalType": "string",
+        "name": "destinationChain",
+        "type": "string"
       },
       {
-        internalType: "uint256",
-        name: "_value",
-        type: "uint256",
+        "internalType": "bytes",
+        "name": "recipient",
+        "type": "bytes"
       },
       {
-        internalType: "bytes",
-        name: "_data",
-        type: "bytes",
+        "internalType": "uint256",
+        "name": "amount",
+        "type": "uint256"
       },
+      {
+        "internalType": "bytes",
+        "name": "metadata",
+        "type": "bytes"
+      }
     ],
-    name: "redeemFrom",
-    outputs: [],
-    stateMutability: "nonpayable",
-    type: "function",
+    "name": "interchainTransfer",
+    "outputs": [],
+    "stateMutability": "payable",
+    "type": "function"
   },
   {
-    inputs: [
+    "inputs": [
       {
-        internalType: "bytes32",
-        name: "_name",
-        type: "bytes32",
+        "internalType": "address",
+        "name": "sender",
+        "type": "address"
       },
       {
-        internalType: "string",
-        name: "_uri",
-        type: "string",
+        "internalType": "string",
+        "name": "destinationChain",
+        "type": "string"
       },
       {
-        internalType: "bytes32",
-        name: "_documentHash",
-        type: "bytes32",
+        "internalType": "bytes",
+        "name": "recipient",
+        "type": "bytes"
       },
+      {
+        "internalType": "uint256",
+        "name": "amount",
+        "type": "uint256"
+      },
+      {
+        "internalType": "bytes",
+        "name": "metadata",
+        "type": "bytes"
+      }
     ],
-    name: "setDocument",
-    outputs: [],
-    stateMutability: "nonpayable",
-    type: "function",
+    "name": "interchainTransferFrom",
+    "outputs": [],
+    "stateMutability": "payable",
+    "type": "function"
   },
   {
-    inputs: [
+    "inputs": [],
+    "name": "isControllable",
+    "outputs": [
       {
-        internalType: "bytes32",
-        name: "_name",
-        type: "bytes32",
-      },
+        "internalType": "bool",
+        "name": "",
+        "type": "bool"
+      }
     ],
-    name: "removeDocument",
-    outputs: [],
-    stateMutability: "nonpayable",
-    type: "function",
+    "stateMutability": "view",
+    "type": "function"
   },
   {
-    inputs: [
+    "inputs": [],
+    "name": "isIssuable",
+    "outputs": [
       {
-        internalType: "bytes32",
-        name: "_name",
-        type: "bytes32",
-      },
+        "internalType": "bool",
+        "name": "",
+        "type": "bool"
+      }
     ],
-    name: "getDocument",
-    outputs: [
-      {
-        internalType: "string",
-        name: "",
-        type: "string",
-      },
-      {
-        internalType: "bytes32",
-        name: "",
-        type: "bytes32",
-      },
-      {
-        internalType: "uint256",
-        name: "",
-        type: "uint256",
-      },
-    ],
-    stateMutability: "view",
-    type: "function",
+    "stateMutability": "view",
+    "type": "function"
   },
   {
-    inputs: [],
-    name: "getAllDocuments",
-    outputs: [
+    "inputs": [
       {
-        internalType: "bytes32[]",
-        name: "",
-        type: "bytes32[]",
+        "internalType": "address",
+        "name": "_tokenHolder",
+        "type": "address"
       },
+      {
+        "internalType": "uint256",
+        "name": "_value",
+        "type": "uint256"
+      },
+      {
+        "internalType": "bytes",
+        "name": "_data",
+        "type": "bytes"
+      }
     ],
-    stateMutability: "view",
-    type: "function",
+    "name": "issue",
+    "outputs": [],
+    "stateMutability": "nonpayable",
+    "type": "function"
   },
   {
-    inputs: [],
-    name: "isControllable",
-    outputs: [
+    "inputs": [],
+    "name": "name",
+    "outputs": [
       {
-        internalType: "bool",
-        name: "",
-        type: "bool",
-      },
+        "internalType": "string",
+        "name": "",
+        "type": "string"
+      }
     ],
-    stateMutability: "view",
-    type: "function",
+    "stateMutability": "view",
+    "type": "function"
   },
   {
-    inputs: [
+    "inputs": [
       {
-        internalType: "address",
-        name: "_from",
-        type: "address",
+        "internalType": "uint256",
+        "name": "_value",
+        "type": "uint256"
       },
       {
-        internalType: "address",
-        name: "_to",
-        type: "address",
-      },
-      {
-        internalType: "uint256",
-        name: "_value",
-        type: "uint256",
-      },
-      {
-        internalType: "bytes",
-        name: "_data",
-        type: "bytes",
-      },
-      {
-        internalType: "bytes",
-        name: "_operatorData",
-        type: "bytes",
-      },
+        "internalType": "bytes",
+        "name": "_data",
+        "type": "bytes"
+      }
     ],
-    name: "controllerTransfer",
-    outputs: [],
-    stateMutability: "nonpayable",
-    type: "function",
+    "name": "redeem",
+    "outputs": [],
+    "stateMutability": "nonpayable",
+    "type": "function"
   },
   {
-    inputs: [
+    "inputs": [
       {
-        internalType: "address",
-        name: "_tokenHolder",
-        type: "address",
+        "internalType": "address",
+        "name": "_tokenHolder",
+        "type": "address"
       },
       {
-        internalType: "uint256",
-        name: "_value",
-        type: "uint256",
+        "internalType": "uint256",
+        "name": "_value",
+        "type": "uint256"
       },
       {
-        internalType: "bytes",
-        name: "_data",
-        type: "bytes",
-      },
-      {
-        internalType: "bytes",
-        name: "_operatorData",
-        type: "bytes",
-      },
+        "internalType": "bytes",
+        "name": "_data",
+        "type": "bytes"
+      }
     ],
-    name: "controllerRedeem",
-    outputs: [],
-    stateMutability: "nonpayable",
-    type: "function",
+    "name": "redeemFrom",
+    "outputs": [],
+    "stateMutability": "nonpayable",
+    "type": "function"
   },
   {
-    inputs: [
+    "inputs": [
       {
-        internalType: "address",
-        name: "_controller",
-        type: "address",
-      },
+        "internalType": "bytes32",
+        "name": "_name",
+        "type": "bytes32"
+      }
     ],
-    name: "assignController",
-    outputs: [],
-    stateMutability: "nonpayable",
-    type: "function",
+    "name": "removeDocument",
+    "outputs": [],
+    "stateMutability": "nonpayable",
+    "type": "function"
   },
   {
-    inputs: [],
-    name: "finalizeControllable",
-    outputs: [],
-    stateMutability: "nonpayable",
-    type: "function",
+    "inputs": [],
+    "name": "service",
+    "outputs": [
+      {
+        "internalType": "contract IInterchainTokenService",
+        "name": "",
+        "type": "address"
+      }
+    ],
+    "stateMutability": "view",
+    "type": "function"
   },
+  {
+    "inputs": [
+      {
+        "internalType": "bytes32",
+        "name": "_name",
+        "type": "bytes32"
+      },
+      {
+        "internalType": "string",
+        "name": "_uri",
+        "type": "string"
+      },
+      {
+        "internalType": "bytes32",
+        "name": "_documentHash",
+        "type": "bytes32"
+      }
+    ],
+    "name": "setDocument",
+    "outputs": [],
+    "stateMutability": "nonpayable",
+    "type": "function"
+  },
+  {
+    "inputs": [
+      {
+        "internalType": "address",
+        "name": "_tokenManager",
+        "type": "address"
+      }
+    ],
+    "name": "setTokenManager",
+    "outputs": [],
+    "stateMutability": "nonpayable",
+    "type": "function"
+  },
+  {
+    "inputs": [],
+    "name": "symbol",
+    "outputs": [
+      {
+        "internalType": "string",
+        "name": "",
+        "type": "string"
+      }
+    ],
+    "stateMutability": "view",
+    "type": "function"
+  },
+  {
+    "inputs": [],
+    "name": "tokenManager",
+    "outputs": [
+      {
+        "internalType": "contract ITokenManager",
+        "name": "",
+        "type": "address"
+      }
+    ],
+    "stateMutability": "view",
+    "type": "function"
+  },
+  {
+    "inputs": [
+      {
+        "internalType": "address",
+        "name": "_buyer",
+        "type": "address"
+      },
+      {
+        "internalType": "uint256",
+        "name": "_value",
+        "type": "uint256"
+      },
+      {
+        "internalType": "bytes",
+        "name": "_data",
+        "type": "bytes"
+      }
+    ],
+    "name": "tokenOffering",
+    "outputs": [],
+    "stateMutability": "nonpayable",
+    "type": "function"
+  },
+  {
+    "inputs": [],
+    "name": "tokenOfferingPrice",
+    "outputs": [
+      {
+        "internalType": "uint256",
+        "name": "",
+        "type": "uint256"
+      }
+    ],
+    "stateMutability": "view",
+    "type": "function"
+  },
+  {
+    "inputs": [],
+    "name": "totalSupply",
+    "outputs": [
+      {
+        "internalType": "uint256",
+        "name": "",
+        "type": "uint256"
+      }
+    ],
+    "stateMutability": "view",
+    "type": "function"
+  },
+  {
+    "inputs": [
+      {
+        "internalType": "address",
+        "name": "to",
+        "type": "address"
+      },
+      {
+        "internalType": "uint256",
+        "name": "value",
+        "type": "uint256"
+      }
+    ],
+    "name": "transfer",
+    "outputs": [
+      {
+        "internalType": "bool",
+        "name": "",
+        "type": "bool"
+      }
+    ],
+    "stateMutability": "nonpayable",
+    "type": "function"
+  },
+  {
+    "inputs": [
+      {
+        "internalType": "address",
+        "name": "from",
+        "type": "address"
+      },
+      {
+        "internalType": "address",
+        "name": "to",
+        "type": "address"
+      },
+      {
+        "internalType": "uint256",
+        "name": "value",
+        "type": "uint256"
+      }
+    ],
+    "name": "transferFrom",
+    "outputs": [
+      {
+        "internalType": "bool",
+        "name": "",
+        "type": "bool"
+      }
+    ],
+    "stateMutability": "nonpayable",
+    "type": "function"
+  },
+  {
+    "inputs": [
+      {
+        "internalType": "address",
+        "name": "_from",
+        "type": "address"
+      },
+      {
+        "internalType": "address",
+        "name": "_to",
+        "type": "address"
+      },
+      {
+        "internalType": "uint256",
+        "name": "_value",
+        "type": "uint256"
+      },
+      {
+        "internalType": "bytes",
+        "name": "_data",
+        "type": "bytes"
+      }
+    ],
+    "name": "transferFromWithData",
+    "outputs": [],
+    "stateMutability": "nonpayable",
+    "type": "function"
+  },
+  {
+    "inputs": [
+      {
+        "internalType": "address",
+        "name": "_to",
+        "type": "address"
+      },
+      {
+        "internalType": "uint256",
+        "name": "_value",
+        "type": "uint256"
+      },
+      {
+        "internalType": "bytes",
+        "name": "_data",
+        "type": "bytes"
+      }
+    ],
+    "name": "transferWithData",
+    "outputs": [],
+    "stateMutability": "nonpayable",
+    "type": "function"
+  }
 ] as const;
 
 export { ASSET_TOKEN };

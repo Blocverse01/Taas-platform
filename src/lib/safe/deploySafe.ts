@@ -9,8 +9,10 @@ const deploySafe = async (owners: Address[], threshold: number) => {
     owners,
     threshold
   }
+
   const safeFactory = await getSafeFactory();
-  const safeSdk: Safe = await safeFactory.deploySafe({ safeAccountConfig })
+  const saltNonce = new Date().getTime().toString();
+  const safeSdk: Safe = await safeFactory.deploySafe({ safeAccountConfig, saltNonce: saltNonce })
 
   return (await safeSdk.getAddress()) as Address;
 }

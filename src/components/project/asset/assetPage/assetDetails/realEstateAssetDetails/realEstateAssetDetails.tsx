@@ -38,7 +38,7 @@ const RealEstateAssetDetails: FC<RealEstateAssetDetailsProps> = ({ asset }) => {
               <p className="text-sm text-t-gray-4 max-w-[321px]">{"$" + asset.valuation}</p>
             </section>
           </div>
-          <button className="bg-t-purple py-[18px] px-[51px] text-white rounded">Edit Details</button>
+          <button className="bg-t-purple py-[18px] px-[35px] text-white rounded">Edit Details</button>
         </div>
       </section>
     </section>

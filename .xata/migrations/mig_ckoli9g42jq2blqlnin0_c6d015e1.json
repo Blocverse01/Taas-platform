@@ -1,0 +1,12 @@
+{
+  "id": "mig_ckoli9g42jq2blqlnin0",
+  "parentID": "mig_ckn3p53nk0772bdlht0g",
+  "checksum": "1:c6d015e101b518db7bb660752b7ebffa199a1e7b379d988e2bbcd4d9569608c6",
+  "operations": [
+    {
+      "addTable": {
+        "table": "AssetTransaction"
+      }
+    }
+  ]
+}

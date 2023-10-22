@@ -1,0 +1,14 @@
+{
+  "id": "mig_ckolppvkv9et5mt90krg",
+  "parentID": "mig_ckolllg42jq2blqlnj00",
+  "checksum": "1:49703924a28d35ce2a3af0a678a1552900df26f4d55b257a9d1823d8d7e512d0",
+  "operations": [
+    {
+      "renameColumn": {
+        "newName": "multisigController",
+        "oldName": "assetController",
+        "table": "Project"
+      }
+    }
+  ]
+}

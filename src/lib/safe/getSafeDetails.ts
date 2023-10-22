@@ -1,24 +1,34 @@
 import { Address } from "viem"
-import { getSafe } from "./safeSdk";
 import { getTeamMembers } from "../taas-api/team/getMembers";
+import { SafeTransaction } from "@safe-global/safe-core-sdk-types";
+import { validateSignatory } from "./validateSafeSigner";
 import { getSession } from "next-auth/react";
-import { Session } from "next-auth";
+import type { Session } from "next-auth";
 
-const getSafeDetails = async (safeAddress: Address) => {
-  //Retrieve the safe SDK for the safeAddress using the currenlty logged in user as a signer
-  const safe = await getSafe(safeAddress);
+export const getSafeDetails = async (safeAddress: Address) => {
 
-  const currentUser = await getSession() as Session;
+  const { currentUser, safe } = await validateSignatory(safeAddress);
 
-  const teamMembers = await getTeamMembers(currentUser, 'sample-team-id');
-  
-  //retrieve the owners of the safe address passed in
+  const teamMembers = await getTeamMembers(currentUser.user, 'sample-team-id');
+
   const owners = await safe.getOwners();
 
   return {
-    //return any address that is in the teamMembers array and ia also an owner
     signers: teamMembers.filter((teamMemberAccount) => owners.includes(teamMemberAccount.walletAddress))
   }
 }
 
-export { getSafeDetails }
+export const getSafeOwnersWhoHaveApproved = async (transactionHash: Address, safeAddress: Address): Promise<string[]> => {
+
+  const { safe } = await validateSignatory(safeAddress);
+
+  return await safe.getOwnersWhoApprovedTx(transactionHash);
+}
+
+export const getSafeThreshold = async (safeAddress: Address): Promise<number> => {
+
+  const { safe } = await validateSignatory(safeAddress);
+
+  return await safe.getThreshold();
+}
+

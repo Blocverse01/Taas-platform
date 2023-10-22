@@ -1,6 +1,7 @@
 import { handleAuthRequest } from "@/lib/magic/utils";
-import NextAuth, { AuthOptions } from "next-auth";
+import NextAuth, { AuthOptions, Awaitable } from "next-auth";
 import CredentialsProvider from "next-auth/providers/credentials";
+import { Address } from "viem";
 
 export const authOptions: AuthOptions = {
   providers: [
@@ -13,6 +14,7 @@ export const authOptions: AuthOptions = {
         if (!credentials) throw new Error("missing credentials");
 
         const user = await handleAuthRequest(credentials.didToken);
+
         if (user) {
           return user;
         }
@@ -26,8 +28,28 @@ export const authOptions: AuthOptions = {
     signOut: "/",
   },
   session: {
+    strategy: "jwt",
     maxAge: 7 * 60 * 60, // 7 hours
   },
+  callbacks: {
+    async jwt({ token, user }) {
+      // Persist the user id to the token right after signin
+
+      if (user) {
+        token.id = user.id;
+        token.walletAddress = user.walletAddress as Address;
+      }
+
+      return token
+    },
+    async session({ session, token }) {
+      session.user.id = token.id;
+
+      session.user.walletAddress = token.walletAddress;
+
+      return session
+    }
+  }
 };
 const handler = NextAuth(authOptions);
 

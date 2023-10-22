@@ -11,17 +11,14 @@ import { TAAS_PURPLE } from "tailwind.config";
 import { SessionProvider } from "next-auth/react";
 
 export type NextPageWithLayout<P = {}, IP = P> = NextPage<P, IP> & {
-  getLayout?: (page: ReactElement) => ReactNode;
+  getLayout?: (page: ReactElement<P>) => ReactNode;
 };
 
 type AppPropsWithLayout = AppProps & {
   Component: NextPageWithLayout;
 };
 
-export default function App({
-  Component,
-  pageProps: { session, ...pageProps },
-}: AppPropsWithLayout) {
+export default function App({ Component, pageProps: { session, ...pageProps } }: AppPropsWithLayout) {
   const modalRef = useRef<HTMLDivElement | null>(null);
   const setModalParent = useSetModalParent();
   const getLayout = Component.getLayout ?? ((page) => page);

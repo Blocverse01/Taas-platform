@@ -13,19 +13,10 @@ const config: Config = {
       fontFamily: {
         aeonik: ["var(--font-aeonik)"],
       },
-      backgroundColor: {
-        t: {
-          "faded-purple": "rgba(55, 27, 137, 0.20)",
-          "faded-purple2": "rgba(55, 27, 137, 0.1)",
-        },
-      },
       colors: {
         t: {
           black: "#1A1A1A",
           purple: TAAS_PURPLE,
-          purple2: "rgba(55, 27, 137, 0.6)",
-          purple3: "rgba(55, 27, 137, 0.15)",
-          purple4: "rgba(55, 27, 137, 0.2)",
           gray: {
             1: "#F9FAFB",
             2: "#FAFAFA",
@@ -38,6 +29,8 @@ const config: Config = {
             9: "#4A5564",
             10: "#FCFCFC",
             11: "#747474",
+            12: "#ECECEC",
+            13: "#DADADA"
           },
           red: {
             1: "#C02425",

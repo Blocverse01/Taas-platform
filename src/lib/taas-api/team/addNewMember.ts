@@ -8,7 +8,7 @@ import {
   userRepository,
 } from "@/utils/constants";
 import { AddNewMemberPayload } from "./teamTypes";
-import { getProjectTeamMemberId } from "@/utils/helperfunctions";
+import { getConcatenatedId } from "@/utils/helperfunctions";
 import type { Session } from "next-auth";
 
 export const addNewTeamMember = async (
@@ -34,7 +34,7 @@ export const addNewTeamMember = async (
     });
   }
 
-  const projectTeamMemberId = getProjectTeamMemberId(
+  const projectTeamMemberId = getConcatenatedId(
     payload.projectId,
     user.id
   );

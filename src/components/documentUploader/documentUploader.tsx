@@ -104,7 +104,7 @@ const DocumentUploader: FC<DocumentUploaderProps> = ({
 
           <div>
             {values.file && values.file.size > 0 ? (
-              <div className="bg-t-faded-purple rounded-lg py-3 px-4 flex items-center justify-between gap-3">
+              <div className="bg-t-purple/20 rounded-lg py-3 px-4 flex items-center justify-between gap-3">
                 <div className="w-[calc(100%-36px)]">
                   <h4 className="text-t-black text-sm truncate">
                     {values.file.name}

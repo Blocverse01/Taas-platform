@@ -1,0 +1,16 @@
+{
+  "id": "mig_ckp60vg42jq2blqlpuk0",
+  "parentID": "mig_ckp2b7fkv9et5mt92cmg",
+  "checksum": "1:5c46b32eb753131e89cd4a7df6b4d6b3402a9a6696de8e18a846669b81fe4733",
+  "operations": [
+    {
+      "addColumn": {
+        "column": {
+          "name": "safeTransactionNonce",
+          "type": "int"
+        },
+        "table": "AssetTransaction"
+      }
+    }
+  ]
+}

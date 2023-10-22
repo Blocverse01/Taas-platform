@@ -1,4 +1,6 @@
 import NextAuth from "next-auth";
+import { JWT } from "next-auth/jwt"
+import { Address } from "viem";
 
 declare module "next-auth" {
   /**
@@ -8,7 +10,21 @@ declare module "next-auth" {
     user: {
       id: string;
       email: string;
-      walletAddress: string;
+      walletAddress: Address
     };
+  }
+  interface User {
+    id: string;
+    email: string;
+    walletAddress: string;
+  }
+}
+
+declare module "next-auth/jwt" {
+  /** Returned by the `jwt` callback and `getToken`, when using JWT sessions */
+  interface JWT {
+    id: string;
+    email: string;
+    walletAddress: Address
   }
 }

@@ -40,10 +40,14 @@ build-storybook.log
 storybook-static
 
 # hardhat
-solidity/artifacts
+solidity/artifacts/@axelar-network
+solidity/artifacts/@openzeppelin
+solidity/artifacts/build-info
 solidity/typechain-types
 solidity/cache
 typechain-types
+
+/solidity/node_modules
 
 # Yarn 3 files
 .pnp.*
