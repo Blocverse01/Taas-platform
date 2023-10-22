@@ -1,3 +1,5 @@
+import { UPLOAD_SERVICE_ENDPOINT } from "./constants";
+
 function formatFileSize(bytes: number): string {
   const units = ["bytes", "KB", "MB", "GB", "TB", "PB", "EB", "ZB", "YB"];
   let size = bytes;
@@ -10,8 +12,6 @@ function formatFileSize(bytes: number): string {
 
   return `${size.toFixed(2)} ${units[unitIndex]}`;
 }
-
-const UPLOAD_SERVICE_ENDPOINT = "https://web3storage-service.vercel.app/upload-file";
 
 interface FileUploadResponse {
   message: string;
