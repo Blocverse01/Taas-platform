@@ -27,6 +27,7 @@ export const UPLOAD_SERVICE_ENDPOINT = "https://web3storage-service.vercel.app/u
 export const GET_ACTIVITY_LOG_ENDPOINT = "/api/activityLog/getActivityLog";
 export const CREATE_ACTIVITY_LOG_ENDPOINT = "/api/activityLog/storeActivityLog";
 export const CREATE_PROJECT_ENDPOINT = "/api/project/create-project";
+export const CREATE_ASSET_ENDPOINT = "/api/asset/create-asset";
 
 //helpers
 export const getCurrentAuthUser = (...args: [GetServerSidePropsContext["req"], GetServerSidePropsContext["res"]] | [NextApiRequest, NextApiResponse]) => getServerSession(...args, authOptions);
