@@ -13,6 +13,7 @@ import useSWR from "swr";
 import { AuthorizationBreakdown } from "@/components/project/pendingAuthorizations/authorizationBreakdown/authorizationBreakdown";
 import { acceptTransaction } from "@/lib/safe/executeTransaction";
 import { executeIssueTokenTransaction } from "@/lib/taas-api/token/issueToken";
+import { OLD_PLATFORM_ENTRY_CONTRACTS } from "@/utils/constants";
 
 type Project = Required<Awaited<ReturnType<typeof getProjectPageProp>>>["project"];
 
@@ -55,7 +56,7 @@ const AuthorizationsPage: NextPageWithLayout<AuthorizationsProps> = ({ teamMembe
 
     const platformEntry = getContractAddress("PLATFORM_ENTRY");
 
-    if (safeTransaction.to == platformEntry) {
+    if (safeTransaction.to == platformEntry || OLD_PLATFORM_ENTRY_CONTRACTS.includes(safeTransaction.to)) {
       const { functionName, args } = decodeFunctionData({
         abi: PLATFORM_ENTRY,
         data: safeTransaction.data as Address,

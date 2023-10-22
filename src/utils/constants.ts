@@ -30,3 +30,5 @@ export const UNAUTHORIZED = 401;
 export const INTERNAL_SERVER_ERROR = 500;
 export const BAD_REQUEST = 400;
 export const NOT_FOUND = 404;
+
+export const OLD_PLATFORM_ENTRY_CONTRACTS = ["0xcf25B4Aa97EB446D2E6a73fEf3068f6ed53D852E"]
