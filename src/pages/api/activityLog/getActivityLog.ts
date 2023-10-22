@@ -8,7 +8,7 @@ const handler: NextApiHandler = async (req: NextApiRequest, res: NextApiResponse
     try {
         await validateAuthInApiHandler(req, res);
 
-        const { projectId, logItem } = req.body.projectId;
+        const { projectId, logItem } = req.body;
 
         if (!projectId || !projectId.trim()) {
             throw new HttpError(BAD_REQUEST, "projectId is required");
