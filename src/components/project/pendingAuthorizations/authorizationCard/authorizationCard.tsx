@@ -16,6 +16,7 @@ interface SafeTransaction {
   confirmationsRequired: number;
   confirmations?: SafeMultisigConfirmationResponse[];
   safeTxHash: string;
+  isExecuted: boolean;
 }
 
 interface ParsedAuthorization {
@@ -28,6 +29,7 @@ interface ParsedAuthorization {
   safeTxHash: Address;
   toUser: Address | undefined;
   assetTokenValue: string | undefined;
+  isExecuted: boolean;
 }
 
 interface AuthorizationCardProps {
