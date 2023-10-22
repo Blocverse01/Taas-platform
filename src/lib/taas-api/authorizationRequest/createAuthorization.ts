@@ -1,4 +1,4 @@
-import { assetTransactionRepository, authorizationRequestRepository } from "@/utils/constants";
+import { assetTransactionRepository } from "@/utils/constants";
 import { AssetTransactionStatus, AssetTransactionType, AuthorizationRequest as AuthorizationRequestStatus } from "@/utils/enums";
 import { getConcatenatedId } from "@/utils/helperfunctions";
 
