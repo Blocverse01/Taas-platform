@@ -25,7 +25,7 @@ const DashboardPage: NextPageWithLayout = () => {
       <div className="flex items-center justify-between mb-6">
         <p className="font-medium text-t-black text-base">All Projects</p>
         <Link
-          href={"/projects/create-project"}
+          href={"/dashboard/projects/create-project"}
           className="px-3 py-4 rounded flex items-center text-white w-max bg-t-purple"
         >
           <Plus width="16" height="16" />
