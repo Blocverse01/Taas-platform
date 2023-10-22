@@ -9,13 +9,18 @@ export const storeProjectAssetFormData = async (projectId: string, tokenAddress:
             headers: {
                 'Content-Type': 'application/json',
             },
-            body: JSON.stringify(payload)
+            body: JSON.stringify({
+                projectId,
+                tokenAddress,
+                realestateData: payload
+            })
         });
 
-        if (!response.ok) throw new Error("File Upload failed");
+        if (!response.ok) throw new Error("Data storing failed");
 
         return await response.json();
     } catch (error) {
+        console.log(error);
         throw error;
     }
 };

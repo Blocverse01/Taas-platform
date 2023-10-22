@@ -6,7 +6,7 @@ import { TokenizedRealData } from "./types";
 export async function createNewProjectAsset(options: any) {
 
     const newAsset = await assetPropertyRepository().create({
-        project: options.projectId,
+        project: options.project.id,
         tokenAddress: options.tokenAddress,
         description: options.description,
         location: options.location,
@@ -29,7 +29,7 @@ export async function storeTokenizedRealEstate(
 
     const project = await projectRepository().read(projectId);
 
-    if(!project){
+    if (!project) {
         throw new Error("");
     }
 
@@ -59,7 +59,7 @@ export async function storeTokenizedRealEstate(
     );
 
     await assetDocumentRepository().create(
-        documents.map((doc : any) => ({
+        documents.map((doc: any) => ({
             ...doc,
             ownerType: "real estate",
             ownerId: tokenizedProperty.id,

@@ -24,7 +24,7 @@ const handler: NextApiHandler = async (req: NextApiRequest, res: NextApiResponse
 
         res.status(OK).json({ message: "Project Created Successfully" });
     } catch (error: any) {
-
+        console.log(error);
         return res
             .status(error?.status ?? error?.response?.status ?? INTERNAL_SERVER_ERROR)
             .json({ message: error.message });
