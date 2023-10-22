@@ -9,7 +9,7 @@ type Address = TAASProject["multisigController"];
 export const getUserProject = async (currentUser: Session["user"], projectId: string, onlyOwnedProject?: true): Promise<TAASProject> => {
     const project = await projectRepository()
         .filter({
-            id: projectId as string,
+            id: projectId,
         })
         .getFirst();
 

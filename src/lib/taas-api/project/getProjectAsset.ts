@@ -22,10 +22,15 @@ export const getProjectAsset = async (currentUser: Session["user"], projectId: s
         throw new HttpError(BAD_REQUEST, "Unsupported asset type");
     }
 
-    const asset = await assetPropertyRepository().filter({
+    const initialAssetQuery = assetPropertyRepository().filter({
         "project.owner.id": currentUser.id,
         "project.id": projectId,
+    });
+
+    const asset = await initialAssetQuery.filter({
         "id": assetId,
+    }).select(["id", "name", "description", "location", "size", "tokenAddress", "tokenPrice", "tokenTicker", "valuation"]).getFirst() ?? await initialAssetQuery.filter({
+        "tokenAddress": assetId,
     }).select(["id", "name", "description", "location", "size", "tokenAddress", "tokenPrice", "tokenTicker", "valuation"]).getFirst();
 
     if (!asset) {
