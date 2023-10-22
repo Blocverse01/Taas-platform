@@ -1,7 +1,7 @@
 import { SafeMultisigTransactionResponse, SafeTransaction } from "@safe-global/safe-core-sdk-types";
 import { Address } from "viem";
 import { validateSignatory } from "./validateSafeSigner";
-import { assetTransactionRepository, authorizationRequestRepository } from "@/utils/constants";
+import { assetTransactionRepository } from "@/utils/constants";
 import { ContractReceipt } from "ethers";
 import { AssetTransactionStatus, AssetTransactionType, AuthorizationRequest as AuthorizationRequestStatus } from "@/utils/enums";
 import { getConcatenatedId } from "@/utils/helperfunctions";
