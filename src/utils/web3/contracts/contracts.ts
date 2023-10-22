@@ -15,7 +15,7 @@ const contracts: ContractsDictionary = {
     //"0x44C2cf0B97c5EE08156683aF5509E16d7A68A324",
   },
   mainnet: {
-    PLATFORM_ENTRY: "0xcf25B4Aa97EB446D2E6a73fEf3068f6ed53D852E"
+    PLATFORM_ENTRY: "0x59f2f026473aBc82a9e61286ca053175681C25E6"
   },
 };
 

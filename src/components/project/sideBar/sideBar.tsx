@@ -38,8 +38,8 @@ const ProjectSidebar: FC<ProjectSidebarProps> = ({ projectId }) => {
       icon: <Settings />,
     },
     {
-      name: "authorization",
-      href: `/projects/${projectId}/authorization`,
+      name: "authorizations",
+      href: `/dashboard/projects/${projectId}/authorizations`,
       icon: <Authorization />,
     },
   ];

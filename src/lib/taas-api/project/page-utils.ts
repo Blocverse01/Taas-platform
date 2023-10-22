@@ -27,7 +27,7 @@ export const getProjectPageProp = async (context: GetServerSidePropsContext) => 
 
     try {
         const project = await getUserProject(authSession.user, projectId as string);
-        return { project };
+        return { project, user: authSession };
     } catch (error: any) {
         if (error instanceof HttpError) {
             if (error.status === NOT_FOUND || error.status === UNAUTHORIZED) {
