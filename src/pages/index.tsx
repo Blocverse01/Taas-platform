@@ -1,35 +1,65 @@
 "use client";
 import { Navbar } from "@/components/landingPage/navbar";
 import Image from "next/image";
-import hero from "@/assets/hero-img.png";
+import { Element } from "react-scroll";
 import heroRaw from "@/assets/hero-img-raw.png";
-import {
-  Facebook,
-  Twitter,
-  Instagram,
-  Linkedln,
-  Plus,
-  Tick,
-  Tick2,
-  HeroBg,
-} from "@/assets/icon";
+import { Twitter, Instagram, Linkedln, Plus, HeroBg } from "@/assets/icon";
 import { ComponentProps } from "react";
 import {
-  CustomPlan,
   DevIntegrations,
   ManageAssets,
-  PropertyListingPlan,
   TeamManagement,
-  TeamMemberPlan,
 } from "@/components/landingPage/sectionData";
 import Link from "next/link";
 
 type MenuItems = ComponentProps<typeof Navbar>["menuItems"]; // MenuItem[];
 
+type TitleAndTextProps = {
+  title: string;
+  text: string;
+};
+
+type FeatureProps = {
+  icon: React.ReactNode;
+  title: string;
+  text: string;
+};
+
+const TitleAndText: React.FC<TitleAndTextProps> = ({ title, text }) => (
+  <div>
+    <h2 className="text-center text-[36px] font-medium">{title}</h2>
+    <p className="text-xl md:text-[20px] mt-4 text-t-black opacity-70 leading-[32px] text-center max-w-[700px] mx-auto">
+      {text}
+    </p>
+  </div>
+);
+
+const Features: React.FC<FeatureProps> = ({ icon, text, title }) => (
+  <div className="flex flex-col space-y-4">
+    <div className="mx-auto w-fit">{icon}</div>
+    <h2 className="text-[24px] text-center font-medium">{title}</h2>
+    <p className="xl:max-w-[383px] xl:ml-4 text-center text-base opacity-70">
+      {text}
+    </p>
+  </div>
+);
+
+const Integrations: React.FC<FeatureProps> = ({ icon, text, title }) => (
+  <div className="flex flex-col space-y-4">
+    <div className=" w-fit">{icon}</div>
+    <h2 className="text-[24px]  font-medium">{title}</h2>
+    <p className="xl:max-w-[383px]   text-base opacity-70">{text}</p>
+  </div>
+);
+
 export default function Home() {
   const menuItems: MenuItems = [
-    { title: "Docs", href: "/", isScrollLink: false },
-    { title: "Pricing", target: "pricing", href: "/", isScrollLink: true },
+    {
+      title: "Docs",
+      href: "https://taas-by-blocverse.gitbook.io/taas/",
+      isScrollLink: false,
+    },
+    // { title: "Pricing", target: "pricing", href: "/", isScrollLink: true },
     {
       title: "Contact Us",
       target: "contact-us",
@@ -37,45 +67,6 @@ export default function Home() {
       isScrollLink: true,
     },
   ];
-
-  type TitleAndTextProps = {
-    title: string;
-    text: string;
-  };
-
-  type FeatureProps = {
-    icon: React.ReactNode;
-    title: string;
-    text: string;
-  };
-
-  const TitleAndText: React.FC<TitleAndTextProps> = ({ title, text }) => (
-    <div>
-      <h2 className="text-center text-[36px] font-medium">{title}</h2>
-      <p className="text-xl md:text-[20px] mt-4 text-t-black opacity-70 leading-[32px] text-center max-w-[700px] mx-auto">
-        {text}
-      </p>
-    </div>
-  );
-
-  const Features: React.FC<FeatureProps> = ({ icon, text, title }) => (
-    <div className="flex flex-col space-y-4">
-      <div className="mx-auto w-fit">{icon}</div>
-      <h2 className="text-[24px] text-center font-medium">{title}</h2>
-      <p className="xl:max-w-[383px] xl:ml-4 text-center text-base opacity-70">
-        {text}
-      </p>
-    </div>
-  );
-
-  const Integrations: React.FC<FeatureProps> = ({ icon, text, title }) => (
-    <div className="flex flex-col space-y-4">
-      <div className=" w-fit">{icon}</div>
-      <h2 className="text-[24px]  font-medium">{title}</h2>
-      <p className="xl:max-w-[383px]   text-base opacity-70">{text}</p>
-    </div>
-  );
-
   return (
     <div>
       <div className="absolute opacity-20 flex z-1 justify-center inset-0 top-[12px]">
@@ -209,7 +200,7 @@ export default function Home() {
               </div>
               <div>
                 <a
-                  href="#"
+                  href="https://taas-by-blocverse.gitbook.io/taas/"
                   type="button"
                   className="select-none w-fit  hover:-translate-y-[3px] duration-200 font-medium bg-t-purple text-white  rounded-lg text-[20px] py-4 px-8"
                 >
@@ -307,35 +298,37 @@ export default function Home() {
                 </a>
               </div>
             </div>
-            <footer className="mt-12 flex flex-col md:flex-row justify-between py-7 px-8 bg-gray-50 rounded-[10px] md:items-center gap-y-6">
-              <div className="flex items-center gap-x-6">
-                {/* <a href="https://www.blocverse.com/">
+            <Element name="contact-us">
+              <footer className="mt-12 flex flex-col md:flex-row justify-between py-7 px-8 bg-gray-50 rounded-[10px] md:items-center gap-y-6">
+                <div className="flex items-center gap-x-6">
+                  {/* <a href="https://www.blocverse.com/">
                   <Facebook />
                 </a> */}
-                <a
-                  className="duration-200 xl:hover:scale-110"
-                  href="https://x.com/blocverse_?s=21&t=rkkQH_grtwFBikJXi4GPcA"
-                >
-                  <Twitter />
-                </a>
-                <a
-                  className="duration-200 xl:hover:scale-110"
-                  href="https://instagram.com/_blocverse?igshid=NGVhN2U2NjQ0Yg=="
-                >
-                  <Instagram />
-                </a>
-                <a
-                  className="duration-200 xl:hover:scale-110"
-                  href="https://www.linkedin.com/company/blocverse/"
-                >
-                  <Linkedln />
-                </a>
-              </div>
-              <p className="text-sm text-gray-800">
-                © 2023 TAAS. All rights reserved.
-              </p>
-              <h2 className="font-bold text-2xl text-t-purple">TAAS</h2>
-            </footer>
+                  <a
+                    className="duration-200 xl:hover:scale-110"
+                    href="https://x.com/blocverse_?s=21&t=rkkQH_grtwFBikJXi4GPcA"
+                  >
+                    <Twitter />
+                  </a>
+                  <a
+                    className="duration-200 xl:hover:scale-110"
+                    href="https://instagram.com/_blocverse?igshid=NGVhN2U2NjQ0Yg=="
+                  >
+                    <Instagram />
+                  </a>
+                  <a
+                    className="duration-200 xl:hover:scale-110"
+                    href="https://www.linkedin.com/company/blocverse/"
+                  >
+                    <Linkedln />
+                  </a>
+                </div>
+                <p className="text-sm text-gray-800">
+                  © 2023 TAAS. All rights reserved.
+                </p>
+                <h2 className="font-bold text-2xl text-t-purple">TAAS</h2>
+              </footer>
+            </Element>
           </section>
         </main>
       </div>

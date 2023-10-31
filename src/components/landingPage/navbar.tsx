@@ -27,6 +27,11 @@ const Navbar: React.FC<NavbarProps> = ({ menuItems, isLoggedIn }) => {
       : setToggleIcon("nav-toggler");
   };
 
+  const closeMenu = () => {
+    setActive("nav-menu");
+    setToggleIcon("nav-toggler");
+  };
+
   return (
     <nav className="z-30 flex items-center xl:shadow-lg justify-between w-full px-4 py-6 xl:relative lg:px-6 xl:px-[72px]">
       <div>
@@ -48,11 +53,14 @@ const Navbar: React.FC<NavbarProps> = ({ menuItems, isLoggedIn }) => {
                   offset={50}
                   smooth={true}
                   duration={500}
+                  onClick={closeMenu}
                 >
                   {menuitem.title}
                 </ScrollLink>
               ) : (
-                <a href={menuitem.href}>{menuitem.title}</a>
+                <a onClick={closeMenu} href={menuitem.href}>
+                  {menuitem.title}
+                </a>
               )}
             </li>
           ))}
