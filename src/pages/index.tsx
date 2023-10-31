@@ -98,7 +98,7 @@ export default function Home() {
               <Image
                 src={heroRaw}
                 alt="Image"
-                className="mx-auto max-w-[1103px] max-h-[600px] object-cover object-top border-t-purple border-[3px] rounded-[24px]"
+                className="mx-auto xl:max-w-[1103px] max-h-[600px] object-cover object-top border-t-purple border-[3px] rounded-[24px]"
               />
             </div>
           </section>
