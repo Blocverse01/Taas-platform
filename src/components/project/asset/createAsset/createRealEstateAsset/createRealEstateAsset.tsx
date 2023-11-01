@@ -1,10 +1,9 @@
-import { FC } from "react";
-import { CreateRealEstateAssetForm } from "./form";
-import { Address } from "viem";
-import { tokenizeAsset } from "@/lib/taas-api/tokenFactory/tokenizeAsset";
-import { useRouter } from "next/router";
-import { storeProjectAssetFormData } from "@/utils/assetIntegrations";
-import { AssetDocument } from "@/xata";
+import { FC } from 'react';
+import { CreateRealEstateAssetForm } from './form';
+import { Address } from 'viem';
+import { tokenizeAsset } from '@/lib/taas-api/tokenFactory/tokenizeAsset';
+import { useRouter } from 'next/router';
+import { storeProjectAssetFormData } from '@/utils/assetIntegrations';
 
 interface CreateRealEstateAssetProps {
   projectId: string;
@@ -22,9 +21,7 @@ const CreateRealEstateAsset: FC<CreateRealEstateAssetProps> = ({
   return (
     <section>
       <div className="mb-8 w-fit mx-auto flex flex-col gap-4">
-        <h3 className="text-2xl font-medium text-t-black text-center">
-          Real Estate Tokenization
-        </h3>
+        <h3 className="text-2xl font-medium text-t-black text-center">Real Estate Tokenization</h3>
         <p className="text-t-black text-base text-center">
           Fill this form to create a new real estate asset.
         </p>
@@ -34,8 +31,6 @@ const CreateRealEstateAsset: FC<CreateRealEstateAssetProps> = ({
         handleCreateAsset={async (values) => {
           const { tokenTicker, pricePerToken, propertyName } = values;
 
-          console.log(projectTokenFactory, "FACTOR")
-
           const { tokenAddress, txHash } = await tokenizeAsset(
             projectTokenFactory,
             tokenTicker,
@@ -43,10 +38,10 @@ const CreateRealEstateAsset: FC<CreateRealEstateAssetProps> = ({
             propertyName
           );
 
-          await storeProjectAssetFormData(projectId, tokenAddress as Address, { ...values, documents: values.documents as AssetDocument[] });
-          console.log(values, "VALUES")
-          console.log(tokenAddress, "Address")
-          console.log(txHash, "Hash")
+          await storeProjectAssetFormData(projectId, tokenAddress as Address, {
+            ...values,
+            documents: values.documents,
+          });
           router.push(assetsPageLink);
         }}
         backLink={assetsPageLink}
