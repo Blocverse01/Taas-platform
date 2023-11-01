@@ -1,6 +1,5 @@
-
-export const getConcatenatedId = (firstPartOfId: string, secondPartOfId: string) => {
-    return `${firstPartOfId}-${secondPartOfId}`
+export const getConcatenatedId = (...args: string[]) => {
+    return args.join('-');
 }
 
 export const derivePageTitle = (routerPath: string, projectId: string) => {

@@ -1,21 +1,25 @@
-import { Formik, Form, Field, ErrorMessage } from "formik";
+import { Formik, Form, ErrorMessage } from "formik";
 import * as Yup from "yup";
 import { FC } from "react";
 import Select from "react-select";
 import { Input } from "@/components/formPrimitives/input";
 import classNames from "classnames";
-
-interface AddTeamMemberDialogProps {
-  backButton?: React.ReactNode;
-}
+import toast from "react-hot-toast";
 
 const validationSchema = Yup.object({
   name: Yup.string().required("Name is required"),
   email: Yup.string()
     .email("Invalid email address")
     .required("Email is required"),
-  role: Yup.string().required("Role is required"),
+  role: Yup.string().required("Role is required").oneOf(["admin", "developer", "owner"]),
 });
+
+type Values = Yup.InferType<typeof validationSchema>;
+
+interface AddTeamMemberDialogProps {
+  backButton?: React.ReactNode;
+  handleCreateTeamMember: (payload: Values) => Promise<void>;
+}
 
 const roleOptions = [
   { value: 'admin', label: 'Admin' },
@@ -23,12 +27,7 @@ const roleOptions = [
   { value: 'owner', label: 'Owner' },
 ];
 
-const handleSubmit = (values: any) => {
-  // Handle form submission here
-  console.log("Form values:", values);
-};
-
-const AddTeamMemberForm: FC<AddTeamMemberDialogProps> = ({ backButton }) => {
+const AddTeamMemberForm: FC<AddTeamMemberDialogProps> = ({ backButton, handleCreateTeamMember }) => {
   const initialValues = {
     name: "",
     email: "",
@@ -38,7 +37,19 @@ const AddTeamMemberForm: FC<AddTeamMemberDialogProps> = ({ backButton }) => {
     <Formik
       initialValues={initialValues}
       validationSchema={validationSchema}
-      onSubmit={handleSubmit}
+      onSubmit={async (values, { setSubmitting }) => {
+        const toastOptions = { id: "create-tem-member" };
+        try {
+          toast.loading("Adding team member", toastOptions);
+          await handleCreateTeamMember(values);
+          toast.success("Team member added", toastOptions);
+        } catch (error) {
+          toast.error("Error adding team member", toastOptions);
+          console.log(error);
+        } finally {
+          setSubmitting(false);
+        }
+      }}
     >
       {({ isValid, isSubmitting, setFieldValue }) => (
         <Form className=" space-y-4 max-w-[430px] w-full">
@@ -92,7 +103,7 @@ const AddTeamMemberForm: FC<AddTeamMemberDialogProps> = ({ backButton }) => {
               className="text-red-500"
             />
           </div>
-         
+
           <div
             className={classNames({
               "grid grid-cols-2 gap-2.5": Boolean(backButton),

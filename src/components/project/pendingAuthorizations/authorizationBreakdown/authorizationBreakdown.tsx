@@ -23,6 +23,7 @@ interface AuthorizationBreakdownProps {
     name: string;
     assetLink: string;
   };
+  approvals: string[];
   approveTransaction: (txHash: Address) => Promise<void>;
   executeTransaction: (txHash: Address) => Promise<void>;
   handleBack: () => void;
@@ -34,6 +35,7 @@ const AuthorizationBreakdown: FC<AuthorizationBreakdownProps> = ({
   approveTransaction,
   executeTransaction,
   handleBack,
+  approvals
 }) => {
   const DATE_FORMAT = "dd MMM, yyyy";
 
@@ -42,7 +44,7 @@ const AuthorizationBreakdown: FC<AuthorizationBreakdownProps> = ({
 
   const hasApproved =
     currentUser &&
-    authorization.confirmations.some((confirmation) => confirmation.owner == currentUserWallet);
+    approvals.some((approval) => approval == currentUserWallet);
 
   const handleApproveTx = async () => {
     if (hasApproved) {
@@ -140,15 +142,15 @@ const AuthorizationBreakdown: FC<AuthorizationBreakdownProps> = ({
           <h3 className="mb-3">
             Authorizations:{" "}
             <span className="text-t-purple">
-              {authorization.confirmations?.length ?? 0}/{authorization.confirmationsRequired}
+              {approvals.length}/{authorization.confirmationsRequired}
             </span>
           </h3>
-          {authorization.confirmations && (
+          {approvals.length > 0 && (
             <div className="flex-col flex gap-3">
-              {authorization.confirmations.map((confirmation) => (
-                <div key={confirmation.owner} className="flex items-center gap-2">
+              {approvals.map((approval) => (
+                <div key={approval} className="flex items-center gap-2">
                   <CheckmarkIcon />
-                  <span>{confirmation.owner == currentUserWallet ? "You" : `${confirmation.owner}`}</span>
+                  <span>{approval == currentUserWallet ? "You" : `${approval}`}</span>
                 </div>
               ))}
             </div>
@@ -158,7 +160,7 @@ const AuthorizationBreakdown: FC<AuthorizationBreakdownProps> = ({
           <button
             type="button"
             onClick={handleExecuteTx}
-            disabled={authorization.confirmations.length < authorization.confirmationsRequired}
+            disabled={approvals.length < authorization.confirmationsRequired}
             className="bg-t-purple py-[18px] rounded text-white px-[54px] disabled:opacity-60"
           >
             Execute Transaction

@@ -1,13 +1,13 @@
-import logo from "@/assets/logo.svg";
-import Image from "next/image";
-import Link from "next/link";
+import logo from '@/assets/logo.svg';
+import Image from 'next/image';
+import Link from 'next/link';
 
 interface SubPageLayoutProps {
   children: React.ReactNode;
 }
 
 // Todo: consider the relevance of adding this to global constants
-const APP_NAME = "TAAS";
+const APP_NAME = 'TAAS';
 
 export default function SubPageLayout({ children }: SubPageLayoutProps) {
   return (
@@ -18,7 +18,7 @@ export default function SubPageLayout({ children }: SubPageLayoutProps) {
           <span className="text-t-purple text-xs font-medium tracking-[1.2px]">{APP_NAME}</span>
         </Link>
       </header>
-      <main className="flex items-center justify-center min-h-[calc(100vh-80px)] md:min-h-[calc(100vh-200px)]">
+      <main className="flex items-center justify-center min-h-[calc(100vh-80px)] md:min-h-[calc(100vh-200px)] pb-6 lg:pb-10">
         {children}
       </main>
     </section>

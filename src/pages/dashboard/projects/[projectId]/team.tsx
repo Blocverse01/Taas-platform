@@ -47,7 +47,7 @@ const ProjectTeamPage: NextPageWithLayout<InferGetServerSidePropsType<typeof get
       </div>
     );
   }
-  return <TeamPage teamMembers={teamMembers} />;
+  return <TeamPage projectId={project.id} teamMembers={teamMembers} />;
 };
 
 ProjectTeamPage.getLayout = (page) => (

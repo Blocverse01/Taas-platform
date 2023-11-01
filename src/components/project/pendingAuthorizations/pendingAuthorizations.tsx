@@ -8,6 +8,7 @@ interface PendingAuthorizationsProps {
   parseTransaction: AuthorizationCardProps["parseAuthorization"];
   getAssetDetails: AuthorizationCardProps["getAssetDetails"];
   selectAuthorization: AuthorizationCardProps["selectAuthorization"];
+  getOwnersWhoApproved: AuthorizationCardProps["getApprovals"];
 }
 
 const PendingAuthorizations: FC<PendingAuthorizationsProps> = ({
@@ -15,31 +16,35 @@ const PendingAuthorizations: FC<PendingAuthorizationsProps> = ({
   parseTransaction,
   getAssetDetails,
   selectAuthorization,
+  getOwnersWhoApproved
 }) => {
   return (
-    <table className="table-fixed border-separate border-spacing-y-8">
-      <thead>
-        <tr className="text-left text-t-black/70">
-          <th className="w-[300px] px-6 font-medium">Action Title</th>
-          <th className="w-[300px] font-medium">Asset</th>
-          <th className="w-[300px] font-medium">Initiator</th>
-        </tr>
-      </thead>
-      <tbody className="text-t-black text-sm">
-        {safeTransactions.map((safeTx) => (
-          <AuthorizationCard
-            key={safeTx.nonce}
-            parseAuthorization={parseTransaction}
-            safeTransaction={safeTx}
-            getAssetDetails={getAssetDetails}
-            selectAuthorization={selectAuthorization}
-          />
-        ))}
-      </tbody>
+    <div>
+      <table className="table-fixed border-separate border-spacing-y-8">
+        <thead>
+          <tr className="text-left text-t-black/70">
+            <th className="w-[300px] px-6 font-medium">Action Title</th>
+            <th className="w-[300px] font-medium">Asset</th>
+            <th className="w-[300px] font-medium">Initiator</th>
+          </tr>
+        </thead>
+        <tbody className="text-t-black text-sm">
+          {safeTransactions.map((safeTx) => (
+            <AuthorizationCard
+              getApprovals={getOwnersWhoApproved}
+              key={safeTx.nonce}
+              parseAuthorization={parseTransaction}
+              safeTransaction={safeTx}
+              getAssetDetails={getAssetDetails}
+              selectAuthorization={selectAuthorization}
+            />
+          ))}
+        </tbody>
+      </table>
       {safeTransactions.length === 0 && (
-        <div className="text-center text-sm text-t-black/70">No items to display</div>
+        <div className="text-center w-full text-sm text-t-black/70">No items to display</div>
       )}
-    </table>
+    </div>
   );
 };
 
