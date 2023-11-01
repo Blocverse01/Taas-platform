@@ -4,10 +4,24 @@ import { Address } from 'viem';
 import { tokenizeAsset } from '@/lib/taas-api/tokenFactory/tokenizeAsset';
 import { useRouter } from 'next/router';
 import { storeProjectAssetFormData } from '@/utils/assetIntegrations';
+import { useLocalStorage } from 'usehooks-ts';
+import { getConcatenatedId } from '@/utils/helperfunctions';
 
 interface CreateRealEstateAssetProps {
   projectId: string;
   projectTokenFactory: Address;
+}
+
+interface TokenOptions {
+  tokenTicker: string;
+  pricePerToken: number;
+  propertyName: string;
+}
+
+interface UnStoredTokenization {
+  id: string;
+  tokenAddress: Address;
+  txHash: Address;
 }
 
 const CreateRealEstateAsset: FC<CreateRealEstateAssetProps> = ({
@@ -15,6 +29,51 @@ const CreateRealEstateAsset: FC<CreateRealEstateAssetProps> = ({
   projectId,
 }) => {
   const router = useRouter();
+
+  const [unStoredTokenization, setUnStoredTokenization] = useLocalStorage<
+    UnStoredTokenization | undefined
+  >('unStoredTokenization', undefined);
+
+  function getUnStoredTokenization(tokenOptions: TokenOptions) {
+    if (!unStoredTokenization) return undefined;
+
+    const { tokenTicker, pricePerToken, propertyName } = tokenOptions;
+
+    // form ID using key tokenization args
+    const id = getConcatenatedId(
+      projectTokenFactory,
+      tokenTicker,
+      pricePerToken.toString(),
+      propertyName
+    );
+    if (unStoredTokenization.id !== id) return undefined;
+
+    return unStoredTokenization;
+  }
+
+  async function handleAssetTokenization(tokenOptions: TokenOptions) {
+    const { tokenTicker, pricePerToken, propertyName } = tokenOptions;
+
+    const { tokenAddress, txHash } = await tokenizeAsset(
+      projectTokenFactory,
+      tokenTicker,
+      pricePerToken,
+      propertyName
+    );
+
+    setUnStoredTokenization({
+      tokenAddress,
+      txHash,
+      id: getConcatenatedId(
+        projectTokenFactory,
+        tokenTicker,
+        pricePerToken.toString(),
+        propertyName
+      ),
+    });
+
+    return { txHash, tokenAddress };
+  }
 
   const assetsPageLink = `/dashboard/projects/${projectId}/assets`;
 
@@ -31,17 +90,18 @@ const CreateRealEstateAsset: FC<CreateRealEstateAssetProps> = ({
         handleCreateAsset={async (values) => {
           const { tokenTicker, pricePerToken, propertyName } = values;
 
-          const { tokenAddress, txHash } = await tokenizeAsset(
-            projectTokenFactory,
-            tokenTicker,
-            pricePerToken,
-            propertyName
-          );
+          const tokenOptions = { tokenTicker, pricePerToken, propertyName };
+
+          const { tokenAddress, txHash } =
+            getUnStoredTokenization(tokenOptions) ?? (await handleAssetTokenization(tokenOptions));
 
           await storeProjectAssetFormData(projectId, tokenAddress as Address, {
             ...values,
             documents: values.documents,
           });
+
+          setUnStoredTokenization(undefined);
+
           router.push(assetsPageLink);
         }}
         backLink={assetsPageLink}
