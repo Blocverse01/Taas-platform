@@ -64,7 +64,6 @@ export async function storeTokenizedRealEstate(
             tokenAddress,
             tokenTicker,
             photos,
-            valuation,
             name: propertyName,
             description: propertyDescription,
             location: propertyLocation,
@@ -73,6 +72,7 @@ export async function storeTokenizedRealEstate(
             project: {
                 id: project.id
             },
+            valuation: parseFloat(`${valuation}`),
         }
     );
 
