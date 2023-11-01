@@ -6,7 +6,6 @@ import 'react-loading-skeleton/dist/skeleton.css';
 import { useSetModalParent } from '../src/lib/zustand/modalSlice';
 import { Toaster } from 'react-hot-toast';
 import { TAAS_PURPLE } from '../tailwind.config';
-import { RouterContext } from 'next/dist/shared/lib/router-context.shared-runtime';
 
 const preview: Preview = {
   parameters: {
@@ -16,9 +15,6 @@ const preview: Preview = {
         color: /(background|color)$/i,
         date: /Date$/,
       },
-    },
-    nextRouter: {
-      Provider: RouterContext.Provider,
     },
   },
   decorators: [
