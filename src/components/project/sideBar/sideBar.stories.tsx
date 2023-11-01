@@ -11,11 +11,14 @@ const meta = {
     projectId,
   },
   parameters: {
-    nextRouter: {
-      pathname: '/dashboard/projects/[projectId]',
-      asPath: `/dashboard/projects/${projectId}`,
-      query: {
-        projectId,
+    layout: 'centered',
+    nextjs: {
+      router: {
+        pathname: '/dashboard/projects/[projectId]',
+        asPath: `/dashboard/projects/${projectId}`,
+        query: {
+          projectId,
+        },
       },
     },
   },
