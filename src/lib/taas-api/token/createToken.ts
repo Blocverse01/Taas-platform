@@ -1,9 +1,23 @@
 import { assetDocumentRepository, assetPropertyRepository, projectRepository } from "@/utils/constants";
-import { AssetDocument } from "@/xata";
 import { Address } from "viem";
 import { TokenizedRealData } from "./types";
 
-export async function createNewProjectAsset(options: any) {
+interface CreateProjectProjectOptions {
+    project: {
+        id: string;
+    },
+    tokenAddress: Address;
+    description: string;
+    location: string;
+    size: number;
+    tokenPrice: number;
+    tokenTicker: string;
+    photos: Array<string>;
+    valuation: number;
+    name: string;
+}
+
+export async function createNewProjectAsset(options: CreateProjectProjectOptions) {
 
     const newAsset = await assetPropertyRepository().create({
         project: options.project.id,
@@ -42,19 +56,23 @@ export async function storeTokenizedRealEstate(
         tokenTicker,
         pricePerToken,
         photos,
+        valuation
     } = realEstateData;
 
     const tokenizedProperty = await createNewProjectAsset(
         {
+            tokenAddress,
+            tokenTicker,
+            photos,
+            valuation,
             name: propertyName,
             description: propertyDescription,
             location: propertyLocation,
             size: propertySize,
             tokenPrice: pricePerToken,
-            project: project.id,
-            tokenAddress,
-            tokenTicker,
-            photos,
+            project: {
+                id: project.id
+            },
         }
     );
 
