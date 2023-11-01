@@ -17906,6 +17906,22 @@ __metadata:
   languageName: node
   linkType: hard
 
+"storybook-addon-next-router@npm:^4.0.2":
+  version: 4.0.2
+  resolution: "storybook-addon-next-router@npm:4.0.2"
+  dependencies:
+    tslib: 2.4.0
+  peerDependencies:
+    "@storybook/addon-actions": ^6.0.0
+    "@storybook/addons": ^6.0.0
+    "@storybook/client-api": ^6.0.0
+    next: ^9.0.0 || ^10.0.0 || ^11.0.0 || ^12.0.0 || ^13.0.0
+    react: ^16.8.0 || ^17.0.0 || ^18.0.0
+    react-dom: ^16.8.0 || ^17.0.0 || ^18.0.0
+  checksum: 5e3d1b2510700c21d175e10d56bcad970a8b390715bbd8e9767528e60165c4bc651ef94a7a854f042185454c51c57d884b03c625c0ee28000d3916e11a6d865f
+  languageName: node
+  linkType: hard
+
 "storybook@npm:^7.4.6":
   version: 7.5.1
   resolution: "storybook@npm:7.5.1"
@@ -18353,6 +18369,7 @@ __metadata:
     react-select: ^5.7.7
     react-spinners: ^0.13.8
     storybook: ^7.4.6
+    storybook-addon-next-router: ^4.0.2
     swr: ^2.2.4
     taas-ethers: "npm:ethers@5.7.2"
     tailwindcss: ^3
