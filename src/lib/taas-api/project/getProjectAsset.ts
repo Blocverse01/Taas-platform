@@ -33,7 +33,7 @@ export const getProjectAsset = async (currentUser: Session["user"], projectId: s
     });
 
 
-    const select: SelectableColumnWithObjectNotation<TokenizedPropertyRecord, []>[] = ["id", "name", "description", "location", "size", "tokenAddress", "tokenPrice", "tokenTicker", "valuation", "project.id", "project.blockchain", "project.multisigController", "project.tokenFactory"] as const;
+    const select: SelectableColumnWithObjectNotation<TokenizedPropertyRecord, []>[] = ["id", "name", "description", "location", "size", "tokenAddress", "tokenPrice", "tokenTicker", "valuation", "project.id", "project.blockchain", "project.multisigController", "project.tokenFactory"];
 
     const asset = await initialAssetQuery.filter({
         "id": assetId,

@@ -1,12 +1,13 @@
-import type { Meta, StoryObj } from "@storybook/react";
-import { TeamPage } from "./teamPage";
+import type { Meta, StoryObj } from '@storybook/react';
+import { TeamPage } from './teamPage';
 
 const meta = {
-  title: "Project/Team Page",
+  title: 'Project/Team Page',
   component: TeamPage,
-  tags: ["autodocs"],
+  tags: ['autodocs'],
   args: {
     teamMembers: [],
+    projectId: 'sample-project-id',
   },
 } satisfies Meta<typeof TeamPage>;
 
