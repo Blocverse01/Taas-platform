@@ -1,5 +1,3 @@
-import { AssetDocument } from "@/xata";
-
 export interface TokenizedRealData {
     propertyName: string;
     propertyDescription: string;
@@ -7,6 +5,7 @@ export interface TokenizedRealData {
     propertySize: number;
     tokenTicker: string;
     pricePerToken: number;
-    documents: Array<AssetDocument>;
+    documents: Array<UploadedAssetDocument>;
     photos: Array<string>;
+    valuation: number;
 }
