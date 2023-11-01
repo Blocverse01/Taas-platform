@@ -181,7 +181,7 @@ const CreateRealEstateAssetForm: FC<CreateAssetFormProps> = ({ backLink, handleC
                   <Input
                     label="Property Valuation (USD)"
                     name="valuation"
-                    placeholder="A symbol for your token"
+                    placeholder="The value of the property in USD"
                   />
                   <Textarea
                     label="Property Description"
