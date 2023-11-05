@@ -64,6 +64,9 @@ const Navbar: React.FC<NavbarProps> = ({ menuItems, isLoggedIn }) => {
               )}
             </li>
           ))}
+          <li className="text-t-black link select-none cursor-pointer  text-[20px] md:text-sm  font-medium">
+            <a href="mailto:info@blocverse.com"> Contact Us</a>
+          </li>
         </ul>
       </div>
       {isLoggedIn ? (

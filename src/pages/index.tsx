@@ -1,7 +1,8 @@
 "use client";
 import { Navbar } from "@/components/landingPage/navbar";
 import Image from "next/image";
-import { Element } from "react-scroll";
+import { useSession } from "next-auth/react";
+
 import heroRaw from "@/assets/hero-img-raw.png";
 import { Twitter, Instagram, Linkedln, Plus, HeroBg } from "@/assets/icon";
 import { ComponentProps } from "react";
@@ -53,6 +54,8 @@ const Integrations: React.FC<FeatureProps> = ({ icon, text, title }) => (
 );
 
 export default function Home() {
+  const { status } = useSession();
+  const isLoggedIn = status === "authenticated";
   const menuItems: MenuItems = [
     {
       title: "Docs",
@@ -60,12 +63,6 @@ export default function Home() {
       isScrollLink: false,
     },
     // { title: "Pricing", target: "pricing", href: "/", isScrollLink: true },
-    {
-      title: "Contact Us",
-      target: "contact-us",
-      href: "/",
-      isScrollLink: true,
-    },
   ];
   return (
     <div>
@@ -73,7 +70,7 @@ export default function Home() {
         <HeroBg />
       </div>
       <div className="max-w-[1440px] z-50 relative mx-auto">
-        <Navbar menuItems={menuItems} isLoggedIn={false} />
+        <Navbar menuItems={menuItems} isLoggedIn={isLoggedIn} />
         <main className="lg:mt-[100px] mt-20 overflow-x-hidden text-t-black">
           <section className="text-center px-6 md:px-12 xl:px-[102px] flex flex-col relative">
             <p className="text-center text-t-purple text-sm rounded-[32px] h-[32px] shadow-[0px_2px_4px_0px_rgba(0,0,0,0.25)] py-[7px] px-[18px] bg-t-purple/10 w-fit mx-auto mb-5">
@@ -298,37 +295,36 @@ export default function Home() {
                 </a>
               </div>
             </div>
-            <Element name="contact-us">
-              <footer className="mt-12 flex flex-col md:flex-row justify-between py-7 px-8 bg-gray-50 rounded-[10px] md:items-center gap-y-6">
-                <div className="flex items-center gap-x-6">
-                  {/* <a href="https://www.blocverse.com/">
+
+            <footer className="mt-12 flex flex-col md:flex-row justify-between py-7 px-8 bg-gray-50 rounded-[10px] md:items-center gap-y-6">
+              <div className="flex items-center gap-x-6">
+                {/* <a href="https://www.blocverse.com/">
                   <Facebook />
                 </a> */}
-                  <a
-                    className="duration-200 xl:hover:scale-110"
-                    href="https://x.com/blocverse_?s=21&t=rkkQH_grtwFBikJXi4GPcA"
-                  >
-                    <Twitter />
-                  </a>
-                  <a
-                    className="duration-200 xl:hover:scale-110"
-                    href="https://instagram.com/_blocverse?igshid=NGVhN2U2NjQ0Yg=="
-                  >
-                    <Instagram />
-                  </a>
-                  <a
-                    className="duration-200 xl:hover:scale-110"
-                    href="https://www.linkedin.com/company/blocverse/"
-                  >
-                    <Linkedln />
-                  </a>
-                </div>
-                <p className="text-sm text-gray-800">
-                  © 2023 TAAS. All rights reserved.
-                </p>
-                <h2 className="font-bold text-2xl text-t-purple">TAAS</h2>
-              </footer>
-            </Element>
+                <a
+                  className="duration-200 xl:hover:scale-110"
+                  href="https://x.com/blocverse_?s=21&t=rkkQH_grtwFBikJXi4GPcA"
+                >
+                  <Twitter />
+                </a>
+                <a
+                  className="duration-200 xl:hover:scale-110"
+                  href="https://instagram.com/_blocverse?igshid=NGVhN2U2NjQ0Yg=="
+                >
+                  <Instagram />
+                </a>
+                <a
+                  className="duration-200 xl:hover:scale-110"
+                  href="https://www.linkedin.com/company/blocverse/"
+                >
+                  <Linkedln />
+                </a>
+              </div>
+              <p className="text-sm text-gray-800">
+                © 2023 TAAS. All rights reserved.
+              </p>
+              <h2 className="font-bold text-2xl text-t-purple">TAAS</h2>
+            </footer>
           </section>
         </main>
       </div>
