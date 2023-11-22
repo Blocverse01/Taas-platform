@@ -1,12 +1,7 @@
 import { activityLogRepository, projectRepository } from "@/utils/constants";
-import { ActivityLog, ActivityLogRecord } from "@/xata";
+import { ActivityLogRecord } from "@/xata";
 import { JSONData } from "@xata.io/client";
-
-type ActivityCategory = "asset" | "configuration" | "integration";
-
-type ActivityLogItem = Pick<ActivityLog, "category" | "ctaLink" | "ctaText" | "title"> & {
-    category: ActivityCategory;
-};
+import { ActivityLogItem } from "./types";
 
 export async function storeProjectActivityLogItem(projectId: string, logItem: ActivityLogItem) {
 
