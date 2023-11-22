@@ -1,5 +1,5 @@
 'use client';
-import { useState } from 'react';
+import { useState, FC } from 'react';
 import { Link as ScrollLink } from 'react-scroll';
 import Link from 'next/link';
 
@@ -14,7 +14,7 @@ type NavbarProps = {
   menuItems: MenuItem[];
   isLoggedIn: boolean;
 };
-const Navbar: React.FC<NavbarProps> = ({ menuItems, isLoggedIn }) => {
+const Navbar: FC<NavbarProps> = ({ menuItems, isLoggedIn }) => {
   const [active, setActive] = useState('nav-menu');
   const [toggleIcon, setToggleIcon] = useState('nav-toggler');
   const navToggler = () => {
@@ -46,8 +46,8 @@ const Navbar: React.FC<NavbarProps> = ({ menuItems, isLoggedIn }) => {
             >
               {menuitem.isScrollLink ? (
                 <ScrollLink
-                  href="?focus=contact-us"
-                  to={menuitem.target ?? ' '}
+                  href="#"
+                  to={menuitem.target ?? ''}
                   offset={50}
                   smooth={true}
                   duration={500}

@@ -60,12 +60,6 @@ const menuItems: MenuItems = [
     isScrollLink: false,
   },
   // { title: "Pricing", target: "pricing", href: "/", isScrollLink: true },
-  {
-    title: 'Contact Us',
-    target: 'contact-us',
-    href: '/',
-    isScrollLink: true,
-  },
 ];
 
 export default function Home() {
