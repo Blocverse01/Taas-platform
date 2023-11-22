@@ -56,7 +56,7 @@ const Navbar: FC<NavbarProps> = ({ menuItems, isLoggedIn }) => {
                   {menuitem.title}
                 </ScrollLink>
               ) : (
-                <a onClick={closeMenu} href={menuitem.href}>
+                <a onClick={closeMenu} target={menuitem.target} rel={menuitem.target === "_blank" ? "noopener" : ""} href={menuitem.href}>
                   {menuitem.title}
                 </a>
               )}

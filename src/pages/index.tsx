@@ -58,6 +58,7 @@ const menuItems: MenuItems = [
     title: 'Docs',
     href: 'https://taas-by-blocverse.gitbook.io/taas/',
     isScrollLink: false,
+    target: "_blank"
   },
   // { title: "Pricing", target: "pricing", href: "/", isScrollLink: true },
 ];
