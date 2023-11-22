@@ -1,5 +1,5 @@
 import { HttpError } from "@/lib/errors";
-import { getProjectActivityLog, storeProjectActivityLogItem } from "@/lib/taas-api/activityLog/createActivityLog";
+import { getProjectActivityLog } from "@/lib/taas-api/activityLog/createActivityLog";
 import { validateAuthInApiHandler } from "@/utils/auth";
 import { BAD_REQUEST, INTERNAL_SERVER_ERROR, OK } from "@/utils/constants";
 import { NextApiHandler, NextApiRequest, NextApiResponse } from "next";

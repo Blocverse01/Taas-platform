@@ -111,6 +111,8 @@ const tables = [
       { name: "ctaLink", type: "text" },
       { name: "ctaText", type: "string" },
       { name: "project", type: "link", link: { table: "Project" } },
+      { name: "subCategory", type: "string" },
+      { name: "actor", type: "string", notNull: true, defaultValue: "null" },
     ],
   },
   {

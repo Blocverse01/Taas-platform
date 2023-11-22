@@ -1,23 +1,8 @@
 import { assetDocumentRepository, assetPropertyRepository, projectRepository } from "@/utils/constants";
 import { Address } from "viem";
-import { TokenizedRealData } from "./types";
+import { CreateProjectAssetOptions, TokenizedRealData } from "./types";
 
-interface CreateProjectProjectOptions {
-    project: {
-        id: string;
-    },
-    tokenAddress: Address;
-    description: string;
-    location: string;
-    size: number;
-    tokenPrice: number;
-    tokenTicker: string;
-    photos: Array<string>;
-    valuation: number;
-    name: string;
-}
-
-export async function createNewProjectAsset(options: CreateProjectProjectOptions) {
+export async function createNewProjectAsset(options: CreateProjectAssetOptions) {
 
     const newAsset = await assetPropertyRepository().create({
         project: options.project.id,
@@ -30,7 +15,7 @@ export async function createNewProjectAsset(options: CreateProjectProjectOptions
         photos: options.photos,
         valuation: options.valuation,
         name: options.name
-    });
+    });    
 
     return newAsset;
 }
