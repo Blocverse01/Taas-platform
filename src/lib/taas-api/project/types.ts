@@ -45,3 +45,11 @@ export interface CreateNewProjectOptions {
     multiSigController: Address,
     tokenFactory: Address
 }
+
+export type CreateProjectTeammatePayload = {
+    projectId: string;
+    projectName: string;
+    userId: string;
+    role: number,
+    isActive: boolean
+}
