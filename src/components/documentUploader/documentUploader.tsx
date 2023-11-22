@@ -1,33 +1,21 @@
-import { CrossIcon, UploadCircleIcon } from "@/assets/icon";
-import { Input } from "@/components/formPrimitives/input";
-import { formatFileSize } from "@/utils/files";
-import classNames from "classnames";
-import { ErrorMessage, Form, Formik } from "formik";
-import { FC, useRef, useState } from "react";
-import { ClipLoader } from "react-spinners";
-import { TAAS_PURPLE } from "tailwind.config";
-import * as Yup from "yup";
-
-export interface AssetDocument {
-  label: string;
-  fileURI: string;
-  fileType: string;
-  fileSize: number;
-}
+import { CrossIcon, UploadCircleIcon } from '@/assets/icon';
+import { Input } from '@/components/formPrimitives/input';
+import { formatFileSize } from '@/utils/files';
+import classNames from 'classnames';
+import { ErrorMessage, Form, Formik } from 'formik';
+import { FC, useRef, useState } from 'react';
+import { ClipLoader } from 'react-spinners';
+import { TAAS_PURPLE } from 'tailwind.config';
+import * as Yup from 'yup';
 
 interface DocumentUploaderProps {
   uploadDocument: (file: File) => Promise<string>;
-  onUploadComplete: (assetDocument: AssetDocument) => void;
+  onUploadComplete: (assetDocument: UploadedAssetDocument) => void;
   maxSize: number;
   backButton?: React.ReactNode;
 }
 
-const DOCUMENT_MIME_TYPES = [
-  "image/jpeg",
-  "image/jpg",
-  "image/png",
-  "application/pdf",
-];
+const DOCUMENT_MIME_TYPES = ['image/jpeg', 'image/jpg', 'image/png', 'application/pdf'];
 
 const documentUploaderSchema = Yup.object().shape({
   label: Yup.string().required(),
@@ -35,11 +23,11 @@ const documentUploaderSchema = Yup.object().shape({
     .required()
     .test({
       test: (file) => file.size > 0,
-      message: "File cannot be empty",
+      message: 'File cannot be empty',
     })
     .test({
       test: (file) => DOCUMENT_MIME_TYPES.includes(file.type),
-      message: "File should be an image or a pdf",
+      message: 'File should be an image or a pdf',
     }),
 });
 
@@ -51,8 +39,8 @@ const DocumentUploader: FC<DocumentUploaderProps> = ({
   backButton,
 }) => {
   const initialValues: InitialValues = {
-    label: "",
-    file: new File([""], "empty file"),
+    label: '',
+    file: new File([''], 'empty file'),
   };
   const [uploading, setUploading] = useState<boolean>(false);
   const [uploadError, setUploadError] = useState<string>();
@@ -81,12 +69,12 @@ const DocumentUploader: FC<DocumentUploaderProps> = ({
 
           resetForm();
           if (inputRef.current) {
-            inputRef.current.value = "";
+            inputRef.current.value = '';
           }
           // Todo: Add toast to show adding document succeeded
         } catch (error) {
           console.log(error);
-          setUploadError("Upload failed");
+          setUploadError('Upload failed');
         } finally {
           setUploading(false);
           setSubmitting(false);
@@ -95,20 +83,13 @@ const DocumentUploader: FC<DocumentUploaderProps> = ({
     >
       {({ isSubmitting, setFieldValue, isValid, values, setFieldTouched }) => (
         <Form className="space-y-6">
-          <Input
-            type="text"
-            label="Document Label"
-            name="label"
-            placeholder="Enter a label"
-          />
+          <Input type="text" label="Document Label" name="label" placeholder="Enter a label" />
 
           <div>
             {values.file && values.file.size > 0 ? (
               <div className="bg-t-purple/20 rounded-lg py-3 px-4 flex items-center justify-between gap-3">
                 <div className="w-[calc(100%-36px)]">
-                  <h4 className="text-t-black text-sm truncate">
-                    {values.file.name}
-                  </h4>
+                  <h4 className="text-t-black text-sm truncate">{values.file.name}</h4>
                   <span className="text-t-gray-4 text-xs mt-[7px]">
                     {formatFileSize(values.file.size)}
                   </span>
@@ -116,7 +97,7 @@ const DocumentUploader: FC<DocumentUploaderProps> = ({
                 <button
                   title="remove document"
                   onClick={() => {
-                    setFieldValue("file", undefined);
+                    setFieldValue('file', undefined);
                   }}
                   type="button"
                   className="p-1.5 bg-white text-t-black rounded-full shrink-0 h-6 w-6 flex items-center justify-center"
@@ -141,8 +122,8 @@ const DocumentUploader: FC<DocumentUploaderProps> = ({
                     onChange={(e) => {
                       const files = e.target.files;
                       if (!files) return;
-                      setFieldTouched("file", true);
-                      setFieldValue("file", files[0], true);
+                      setFieldTouched('file', true);
+                      setFieldValue('file', files[0], true);
                     }}
                     accept="image/*,.pdf"
                   />
@@ -158,17 +139,15 @@ const DocumentUploader: FC<DocumentUploaderProps> = ({
                 <ClipLoader size={40} color={TAAS_PURPLE} /> Uploading file
               </div>
             )}
-            {uploadError && (
-              <div className="text-red-500 mt-1">{uploadError}</div>
-            )}
+            {uploadError && <div className="text-red-500 mt-1">{uploadError}</div>}
           </div>
 
           <div
             className={classNames(
               {
-                "grid grid-cols-2 gap-2.5": Boolean(backButton),
+                'grid grid-cols-2 gap-2.5': Boolean(backButton),
               },
-              "pt-[21px]"
+              'pt-[21px]'
             )}
           >
             {backButton}
@@ -177,7 +156,7 @@ const DocumentUploader: FC<DocumentUploaderProps> = ({
               disabled={!isValid || isSubmitting}
               className="px-6 py-3 text-base font-medium rounded disabled:opacity-40 bg-t-purple text-white"
             >
-              {uploadError ? "Retry Upload" : "Proceed"}
+              {uploadError ? 'Retry Upload' : 'Proceed'}
             </button>
           </div>
         </Form>

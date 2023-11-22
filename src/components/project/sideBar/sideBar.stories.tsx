@@ -1,12 +1,26 @@
-import { Meta, StoryObj } from "@storybook/react";
-import { ProjectSidebar } from ".";
+import { Meta, StoryObj } from '@storybook/react';
+import { ProjectSidebar } from '.';
+
+const projectId = '1123433';
 
 const meta = {
-  title: "Project/Project Sidebar",
+  title: 'Project/Project Sidebar',
   component: ProjectSidebar,
-  tags: ["autodocs"],
+  tags: ['autodocs'],
   args: {
-    projectId: "1123433",
+    projectId,
+  },
+  parameters: {
+    layout: 'centered',
+    nextjs: {
+      router: {
+        pathname: '/dashboard/projects/[projectId]',
+        asPath: `/dashboard/projects/${projectId}`,
+        query: {
+          projectId,
+        },
+      },
+    },
   },
 } satisfies Meta<typeof ProjectSidebar>;
 

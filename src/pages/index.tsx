@@ -1,69 +1,83 @@
-"use client";
-import { Navbar } from "@/components/landingPage/navbar";
-import Image from "next/image";
-import hero from "@/assets/hero-img.png";
-import heroRaw from "@/assets/hero-img-raw.png";
-import { Facebook, Twitter, Instagram, Linkedln, Plus, Tick, Tick2, HeroBg } from "@/assets/icon";
-import { ComponentProps } from "react";
+'use client';
+import { Navbar } from '@/components/landingPage/navbar';
+import Image from 'next/image';
+//import { Element } from 'react-scroll';
+import heroRaw from '@/assets/hero-img-raw.png';
+import { Twitter, Instagram, Linkedln, Plus, HeroBg } from '@/assets/icon';
+import { ComponentProps, useEffect, useRef } from 'react';
 import {
-  CustomPlan,
   DevIntegrations,
   ManageAssets,
-  PropertyListingPlan,
   TeamManagement,
-  TeamMemberPlan,
-} from "@/components/landingPage/sectionData";
-import Link from "next/link";
+} from '@/components/landingPage/sectionData';
+import Link from 'next/link';
+import { useRouter } from 'next/router';
+import { useSession } from 'next-auth/react';
+import React from "react";
 
-type MenuItems = ComponentProps<typeof Navbar>["menuItems"]; // MenuItem[];
+type MenuItems = ComponentProps<typeof Navbar>['menuItems']; // MenuItem[];
+
+type TitleAndTextProps = {
+  title: string;
+  text: string;
+};
+
+type FeatureProps = {
+  icon: React.ReactNode;
+  title: string;
+  text: string;
+};
+
+const TitleAndText: React.FC<TitleAndTextProps> = ({ title, text }) => (
+  <div>
+    <h2 className="text-center text-[36px] font-medium">{title}</h2>
+    <p className="text-xl md:text-[20px] mt-4 text-t-black opacity-70 leading-[32px] text-center max-w-[700px] mx-auto">
+      {text}
+    </p>
+  </div>
+);
+
+const Features: React.FC<FeatureProps> = ({ icon, text, title }) => (
+  <div className="flex flex-col space-y-4">
+    <div className="mx-auto w-fit">{icon}</div>
+    <h2 className="text-[24px] text-center font-medium">{title}</h2>
+    <p className="xl:max-w-[383px] xl:ml-4 text-center text-base opacity-70">{text}</p>
+  </div>
+);
+
+const Integrations: React.FC<FeatureProps> = ({ icon, text, title }) => (
+  <div className="flex flex-col space-y-4">
+    <div className=" w-fit">{icon}</div>
+    <h2 className="text-[24px]  font-medium">{title}</h2>
+    <p className="xl:max-w-[383px]   text-base opacity-70">{text}</p>
+  </div>
+);
+
+const menuItems: MenuItems = [
+  {
+    title: 'Docs',
+    href: 'https://taas-by-blocverse.gitbook.io/taas/',
+    isScrollLink: false,
+    target: "_blank"
+  },
+  // { title: "Pricing", target: "pricing", href: "/", isScrollLink: true },
+];
 
 export default function Home() {
-  const menuItems: MenuItems = [
-    { title: "Docs", href: "/", isScrollLink: false },
-    { title: "Pricing", target: "pricing", href: "/", isScrollLink: true },
-    {
-      title: "Contact Us",
-      target: "contact-us",
-      href: "/",
-      isScrollLink: true,
-    },
-  ];
+  const router = useRouter();
+  const { status } = useSession();
+  const isLoggedIn = status === 'authenticated';
 
-  type TitleAndTextProps = {
-    title: string;
-    text: string;
-  };
+  const contactUsRef = useRef<HTMLAnchorElement | null>(null);
 
-  type FeatureProps = {
-    icon: React.ReactNode;
-    title: string;
-    text: string;
-  };
-
-  const TitleAndText: React.FC<TitleAndTextProps> = ({ title, text }) => (
-    <div>
-      <h2 className="text-center text-[36px] font-medium">{title}</h2>
-      <p className="text-xl md:text-[20px] mt-4 text-t-black opacity-70 leading-[32px] text-center max-w-[700px] mx-auto">
-        {text}
-      </p>
-    </div>
-  );
-
-  const Features: React.FC<FeatureProps> = ({ icon, text, title }) => (
-    <div className="flex flex-col space-y-4">
-      <div className="mx-auto w-fit">{icon}</div>
-      <h2 className="text-[24px] text-center font-medium">{title}</h2>
-      <p className="xl:max-w-[383px] xl:ml-4 text-center text-base opacity-70">{text}</p>
-    </div>
-  );
-
-  const Integrations: React.FC<FeatureProps> = ({ icon, text, title }) => (
-    <div className="flex flex-col space-y-4">
-      <div className=" w-fit">{icon}</div>
-      <h2 className="text-[24px]  font-medium">{title}</h2>
-      <p className="xl:max-w-[383px]   text-base opacity-70">{text}</p>
-    </div>
-  );
+  useEffect(() => {
+    if (contactUsRef.current) {
+      const focusQuery = router.query['focus'];
+      if (focusQuery && focusQuery === 'contact-us') {
+        contactUsRef.current.focus();
+      }
+    }
+  }, [router]);
 
   return (
     <div>
@@ -71,7 +85,7 @@ export default function Home() {
         <HeroBg />
       </div>
       <div className="max-w-[1440px] z-50 relative mx-auto">
-        <Navbar menuItems={menuItems} isLoggedIn={false} />
+        <Navbar menuItems={menuItems} isLoggedIn={isLoggedIn} />
         <main className="lg:mt-[100px] mt-20 overflow-x-hidden text-t-black">
           <section className="text-center px-6 md:px-12 xl:px-[102px] flex flex-col relative">
             <p className="text-center text-t-purple text-sm rounded-[32px] h-[32px] shadow-[0px_2px_4px_0px_rgba(0,0,0,0.25)] py-[7px] px-[18px] bg-t-purple/10 w-fit mx-auto mb-5">
@@ -81,8 +95,8 @@ export default function Home() {
               Unlock The Power of Asset Tokenization
             </h1>
             <p className="text-[24px] text-center leading-[36px] max-w-[733px] mx-auto mt-8 text-t-black">
-              On Taas, we enable developers create and manage tokenized assets while securing accounts and
-              monitoring trading metrics.
+              On Taas, we enable developers create and manage tokenized assets while securing
+              accounts and monitoring trading metrics.
             </p>
             <Link
               href="/signup"
@@ -96,7 +110,7 @@ export default function Home() {
               <Image
                 src={heroRaw}
                 alt="Image"
-                className="mx-auto max-w-[1103px] max-h-[600px] object-cover object-top border-t-purple border-[3px] rounded-[24px]"
+                className="mx-auto xl:max-w-[1103px] max-h-[600px] object-cover object-top border-t-purple border-[3px] rounded-[24px]"
               />
             </div>
           </section>
@@ -147,29 +161,29 @@ export default function Home() {
               <div className="bg-t-purple/20 hover:-translate-y-[3px] duration-200 p-7 rounded-xl ">
                 <p className=" text-2xl ">Startup Investment</p>
                 <p className="text-base mt-2 leading-[28px] opacity-70">
-                  TAAS offers the opportunity to create tokens for your startup investment scheme. It’s comes
-                  in really handy for new startups looking to raise funds.{" "}
+                  TAAS offers the opportunity to create tokens for your startup investment scheme.
+                  It’s comes in really handy for new startups looking to raise funds.{' '}
                 </p>
               </div>
               <div className="border hover:-translate-y-[3px] duration-200 border-t-gray-12 p-7 rounded-xl ">
                 <p className=" text-2xl ">Real Estate</p>
                 <p className="text-base mt-2 leading-[28px] opacity-70">
-                  Create and manage tokens for your real estate projects with ease, enabling fractional
-                  liquidity and ownership for property investments.
+                  Create and manage tokens for your real estate projects with ease, enabling
+                  fractional liquidity and ownership for property investments.
                 </p>
               </div>
               <div className="bg-t-purple/20 p-7 hover:-translate-y-[3px] duration-200 rounded-xl">
                 <p className=" text-2xl ">Blue/Green Bonds</p>
                 <p className="text-base mt-2 leading-[28px] opacity-70">
-                  TAAS helps you support sustainable projects, and invest in blue or green bonds with digital
-                  tokens.
+                  TAAS helps you support sustainable projects, and invest in blue or green bonds
+                  with digital tokens.
                 </p>
               </div>
               <div className="border border-t-gray-12 p-7 hover:-translate-y-[3px] duration-200 rounded-xl ">
                 <p className=" text-2xl ">Antiques</p>
                 <p className="text-base mt-2 leading-[28px] opacity-70">
-                  On TAAS, you are able to diversify your portfolio, and trade shares in valuable antiques as
-                  digital tokens.
+                  On TAAS, you are able to diversify your portfolio, and trade shares in valuable
+                  antiques as digital tokens.
                 </p>
               </div>
             </div>
@@ -182,13 +196,13 @@ export default function Home() {
                   Seamless Integration for Developers
                 </h2>
                 <p className="xl:w-auto md:w-[360px] text-xl md:text-[20px] mt-4 text-t-black opacity-70 leading-[32px] max-w-[700px]">
-                  On Taas, we enable developers create and manage tokenized assets while securing accounts and
-                  monitoring trading metrics.
+                  On Taas, we enable developers create and manage tokenized assets while securing
+                  accounts and monitoring trading metrics.
                 </p>
               </div>
               <div>
                 <a
-                  href="#"
+                  href="https://taas-by-blocverse.gitbook.io/taas/"
                   type="button"
                   className="select-none w-fit  hover:-translate-y-[3px] duration-200 font-medium bg-t-purple text-white  rounded-lg text-[20px] py-4 px-8"
                 >
@@ -205,7 +219,7 @@ export default function Home() {
             </div>
           </section>
 
-          <section className="bg-[#FAFAFA] mt-8 md:mt-[150px] px-6 md:px-12 xl:px-[102px] py-28 md:py-[63px]">
+          {/* <section className="bg-[#FAFAFA] mt-8 md:mt-[150px] px-6 md:px-12 xl:px-[102px] py-28 md:py-[63px]">
             <TitleAndText
               title="Pricing Plans"
               text="TAAS has affordable plans for teams of every size and capacity, enabling you work with maximum efficiency."
@@ -260,7 +274,7 @@ export default function Home() {
                 ))}
               </div>
             </div>
-          </section>
+          </section> */}
           <section className="md:mt-[100px] px-6 md:px-12 xl:px-[102px] mt-28 py-[64px]">
             <div className="flex flex-col md:flex-row gap-y-8 md:gap-y-0 justify-between md:items-start">
               <div>
@@ -273,33 +287,44 @@ export default function Home() {
               </div>
               <div>
                 <a
-                  href="#"
+                  ref={contactUsRef}
+                  href="mailto:info@blocverse.com"
                   type="button"
-                  className="select-none w-fit  hover:-translate-y-[3px] duration-200 font-medium bg-t-purple text-white rounded-lg text-[20px] py-4 px-8"
+                  className="w-fit hover:-translate-y-[3px] duration-200 font-medium bg-t-purple text-white rounded-lg text-[20px] py-4 px-8 focus:outline-t-purple/30 focus:outline-[20px]"
                 >
                   Send us a message
                 </a>
               </div>
             </div>
+
             <footer className="mt-12 flex flex-col md:flex-row justify-between py-7 px-8 bg-gray-50 rounded-[10px] md:items-center gap-y-6">
               <div className="flex items-center gap-x-6">
-                <a href="#">
+                {/* <a href="https://www.blocverse.com/">
                   <Facebook />
-                </a>
-                <a href="#">
-                  <Twitter />
-                </a>
-                <a href="#">
-                  <Instagram />
-                </a>
-                <a href="#">
-                  <Linkedln />
-                </a>
-              </div>
-              <p className="text-sm text-gray-800">© 2023 TAAS. All rights reserved.</p>
-              <h2 className="font-bold text-2xl text-t-purple">TAAS</h2>
-            </footer>
-          </section>
+                </a> */}
+                  <a
+                    className="duration-200 xl:hover:scale-110"
+                    href="https://x.com/blocverse_?s=21&t=rkkQH_grtwFBikJXi4GPcA"
+                  >
+                    <Twitter />
+                  </a>
+                  <a
+                    className="duration-200 xl:hover:scale-110"
+                    href="https://instagram.com/_blocverse?igshid=NGVhN2U2NjQ0Yg=="
+                  >
+                    <Instagram />
+                  </a>
+                  <a
+                    className="duration-200 xl:hover:scale-110"
+                    href="https://www.linkedin.com/company/blocverse/"
+                  >
+                    <Linkedln />
+                  </a>
+                </div>
+                <p className="text-sm text-gray-800">© 2023 TAAS. All rights reserved.</p>
+                <h2 className="font-bold text-2xl text-t-purple">TAAS</h2>
+              </footer>
+            </section>
         </main>
       </div>
     </div>

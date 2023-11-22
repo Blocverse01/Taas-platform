@@ -13,6 +13,14 @@ interface TeamMembersProps {
   }[];
 }
 
+const USER_ROLES = {
+  1: "developer",
+  2: "admin",
+  3: "owner"
+}
+
+type Role = keyof typeof USER_ROLES;
+
 const TeamMembers: FC<TeamMembersProps> = ({ teamMembers }) => {
   return (
     <div>
@@ -34,7 +42,7 @@ const TeamMembers: FC<TeamMembersProps> = ({ teamMembers }) => {
               <td className="font-medium">
                 <p className="w-[141px] truncate">{member.walletAddress}</p>
               </td>
-              <td className="font-medium">{member.role}</td>
+              <td className="font-medium">{USER_ROLES[+member.role as Role]}</td>
               <td>
                 <span className="text-t-purple py-1 px-4 rounded-full bg-t-purple/20">Active</span>
               </td>

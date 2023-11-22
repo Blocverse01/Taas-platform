@@ -3,9 +3,18 @@ import { motion } from "framer-motion";
 import { CrossIcon, PlusSign } from "@/assets/icon";
 import { useModalParent } from "@/lib/zustand/modalSlice";
 import { AddTeamMemberForm } from "../addTeamMemberForm";
+import { FC } from "react";
+import { useSWRConfig } from "node_modules/swr/_internal/dist/index.mjs";
 
-const AddTeamMemberDialog = () => {
+interface AddTeamMemberProps {
+  projectId: string;
+}
+
+const AddTeamMemberDialog: FC<AddTeamMemberProps> = ({ projectId }) => {
   const dialogContainer = useModalParent();
+
+  const { mutate } = useSWRConfig();
+  const teamMembersSwrKey = `/api/user/projects/${projectId}/team`;
 
   return (
     <AlertDialog.Root>
@@ -39,6 +48,19 @@ const AddTeamMemberDialog = () => {
             </AlertDialog.Title>
             <div className="w-full">
               <AddTeamMemberForm
+                handleCreateTeamMember={async (values) => {
+                  const response = await fetch(`/api/user/projects/${projectId}/team/add-team-member`, {
+                    method: "POST",
+                    headers: {
+                      "Content-Type": "Application/json",
+                    },
+                    body: JSON.stringify(values)
+                  })
+
+                  mutate(teamMembersSwrKey, [values])
+
+                  if (!response.ok) throw new Error('Invalid response');
+                }}
                 backButton={
                   <AlertDialog.Cancel asChild>
                     <button

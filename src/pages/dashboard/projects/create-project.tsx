@@ -9,6 +9,10 @@ import Link from "next/link";
 import SubPageLayout from "@/components/layout/subPageLayout";
 import toast from "react-hot-toast";
 import { storeProjectItem } from "@/utils/projectIntegration";
+import { deploySafe } from "@/lib/safe/deploySafe";
+import { getSession } from "next-auth/react";
+import { deployTokenFactory } from "@/lib/taas-api/tokenFactory/deployTokenFactory";
+import { Address } from "viem";
 
 const validationSchema = Yup.object({
     name: Yup.string().required("Name is required"),
@@ -46,9 +50,20 @@ const CreateProject: NextPageWithLayout = () => {
                 try {
                     toast.loading("Generating a project", toastOptions);
 
-                    await storeProjectItem(values);
+                    const session = await getSession();
+
+                    if (!session) {
+                        throw new Error("");
+                    }
+
+                    const safeAddress = await deploySafe([session?.user.walletAddress], 1);
+
+                    const { tokenFactory } = await deployTokenFactory(safeAddress, values.treasuryWallet as Address);
+
+                    await storeProjectItem({ ...values, multiSigController: safeAddress, tokenFactory });
 
                     toast.success("Project generated successfully", toastOptions);
+
                     resetForm();
                 } catch (error) {
                     const errorMessage =
@@ -94,6 +109,7 @@ const CreateProject: NextPageWithLayout = () => {
                             }}
                             placeholder="Select an asset"
                             options={assetOptions}
+                            isOptionDisabled={(option) => option.value !== "realestate"}
                             onChange={(assetOption) => {
                                 if (!assetOption) return null;
                                 setFieldValue("assetType", assetOption.value);
@@ -149,7 +165,6 @@ const CreateProject: NextPageWithLayout = () => {
                         type="text"
                         name="treasuryWallet"
                         id="treasuryWallet"
-                        //={Formik.handleChange}
                     />
                     <div
                         className="grid grid-cols-2 gap-4"

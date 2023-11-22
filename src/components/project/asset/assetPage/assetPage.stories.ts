@@ -42,6 +42,8 @@ const meta = {
         },
       ],
     },
+    projectSafeWallet: "0x0",
+    projectTokenFactory: "0x0"
   },
 } satisfies Meta<typeof AssetPage>;
 

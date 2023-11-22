@@ -5,9 +5,10 @@ import { AddTeamMemberDialog } from "../addTeamMember/addTeamMemberDialog";
 
 interface TeamPageProps {
   teamMembers: ComponentProps<typeof TeamMembers>["teamMembers"];
+  projectId: string
 }
 
-const TeamPage: FC<TeamPageProps> = ({ teamMembers }) => {
+const TeamPage: FC<TeamPageProps> = ({ teamMembers, projectId }) => {
   const [searchInput, setSearchInput] = useState("");
   const [filteredTeamMembers, setFilteredTeamMembers] = useState(teamMembers);
 
@@ -36,7 +37,7 @@ const TeamPage: FC<TeamPageProps> = ({ teamMembers }) => {
             onChange={(e) => handleSearchInputChange(e.target.value)}
           />
         </div>
-        <AddTeamMemberDialog />
+        <AddTeamMemberDialog projectId={projectId} />
       </div>
       <div className="mt-12">
         <TeamMembers teamMembers={filteredTeamMembers} />

@@ -1,50 +1,42 @@
-import { CrossIcon, InfoCircleIcon } from "@/assets/icon";
-import { DocumentUploaderDialog } from "@/components/documentUploader";
-import { Input } from "@/components/formPrimitives/input";
-import { Textarea } from "@/components/formPrimitives/textarea";
-import { PhotoUploader } from "@/components/photoUploader";
-import { removeArrayIndex } from "@/utils/arrays";
-import { formatFileSize, uploadFile } from "@/utils/files";
-import classNames from "classnames";
-import { ErrorMessage, Form, Formik } from "formik";
-import Image from "next/image";
-import Link from "next/link";
-import { FC, useState } from "react";
-import { useLocalStorage } from "usehooks-ts";
-import * as Yup from "yup";
-
-// Todo: Replace with derived type
-interface AssetDocument {
-  label: string;
-  fileURI: string;
-  fileType: string;
-  fileSize: number;
-}
+import { CrossIcon, InfoCircleIcon } from '@/assets/icon';
+import { DocumentUploaderDialog } from '@/components/documentUploader';
+import { Input } from '@/components/formPrimitives/input';
+import { Textarea } from '@/components/formPrimitives/textarea';
+import { PhotoUploader } from '@/components/photoUploader';
+import { removeArrayIndex } from '@/utils/arrays';
+import { formatFileSize, uploadFile } from '@/utils/files';
+import classNames from 'classnames';
+import { ErrorMessage, Form, Formik } from 'formik';
+import Image from 'next/image';
+import Link from 'next/link';
+import { FC, useState } from 'react';
+import toast from 'react-hot-toast';
+import { useLocalStorage } from 'usehooks-ts';
+import * as Yup from 'yup';
 
 const formStepSchemas = {
   1: Yup.object({
-    propertyName: Yup.string().required("Property name is required"),
-    propertyLocation: Yup.string().required("Property location is required"),
-    propertyDescription: Yup.string().required(
-      "Property description is required"
-    ),
-    propertySize: Yup.number().required("Property size is required").min(1),
+    propertyName: Yup.string().required('Property name is required'),
+    propertyLocation: Yup.string().required('Property location is required'),
+    propertyDescription: Yup.string().required('Property description is required'),
+    propertySize: Yup.number().required('Property size is required').min(1),
     pricePerToken: Yup.number().required().min(1),
     tokenTicker: Yup.string().required(),
+    valuation: Yup.number().required(),
   }),
   2: Yup.object({
     photos: Yup.array()
       .of(Yup.string().required())
       .required()
       .test({
-        message: "Add at least one photo",
+        message: 'Add at least one photo',
         test: (photos) => photos.length > 0,
       }),
     documents: Yup.array()
-      .of(Yup.mixed<AssetDocument>().required())
+      .of(Yup.mixed<UploadedAssetDocument>().required())
       .required()
       .test({
-        message: "Add at least one document",
+        message: 'Add at least one document',
         test: (documents) => documents.length > 0,
       }),
   }),
@@ -62,20 +54,18 @@ type FormStep = keyof typeof formStepSchemas;
 
 const maxFileSize = 5 * 1024 * 1024; // approx 5MB
 
-const CreateRealEstateAssetForm: FC<CreateAssetFormProps> = ({
-  backLink,
-  handleCreateAsset,
-}) => {
+const CreateRealEstateAssetForm: FC<CreateAssetFormProps> = ({ backLink, handleCreateAsset }) => {
   const [step, setStep] = useState<FormStep>(1);
 
   const defaultInitialValues = {
     1: {
-      propertyName: "",
-      propertyDescription: "",
+      propertyName: '',
+      propertyDescription: '',
       propertySize: 0,
-      propertyLocation: "",
+      propertyLocation: '',
       pricePerToken: 0,
-      tokenTicker: "",
+      tokenTicker: '',
+      valuation: 0,
     },
     2: {
       photos: [],
@@ -86,7 +76,7 @@ const CreateRealEstateAssetForm: FC<CreateAssetFormProps> = ({
   const [initialValues, setInitialValues] = useLocalStorage<{
     1: Values1;
     2: Values2;
-  }>("createRealEstateAssetValues", defaultInitialValues);
+  }>('createRealEstateAssetValues', defaultInitialValues);
 
   return (
     <section className="flex flex-col gap-10">
@@ -96,9 +86,9 @@ const CreateRealEstateAssetForm: FC<CreateAssetFormProps> = ({
             <div
               className={classNames(
                 {
-                  "bg-t-purple text-white": step >= 1,
+                  'bg-t-purple text-white': step >= 1,
                 },
-                "h-8 w-8 flex items-center justify-center text-sm rounded-full mb-1"
+                'h-8 w-8 flex items-center justify-center text-sm rounded-full mb-1'
               )}
             >
               1
@@ -109,10 +99,10 @@ const CreateRealEstateAssetForm: FC<CreateAssetFormProps> = ({
             <div
               className={classNames(
                 {
-                  "bg-t-purple text-white": step >= 2,
-                  "text-t-purple border-t-purple border": step < 2,
+                  'bg-t-purple text-white': step >= 2,
+                  'text-t-purple border-t-purple border': step < 2,
                 },
-                "h-8 w-8 flex items-center justify-center text-sm rounded-full mb-1"
+                'h-8 w-8 flex items-center justify-center text-sm rounded-full mb-1'
               )}
             >
               2
@@ -131,12 +121,14 @@ const CreateRealEstateAssetForm: FC<CreateAssetFormProps> = ({
             initialValues={initialValues[step]}
             validationSchema={formStepSchemas[step]}
             onSubmit={(values, { setSubmitting, resetForm }) => {
+              // submit the first part
               setInitialValues((prev) => ({
                 ...prev,
                 [step]: values,
               }));
               setSubmitting(false);
               resetForm();
+              // continue to the next step
               setStep(2);
             }}
           >
@@ -178,13 +170,18 @@ const CreateRealEstateAssetForm: FC<CreateAssetFormProps> = ({
                     name="tokenTicker"
                     customLabel={
                       <span>
-                        Token Ticker{" "}
+                        Token Ticker{' '}
                         <span className="text-t-black/50">
                           (Please give your property an initial)
                         </span>
                       </span>
                     }
                     placeholder="A symbol for your token"
+                  />
+                  <Input
+                    label="Property Valuation (USD)"
+                    name="valuation"
+                    placeholder="The value of the property in USD"
                   />
                   <Textarea
                     label="Property Description"
@@ -219,13 +216,17 @@ const CreateRealEstateAssetForm: FC<CreateAssetFormProps> = ({
             initialValues={initialValues[step]}
             validationSchema={formStepSchemas[step]}
             onSubmit={async (values, { setSubmitting, resetForm }) => {
+              const toastOptions = { id: 'create token' };
               try {
+                toast.loading('Tokenizing asset', toastOptions);
                 await handleCreateAsset({ ...initialValues[1], ...values });
+                toast.success('Tokenized asset', toastOptions);
                 resetForm();
                 setInitialValues(defaultInitialValues);
                 // Todo: add toast
               } catch (error) {
                 // Todo: add toast
+                toast.error('Tokenizing asset failed', toastOptions);
               } finally {
                 setSubmitting(false);
               }
@@ -235,9 +236,7 @@ const CreateRealEstateAssetForm: FC<CreateAssetFormProps> = ({
               <Form className="flex flex-col gap-10 max-w-[430px] mx-auto">
                 <section className="flex flex-col gap-8">
                   <section>
-                    <h3 className="text-t-black text-base mb-3">
-                      Upload Media (Images)
-                    </h3>
+                    <h3 className="text-t-black text-base mb-3">Upload Media (Images)</h3>
                     <div className="grid grid-cols-3 gap-4">
                       {values.photos &&
                         values.photos.map((photo, i) => (
@@ -246,11 +245,8 @@ const CreateRealEstateAssetForm: FC<CreateAssetFormProps> = ({
                             photoSrc={photo}
                             alt={`property photo ${i + 1}`}
                             removePhoto={() => {
-                              const updatedPhotos = removeArrayIndex(
-                                values.photos,
-                                i
-                              );
-                              setFieldValue("photos", updatedPhotos);
+                              const updatedPhotos = removeArrayIndex(values.photos, i);
+                              setFieldValue('photos', updatedPhotos);
                               setInitialValues((prev) => ({
                                 ...prev,
                                 [step]: {
@@ -264,7 +260,7 @@ const CreateRealEstateAssetForm: FC<CreateAssetFormProps> = ({
                       <PhotoUploader
                         onUploadComplete={(fileUrl) => {
                           const updatedPhotos = [...values.photos, fileUrl];
-                          setFieldValue("photos", updatedPhotos);
+                          setFieldValue('photos', updatedPhotos);
                           setInitialValues((prev) => ({
                             ...prev,
                             [step]: {
@@ -288,9 +284,7 @@ const CreateRealEstateAssetForm: FC<CreateAssetFormProps> = ({
                         <span>Upload Documents</span>
                         <InfoCircleIcon />
                       </h3>
-                      <span className="text-t-black/70 text-sm">
-                        pdf, jpeg format only
-                      </span>
+                      <span className="text-t-black/70 text-sm">pdf, jpeg format only</span>
                     </div>
                     <div className="flex flex-col gap-5">
                       {values.documents &&
@@ -299,11 +293,8 @@ const CreateRealEstateAssetForm: FC<CreateAssetFormProps> = ({
                             key={`${document.label}_${index}`}
                             document={document}
                             removeDocument={() => {
-                              const updatedDocuments = removeArrayIndex(
-                                values.documents,
-                                index
-                              );
-                              setFieldValue("documents", updatedDocuments);
+                              const updatedDocuments = removeArrayIndex(values.documents, index);
+                              setFieldValue('documents', updatedDocuments);
                               setInitialValues((prev) => ({
                                 ...prev,
                                 [step]: {
@@ -317,11 +308,8 @@ const CreateRealEstateAssetForm: FC<CreateAssetFormProps> = ({
                       <DocumentUploaderDialog
                         uploadDocument={uploadFile}
                         onUploadComplete={(assetDocument) => {
-                          const updatedDocuments = [
-                            ...values.documents,
-                            assetDocument,
-                          ];
-                          setFieldValue("documents", updatedDocuments);
+                          const updatedDocuments = [...values.documents, assetDocument];
+                          setFieldValue('documents', updatedDocuments);
                           setInitialValues((prev) => ({
                             ...prev,
                             [step]: {
@@ -388,16 +376,13 @@ const PhotoCard: FC<PhotoCardProps> = ({ photoSrc, alt, removePhoto }) => {
 };
 
 interface AssetDocumentCardProps {
-  document: AssetDocument;
+  document: UploadedAssetDocument;
   removeDocument: () => void;
 }
-const AssetDocumentCard: FC<AssetDocumentCardProps> = ({
-  document,
-  removeDocument,
-}) => {
+const AssetDocumentCard: FC<AssetDocumentCardProps> = ({ document, removeDocument }) => {
   const { label, fileSize, fileURI } = document;
 
-  const fileName = fileURI.split("/")[fileURI.split("/").length - 1];
+  const fileName = fileURI.split('/')[fileURI.split('/').length - 1];
 
   return (
     <div className="flex flex-col gap-1">
@@ -407,9 +392,7 @@ const AssetDocumentCard: FC<AssetDocumentCardProps> = ({
       <div className="bg-t-purple/20 rounded-lg py-[18px] px-4 flex items-center justify-between gap-3">
         <div className="w-[calc(100%-36px)]">
           <h4 className="text-t-black text-sm truncate">{fileName}</h4>
-          <span className="text-t-gray-4 text-xs mt-[7px]">
-            {formatFileSize(fileSize)}
-          </span>
+          <span className="text-t-gray-4 text-xs mt-[7px]">{formatFileSize(fileSize)}</span>
         </div>
         <button
           title="remove document"

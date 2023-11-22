@@ -1,9 +1,14 @@
 import { HttpError } from "@/lib/errors";
-import { createNewProject } from "@/lib/taas-api/project/addProject";
+import { addNewTeamMember } from "@/lib/taas-api/team/addNewMember";
 import { validateAuthInApiHandler } from "@/utils/auth";
 import { BAD_REQUEST, INTERNAL_SERVER_ERROR, OK, UNAUTHORIZED } from "@/utils/constants";
 import { NextApiHandler, NextApiRequest, NextApiResponse } from "next";
-import { Address } from "viem";
+
+const USER_ROLES = {
+    "developer": 1,
+    "admin": 2,
+    "owner": 3
+}
 
 const handler: NextApiHandler = async (req: NextApiRequest, res: NextApiResponse) => {
     try {
@@ -15,25 +20,21 @@ const handler: NextApiHandler = async (req: NextApiRequest, res: NextApiResponse
 
         const userId = session.user.id;
 
-        const { name, blockchain, treasuryWallet, tokenFactory, multiSigController } = req.body;
+        const { name, email, role } = req.body;
 
-        if (!name.trim() || !blockchain || !treasuryWallet) {
+        if (!name.trim() || !email || !role) {
             throw new HttpError(BAD_REQUEST, "Invalid Body Properties");
         }
 
-        await createNewProject({
+        await addNewTeamMember(session, {
             name,
-            blockchain,
-            treasuryWallet,
-            userId,
-            assetType: "real estate",
-            tokenFactory,
-            multiSigController
+            email,
+            role: `${USER_ROLES[role as "admin" | "developer" | "owner"]}`,
+            projectId: req.query.projectId! as string
         });
 
-        res.status(OK).json({ message: "Project Created Successfully" });
+        res.status(OK).json({ message: "Team member added Successfully" });
     } catch (error: any) {
-
         return res
             .status(error?.status ?? error?.response?.status ?? INTERNAL_SERVER_ERROR)
             .json({ message: error.message });

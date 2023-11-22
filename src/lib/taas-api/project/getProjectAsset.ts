@@ -3,11 +3,16 @@ import { TokenizedProperty } from "./types";
 import { getUserProject } from "./getUserProject";
 import { HttpError } from "@/lib/errors";
 import { BAD_REQUEST, NOT_FOUND, assetDocumentRepository, assetPropertyRepository } from "@/utils/constants";
+import { SelectableColumnWithObjectNotation } from "@xata.io/client";
+import { TokenizedPropertyRecord } from "@/xata";
+import { Address } from "viem";
 
 type ReturnedTokenizedProperty = Omit<TokenizedProperty, "media" | "displayImage"> & {
     project: {
         name: string;
         id: string;
+        tokenFactory: Address;
+        multiSigController: Address;
     }
 };
 
@@ -27,11 +32,14 @@ export const getProjectAsset = async (currentUser: Session["user"], projectId: s
         "project.id": projectId,
     });
 
+
+    const select: SelectableColumnWithObjectNotation<TokenizedPropertyRecord, []>[] = ["id", "name", "description", "location", "size", "tokenAddress", "tokenPrice", "tokenTicker", "valuation", "project.id", "project.blockchain", "project.multisigController", "project.tokenFactory"];
+
     const asset = await initialAssetQuery.filter({
         "id": assetId,
-    }).select(["id", "name", "description", "location", "size", "tokenAddress", "tokenPrice", "tokenTicker", "valuation"]).getFirst() ?? await initialAssetQuery.filter({
+    }).select(select).getFirst() ?? await initialAssetQuery.filter({
         "tokenAddress": assetId,
-    }).select(["id", "name", "description", "location", "size", "tokenAddress", "tokenPrice", "tokenTicker", "valuation"]).getFirst();
+    }).select(select).getFirst();
 
     if (!asset) {
         throw new HttpError(NOT_FOUND, "Asset not found");
@@ -59,7 +67,9 @@ export const getProjectAsset = async (currentUser: Session["user"], projectId: s
         tokenAddress: asset.tokenAddress as TokenizedProperty["tokenAddress"],
         project: {
             name: validProject.name,
-            id: validProject.id
+            id: validProject.id,
+            tokenFactory: validProject.tokenFactory,
+            multiSigController: validProject.multisigController
         },
     }
 }

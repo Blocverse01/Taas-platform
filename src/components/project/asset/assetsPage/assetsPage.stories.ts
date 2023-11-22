@@ -8,6 +8,7 @@ const meta = {
   tags: ["autodocs"],
   args: {
     assetType: "real estate",
+    projectId: "",
     assets: [
       {
         id: "asset-1",
@@ -16,7 +17,7 @@ const meta = {
         displayImage:
           "https://ipfs.moralis.io:2053/ipfs/QmeMtpZPDQk9CJV2V7hnCMbG6DYuKkJjxRiH6Kmwja4tkE/demo-real-estate-asset-image.jpeg",
         tokenPrice: 100,
-        assetLink: "/"
+        assetLink: "/"        
       },
       {
         id: "asset-2",
