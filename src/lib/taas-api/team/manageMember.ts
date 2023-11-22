@@ -8,6 +8,9 @@ import {
 } from "@/utils/constants";
 import { getConcatenatedId } from "@/utils/helperfunctions";
 import type { Session } from "next-auth";
+import { storeProjectActivityLogItem } from "../activityLog/createActivityLog";
+import { ActivityLogCategory, ActivityLogProjectSubCategory } from "../activityLog/types";
+import { createActivityLogTitle } from "../activityLog/activityLogUtils";
 
 export const updateTeamMemberRole = async (
   currentUser: Session,
@@ -38,6 +41,14 @@ export const updateTeamMemberRole = async (
     }
 
     existingProjectTeamMember.update({ roleId: payload.newRole });
+
+    await storeProjectActivityLogItem(payload.projectId, {
+      title: createActivityLogTitle(ActivityLogProjectSubCategory["updateTeamMember"], ActivityLogCategory["project"], project.name),
+      category: ActivityLogCategory["project"],
+      subCategory: ActivityLogProjectSubCategory["updateTeamMember"],
+      actor: currentUser.user.walletAddress
+    });
+
   } catch (error: any) {
     throw error;
   }
@@ -72,6 +83,14 @@ export const removeTeamMember = async (
     }
 
     existingProjectTeamMember.update({ isActive: false });
+
+    await storeProjectActivityLogItem(payload.projectId, {
+      title: createActivityLogTitle(ActivityLogProjectSubCategory["removeTeamMember"], ActivityLogCategory["project"], project.name),
+      category: ActivityLogCategory["project"],
+      subCategory: ActivityLogProjectSubCategory["removeTeamMember"],
+      actor: currentUser.user.walletAddress
+    });
+
   } catch (error: any) {
     throw error;
   }

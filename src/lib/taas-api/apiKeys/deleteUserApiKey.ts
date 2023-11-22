@@ -1,6 +1,9 @@
 import { HttpError } from "@/lib/errors";
 import { BAD_REQUEST, NOT_FOUND, apiKeyRepository } from "@/utils/constants";
 import type { Session } from "next-auth";
+import { storeProjectActivityLogItem } from "../activityLog/createActivityLog";
+import { createActivityLogTitle } from "../activityLog/activityLogUtils";
+import { ActivityLogCategory, ActivityLogProjectSubCategory } from "../activityLog/types";
 
 
 export const deleteUserApiKey = async (currentUser: Session["user"], apiKeyId: string) => {
@@ -12,12 +15,19 @@ export const deleteUserApiKey = async (currentUser: Session["user"], apiKeyId: s
 
     const existingApiKey = await apiKeyRepository().filter({
         "user.id": trimmedUserId,
-        "id": trimmedApiKeyId,
-    }).getFirst();
+        "id": trimmedApiKeyId        
+    }).select(["project.name", "user.walletAddress"]).getFirst();
 
-    if (!existingApiKey) {
+    if (!existingApiKey || !existingApiKey.project) {
         throw new HttpError(NOT_FOUND, "API key not found")
     }
 
     await existingApiKey.delete();
+
+    await storeProjectActivityLogItem(existingApiKey.project.id as string, {
+        title: createActivityLogTitle(ActivityLogProjectSubCategory["deleteKey"], ActivityLogCategory["project"], existingApiKey.project.name),
+        category: ActivityLogCategory["project"],        
+        subCategory: ActivityLogProjectSubCategory["deleteKey"],
+        actor: existingApiKey.user?.walletAddress ?? trimmedUserId
+    });
 }

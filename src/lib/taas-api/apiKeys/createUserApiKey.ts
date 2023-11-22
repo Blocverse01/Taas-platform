@@ -4,6 +4,9 @@ import type { Session } from "next-auth";
 import { getUserProject } from "../project/getUserProject";
 import { randomBytes } from "crypto";
 import bcrypt from "bcrypt";
+import { storeProjectActivityLogItem } from "../activityLog/createActivityLog";
+import { createActivityLogTitle } from "../activityLog/activityLogUtils";
+import { ActivityLogCategory, ActivityLogProjectSubCategory } from "../activityLog/types";
 
 const API_KEY_LENGTH = process.env.API_KEY_LENGTH;
 const API_KEY_SALT = process.env.API_KEY_SALT;
@@ -43,6 +46,13 @@ export const createUserApiKey = async (currentUser: Session["user"], projectId: 
         apiKey: hashApiKey(newApiKey),
         user: trimmedUserId,
         project: trimmedProjectId,
+    });
+
+    await storeProjectActivityLogItem(trimmedProjectId, {
+        title: createActivityLogTitle(ActivityLogProjectSubCategory["generateKey"], ActivityLogCategory["project"], validProject.name),
+        category: ActivityLogCategory["project"],        
+        subCategory: ActivityLogProjectSubCategory["generateKey"],
+        actor: trimmedUserId
     });
 
     return newApiKey;
