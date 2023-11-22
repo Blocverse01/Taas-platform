@@ -1,10 +1,8 @@
 import { assetDocumentRepository, assetPropertyRepository, projectRepository } from "@/utils/constants";
-import { Address } from "viem";
 import { TokenizedRealEstateData } from "./types";
 
 export async function updateTokenizedRealEstateDetails(
     assetId: string,
-    tokenAddress: Address,
     realEstateData: TokenizedRealEstateData
 ) {
     const asset = await assetPropertyRepository().read(assetId);
@@ -24,7 +22,6 @@ export async function updateTokenizedRealEstateDetails(
     } = realEstateData;
 
     await asset.update({
-        tokenAddress,
         tokenTicker,
         name: propertyName,
         description: propertyDescription,

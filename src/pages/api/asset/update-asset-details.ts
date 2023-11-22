@@ -10,13 +10,13 @@ const handler: NextApiHandler = async (req: NextApiRequest, res: NextApiResponse
     try {
         await validateAuthInApiHandler(req, res);
 
-        const { assetId, tokenAddress, realEstateData } = req.body;
+        const { assetId, realEstateData } = req.body;
 
-        if (!assetId.trim() || !tokenAddress.trim() || !realEstateData) {
+        if (!assetId.trim() || !realEstateData) {
             throw new HttpError(BAD_REQUEST, "Invalid Body Properties");
         }
 
-        await updateTokenizedRealEstateDetails(assetId, tokenAddress, realEstateData);
+        await updateTokenizedRealEstateDetails(assetId, realEstateData);
 
         res.status(OK).json({ message: "Asset Details Updated Successfully" });
 
