@@ -1,0 +1,14 @@
+{
+  "id": "mig_clb6td0fua8rseafclg0",
+  "parentID": "mig_clb6raokijoja2cuimag",
+  "checksum": "1:55e8c6e4d0c5da2f8ff3cedd1f2a4f8020d46165e74472ffa3237842cc776148",
+  "operations": [
+    {
+      "renameColumn": {
+        "newName": "subCategory",
+        "oldName": "sub-category",
+        "table": "ActivityLog"
+      }
+    }
+  ]
+}

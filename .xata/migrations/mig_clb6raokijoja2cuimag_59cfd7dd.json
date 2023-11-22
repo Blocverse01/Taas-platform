@@ -1,0 +1,19 @@
+{
+  "id": "mig_clb6raokijoja2cuimag",
+  "parentID": "mig_clb6fhfihodm1m3fnjk0",
+  "checksum": "1:59cfd7dd5fab56bc0215aa56902767ddd2cf8dd93f1fe3c751457dd6ed6e9cfb",
+  "operations": [
+    {
+      "addColumn": {
+        "column": {
+          "name": "actor",
+          "type": "link",
+          "link": {
+            "table": "User"
+          }
+        },
+        "table": "ActivityLog"
+      }
+    }
+  ]
+}

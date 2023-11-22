@@ -1,0 +1,13 @@
+{
+  "id": "mig_clb6udvihodm1m3fnkr0",
+  "parentID": "mig_clb6td0fua8rseafclg0",
+  "checksum": "1:f59e1ea28ca9d6124e78756c03e707bdd130630c295e37e99c14fd3c80643ff2",
+  "operations": [
+    {
+      "removeColumn": {
+        "column": "actor",
+        "table": "ActivityLog"
+      }
+    }
+  ]
+}

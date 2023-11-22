@@ -1,0 +1,18 @@
+{
+  "id": "mig_clb6uivihodm1m3fnkt0",
+  "parentID": "mig_clb6udvihodm1m3fnkr0",
+  "checksum": "1:390e11393b5cea077f5be689763ee5d3d496fe9875ad6c832ee5dee4126abac0",
+  "operations": [
+    {
+      "addColumn": {
+        "column": {
+          "name": "actor",
+          "type": "string",
+          "notNull": true,
+          "defaultValue": "null"
+        },
+        "table": "ActivityLog"
+      }
+    }
+  ]
+}
