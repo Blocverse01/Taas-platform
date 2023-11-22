@@ -46,7 +46,7 @@ export async function updateTokenizedRealEstatePhotos(
     await asset.update({ photos });
 }
 
-export async function updateAssetDocumentLable(
+export async function updateAssetDocumentLabel(
     documentId: string, label: string
 ) {
     const document = await assetDocumentRepository().read(documentId);

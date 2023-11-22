@@ -1,8 +1,6 @@
 
 
 import { HttpError } from "@/lib/errors";
-import {  } from "@/lib/taas-api/asset/updateAsset";
-import { } from "@/lib/taas-api/token/createToken";
 import { updateTokenizedRealEstateDetails } from "@/lib/taas-api/asset/updateAsset";
 import { validateAuthInApiHandler } from "@/utils/auth";
 import { BAD_REQUEST, INTERNAL_SERVER_ERROR, OK } from "@/utils/constants";

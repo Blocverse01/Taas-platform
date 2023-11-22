@@ -1,6 +1,5 @@
 import { HttpError } from "@/lib/errors";
-import { updateAssetDocumentLable } from "@/lib/taas-api/asset/updateAsset";
-import { } from "@/lib/taas-api/token/createToken";
+import { updateAssetDocumentLabel } from "@/lib/taas-api/asset/updateAsset";
 import { validateAuthInApiHandler } from "@/utils/auth";
 import { BAD_REQUEST, INTERNAL_SERVER_ERROR, OK } from "@/utils/constants";
 import { NextApiHandler, NextApiRequest, NextApiResponse } from "next";
@@ -9,15 +8,15 @@ const handler: NextApiHandler = async (req: NextApiRequest, res: NextApiResponse
     try {
         await validateAuthInApiHandler(req, res);
 
-        const { documentId, lable } = req.body;
+        const { documentId, label } = req.body;
 
-        if (!documentId.trim() || !lable) {
+        if (!documentId.trim() || !label) {
             throw new HttpError(BAD_REQUEST, "Invalid Body Properties");
         }
 
-        await updateAssetDocumentLable(documentId, lable);
+        await updateAssetDocumentLabel(documentId, label);
 
-        res.status(OK).json({ message: "Document Lable Updated Successfully" });
+        res.status(OK).json({ message: "Document label Updated Successfully" });
     } catch (error: any) {
 
         return res
