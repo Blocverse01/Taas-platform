@@ -1,7 +1,6 @@
 
 export type AddNewMemberPayload = {
-    projectId: string,
-    projectName: string,
+    projectId: string,    
     name: string,
     email: string,
     role: string

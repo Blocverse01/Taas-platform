@@ -50,7 +50,7 @@ export const addNewTeamMember = async (
   if (!existingTeamMember) {
     await createProjectTeammate({
       projectId: payload.projectId,
-      projectName: payload.projectName,
+      projectName: payload.projectId,
       userId: user.id,
       role: +payload.role,
       isActive: false,
