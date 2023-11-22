@@ -12,4 +12,18 @@ const createUser = async (payload: CreateTaasUserPayload) => {
   });
 };
 
-export { createUser };
+const getUserById = async (Id: string) => {
+
+  const user = await userRepository()
+    .filter({ id: Id })
+    .select([
+      "id",      
+      "email",
+      "walletAddress"      
+    ])
+    .getFirst();
+
+  return user;
+}
+
+export { createUser, getUserById };
