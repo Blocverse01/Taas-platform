@@ -27,3 +27,13 @@ pnpm dev
 # or
 bun dev
 ```
+
+
+TODO
+
+Change Price Should Be a MultSig
+Change Property Name
+Change Token Ticker
+Add Time Lock
+Add Functionality to Change Price, PropertyName and TokenTicker on contract
+Upgradeable Smart Contracts for backwards compatibility (AssetFactory, AssetToken)
