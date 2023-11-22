@@ -1,7 +1,7 @@
 'use client';
 import { Navbar } from '@/components/landingPage/navbar';
 import Image from 'next/image';
-import { Element } from 'react-scroll';
+//import { Element } from 'react-scroll';
 import heroRaw from '@/assets/hero-img-raw.png';
 import { Twitter, Instagram, Linkedln, Plus, HeroBg } from '@/assets/icon';
 import { ComponentProps, useEffect, useRef } from 'react';
@@ -13,6 +13,7 @@ import {
 import Link from 'next/link';
 import { useRouter } from 'next/router';
 import { useSession } from 'next-auth/react';
+import React from "react";
 
 type MenuItems = ComponentProps<typeof Navbar>['menuItems']; // MenuItem[];
 
@@ -328,8 +329,7 @@ export default function Home() {
                 <p className="text-sm text-gray-800">© 2023 TAAS. All rights reserved.</p>
                 <h2 className="font-bold text-2xl text-t-purple">TAAS</h2>
               </footer>
-            </Element>
-          </section>
+            </section>
         </main>
       </div>
     </div>
