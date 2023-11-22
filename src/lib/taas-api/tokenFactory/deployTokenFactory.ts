@@ -13,6 +13,10 @@ import { PLATFORM_ENTRY } from "@/utils/web3/abis";
 import { getContractAddress } from "@/utils/web3/contracts";
 import { sponsorTransaction } from "@/lib/biconomy";
 import { SPONSOR_TRANSACTION } from "@/utils/constants";
+import { storeProjectActivityLogItem } from "../activityLog/createActivityLog";
+import { ActivityLogAssetSubCategory, ActivityLogCategory, ActivityLogProjectSubCategory } from "../activityLog/types";
+import { createActivityLogTitle } from "../activityLog/activityLogUtils";
+import { getTransactionExplorerUrl } from "@/utils/web3/connection";
 
 const CONTRACT_FUNCTION_NAME = "createTokenFactory" as const;
 
@@ -65,6 +69,17 @@ const deployTokenFactory = async (
   const receipt = await publicClient.waitForTransactionReceipt({
     hash: txHash,
   });
+
+  //TODO: Update this function to provide appropiate info for the activity log
+  await storeProjectActivityLogItem("", {
+    title: createActivityLogTitle(ActivityLogProjectSubCategory["deployFactory"], txHash),
+    category: ActivityLogCategory["project"],
+    ctaLink: getTransactionExplorerUrl(txHash),
+    ctaText: "View Transaction",
+    subCategory: ActivityLogProjectSubCategory["deployFactory"],
+    actor: receipt.from
+  });
+
   return extractResponseFromReceipt(receipt, platformEntryAddress);
 };
 
@@ -89,6 +104,7 @@ const extractResponseFromReceipt = (
     tokenFactory: topics.args.contractAddress,
     txHash: receipt.transactionHash,
   };
+
   return response;
 };
 

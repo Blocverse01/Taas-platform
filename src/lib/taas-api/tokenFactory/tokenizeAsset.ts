@@ -15,6 +15,10 @@ import { utils } from "@/utils/web3/utils";
 import { getContractAddress } from "@/utils/web3/contracts";
 import { sponsorTransaction } from "@/lib/biconomy";
 import { SPONSOR_TRANSACTION } from "@/utils/constants";
+import { storeProjectActivityLogItem } from "../activityLog/createActivityLog";
+import { ActivityLogCategory, ActivityLogProjectSubCategory } from "../activityLog/types";
+import { createActivityLogTitle } from "../activityLog/activityLogUtils";
+import { getTransactionExplorerUrl } from "@/utils/web3/connection";
 
 const CONTRACT_FUNCTION_NAME = "createToken" as const;
 const INTER_CHAIN_TOKEN_SERVICE = "0xF786e21509A9D50a9aFD033B5940A2b7D872C208" as const;
@@ -75,6 +79,17 @@ const tokenizeAsset = async (
   const receipt = await publicClient.waitForTransactionReceipt({
     hash: txHash,
   });
+
+  //TODO: Update this function to provide appriopiate info for the activity log
+  await storeProjectActivityLogItem("options.project.id", {
+    title: createActivityLogTitle(ActivityLogProjectSubCategory["tokenizeAsset"], txHash),
+    category: ActivityLogCategory["project"],
+    ctaLink: getTransactionExplorerUrl(txHash),
+    ctaText: "View Transaction",
+    subCategory: ActivityLogProjectSubCategory["tokenizeAsset"],
+    actor: receipt.from
+  });
+
   return extractResponseFromReceipt(receipt, tokenFactory);
 };
 
@@ -83,8 +98,6 @@ const extractResponseFromReceipt = (
   tokenFactoryAddress: Address
 ) => {
   if (receipt.status === "reverted") throw new Error("Transaction failed");
-
-  console.log(receipt.logs);
 
   const log = receipt.logs.find(
     (l) => l.address.toLowerCase() === tokenFactoryAddress.toLowerCase()
