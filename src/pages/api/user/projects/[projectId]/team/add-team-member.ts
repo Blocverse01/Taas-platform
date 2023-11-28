@@ -1,7 +1,7 @@
-import { HttpError } from "@/lib/errors";
-import { addNewTeamMember } from "@/lib/taas-api/team/addNewMember";
-import { validateAuthInApiHandler } from "@/utils/auth";
-import { BAD_REQUEST, INTERNAL_SERVER_ERROR, OK, UNAUTHORIZED } from "@/utils/constants";
+import { HttpError } from "@/resources/errors";
+import { addNewTeamMember } from "@/data/adapters/server/taas-api/team/addNewMember";
+import { validateAuthInApiHandler } from "@/data/adapters/browser/auth";
+import { BAD_REQUEST, INTERNAL_SERVER_ERROR, OK, UNAUTHORIZED } from "@/resources/constants";
 import { NextApiHandler, NextApiRequest, NextApiResponse } from "next";
 
 const USER_ROLES = {

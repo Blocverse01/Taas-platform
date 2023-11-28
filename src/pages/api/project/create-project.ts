@@ -1,12 +1,12 @@
-import { HttpError } from "@/lib/errors";
-import { createNewProject } from "@/lib/taas-api/project/addProject";
-import { validateAuthInApiHandler } from "@/utils/auth";
+import { HttpError } from "@/resources/errors";
+import { createNewProject } from "@/data/adapters/server/taas-api/project/addProject";
+import { validateAuthInApiHandler } from "@/data/adapters/browser/auth";
 import {
   BAD_REQUEST,
   INTERNAL_SERVER_ERROR,
   OK,
   UNAUTHORIZED,
-} from "@/utils/constants";
+} from "@/resources/constants";
 import { NextApiHandler, NextApiRequest, NextApiResponse } from "next";
 import { Address } from "viem";
 

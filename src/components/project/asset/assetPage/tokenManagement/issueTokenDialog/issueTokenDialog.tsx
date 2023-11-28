@@ -1,17 +1,17 @@
-import { ComponentProps, FC } from "react";
-import { IssueTokenForm } from "../issueTokenForm";
-import * as AlertDialog from "@radix-ui/react-alert-dialog";
-import { motion } from "framer-motion";
-import { CrossIcon } from "@/assets/icon";
-import { useModalParent } from "@/lib/zustand/modalSlice";
+import { ComponentProps, FC } from 'react';
+import { IssueTokenForm } from '../issueTokenForm';
+import * as AlertDialog from '@radix-ui/react-alert-dialog';
+import { motion } from 'framer-motion';
+import { CrossIcon } from '@/assets/icon';
+import { useModalParent } from '@/data/store/zustand/modalSlice';
 
 interface IssueTokenDialogProps {
-  handleIssueToken: ComponentProps<typeof IssueTokenForm>["handleIssueToken"];
+  handleIssueToken: ComponentProps<typeof IssueTokenForm>['handleIssueToken'];
 }
 
 const IssueTokenDialog: FC<IssueTokenDialogProps> = ({ handleIssueToken }) => {
   const dialogContainer = useModalParent();
-  
+
   return (
     <AlertDialog.Root>
       <AlertDialog.Trigger asChild>
@@ -45,12 +45,15 @@ const IssueTokenDialog: FC<IssueTokenDialogProps> = ({ handleIssueToken }) => {
               <IssueTokenForm
                 backButton={
                   <AlertDialog.Cancel asChild>
-                    <button type="button" className="text-white py-[18px] px-[70px] rounded bg-t-black">
+                    <button
+                      type="button"
+                      className="text-white py-[18px] px-[70px] rounded bg-t-black"
+                    >
                       Back
                     </button>
                   </AlertDialog.Cancel>
                 }
-                submitButtonText={"Proceed"}
+                submitButtonText={'Proceed'}
                 handleIssueToken={handleIssueToken}
               />
             </div>

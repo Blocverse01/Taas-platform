@@ -1,11 +1,11 @@
-"use client";
-import Link from "next/link";
-import logo from "@/assets/logo.svg";
-import { useRouter } from "next/router";
-import Image from "next/image";
-import { FC } from "react";
-import { Assets, Dashboard, Authorization, Settings, TeamIcon } from "@/assets/icon";
-import { derivePageTitle } from "@/utils/helperfunctions";
+'use client';
+import Link from 'next/link';
+import logo from '@/assets/logo.svg';
+import { useRouter } from 'next/router';
+import Image from 'next/image';
+import { FC } from 'react';
+import { Assets, Dashboard, Authorization, Settings, TeamIcon } from '@/assets/icon';
+import { derivePageTitle } from '@/resources/utils/helperfunctions';
 
 interface ProjectSidebarProps {
   projectId: string;
@@ -18,27 +18,27 @@ const ProjectSidebar: FC<ProjectSidebarProps> = ({ projectId }) => {
 
   const navItems = [
     {
-      name: "dashboard",
+      name: 'dashboard',
       href: `/dashboard/projects/${projectId}`,
       icon: <Dashboard />,
     },
     {
-      name: "assets",
+      name: 'assets',
       href: `/dashboard/projects/${projectId}/assets`,
       icon: <Assets />,
     },
     {
-      name: "team",
+      name: 'team',
       href: `/dashboard/projects/${projectId}/team`,
       icon: <TeamIcon />,
     },
     {
-      name: "settings",
+      name: 'settings',
       href: `/dashboard/projects/${projectId}/settings`,
       icon: <Settings />,
     },
     {
-      name: "authorizations",
+      name: 'authorizations',
       href: `/dashboard/projects/${projectId}/authorizations`,
       icon: <Authorization />,
     },
@@ -55,7 +55,7 @@ const ProjectSidebar: FC<ProjectSidebarProps> = ({ projectId }) => {
             {navItems.map((item) => (
               <Link
                 className={`flex relative rounded gap-2 py-[10.5px] px-[19px] items-center ${
-                  pageTitle === item.name ? "bg-t-purple text-white" : ""
+                  pageTitle === item.name ? 'bg-t-purple text-white' : ''
                 }`}
                 key={item.href}
                 href={item.href}

@@ -1,8 +1,8 @@
-import { DeleteIcon, DownloadCircle, EditIcon, Ellipsis } from "@/assets/icon";
-import { formatFileSize } from "@/utils/files";
-import { FC } from "react";
-import * as Popover from "@radix-ui/react-popover";
-import { useModalParent } from "@/lib/zustand/modalSlice";
+import { DeleteIcon, DownloadCircle, EditIcon, Ellipsis } from '@/assets/icon';
+import { formatFileSize } from '@/resources/utils/file';
+import { FC } from 'react';
+import * as Popover from '@radix-ui/react-popover';
+import { useModalParent } from '@/data/store/zustand/modalSlice';
 
 interface Document {
   label: string;
@@ -36,7 +36,7 @@ const DocumentCard: FC<{
 }> = ({ document }) => {
   const { label, fileURI, fileSize } = document;
 
-  const fileName = fileURI.split("/")[fileURI.split("/").length - 1];
+  const fileName = fileURI.split('/')[fileURI.split('/').length - 1];
 
   const modalParent = useModalParent();
 

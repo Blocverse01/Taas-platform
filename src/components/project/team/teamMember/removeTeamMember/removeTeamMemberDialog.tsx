@@ -1,7 +1,7 @@
-import * as AlertDialog from "@radix-ui/react-alert-dialog";
-import { motion } from "framer-motion";
-import { CrossIcon, Exclamation, PlusSign, DeleteIcon } from "@/assets/icon";
-import { useModalParent } from "@/lib/zustand/modalSlice";
+import * as AlertDialog from '@radix-ui/react-alert-dialog';
+import { motion } from 'framer-motion';
+import { CrossIcon, Exclamation, PlusSign, DeleteIcon } from '@/assets/icon';
+import { useModalParent } from '@/data/store/zustand/modalSlice';
 
 const RemoveTeamMemberDialog = () => {
   const dialogContainer = useModalParent();
@@ -10,7 +10,7 @@ const RemoveTeamMemberDialog = () => {
     <AlertDialog.Root>
       <AlertDialog.Trigger asChild>
         <button className="flex hover:bg-t-gray-2 rounded p-3 items-center  space-x-2">
-          {" "}
+          {' '}
           <DeleteIcon /> <span>Remove Team Member</span>
         </button>
       </AlertDialog.Trigger>
@@ -37,12 +37,12 @@ const RemoveTeamMemberDialog = () => {
               <AlertDialog.Title className=" text-[20px]  text-center text-black">
                 Are you sure you want to remove this team member?
               </AlertDialog.Title>
-             
-                <p className="flex text-sm w-fit mx-auto text-center space-x-2 items-center">
-                  <Exclamation />
-                 <span> This action is permanent; you cannot undo it.</span>
-                </p>
-             
+
+              <p className="flex text-sm w-fit mx-auto text-center space-x-2 items-center">
+                <Exclamation />
+                <span> This action is permanent; you cannot undo it.</span>
+              </p>
+
               <div className="grid  grid-cols-2 gap-x-6">
                 <AlertDialog.Cancel asChild>
                   <button
@@ -52,10 +52,7 @@ const RemoveTeamMemberDialog = () => {
                     Back
                   </button>
                 </AlertDialog.Cancel>
-                <button
-                  type="button"
-                  className="text-white py-[18px] px-[70px] rounded bg-t-red-1"
-                >
+                <button type="button" className="text-white py-[18px] px-[70px] rounded bg-t-red-1">
                   Remove
                 </button>
               </div>

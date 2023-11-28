@@ -1,9 +1,9 @@
-import { FC } from "react";
-import * as AlertDialog from "@radix-ui/react-alert-dialog";
-import { motion } from "framer-motion";
-import { CrossIcon } from "@/assets/icon";
-import { useModalParent } from "@/lib/zustand/modalSlice";
-import { DisplayApiKey } from "../displayApiKey";
+import { FC } from 'react';
+import * as AlertDialog from '@radix-ui/react-alert-dialog';
+import { motion } from 'framer-motion';
+import { CrossIcon } from '@/assets/icon';
+import { useModalParent } from '@/data/store/zustand/modalSlice';
+import { DisplayApiKey } from '../displayApiKey';
 
 interface DisplayApiKeyDialogProps {
   apiKey: string;
@@ -11,11 +11,7 @@ interface DisplayApiKeyDialogProps {
   open: boolean;
 }
 
-const DisplayApiKeyDialog: FC<DisplayApiKeyDialogProps> = ({
-  apiKey,
-  onOpenChange,
-  open,
-}) => {
+const DisplayApiKeyDialog: FC<DisplayApiKeyDialogProps> = ({ apiKey, onOpenChange, open }) => {
   const dialogContainer = useModalParent();
   return (
     <AlertDialog.Root open={open} onOpenChange={onOpenChange}>

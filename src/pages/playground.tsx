@@ -1,22 +1,22 @@
-import { useLocalStorage } from "usehooks-ts";
-import { NextPageWithLayout } from "./_app";
-import { deploySafe } from "@/lib/safe/deploySafe";
-import { getSession } from "next-auth/react";
-import { deployTokenFactory } from "@/lib/taas-api/tokenFactory/deployTokenFactory";
-import { useState } from "react";
-import SubPageLayout from "@/components/layout/subPageLayout";
-import { tokenizeAsset } from "@/lib/taas-api";
-import toast from "react-hot-toast";
-import { Formik, Form } from "formik";
-import { createIssueTokenAssetTransaction } from "@/lib/taas-api/token/createIssueTokenTransaction";
-import { Address } from "viem";
-import { Input } from "@/components/formPrimitives/input";
-import { executeIssueTokenTransaction } from "@/lib/taas-api/token/issueToken";
+import { useLocalStorage } from 'usehooks-ts';
+import { NextPageWithLayout } from './_app';
+import { deploySafe } from '@/data/adapters/browser/safe/deploySafe';
+import { getSession } from 'next-auth/react';
+import { deployTokenFactory } from '@/data/adapters/browser/taas-web/tokenFactory/deployTokenFactory';
+import { useState } from 'react';
+import SubPageLayout from '@/components/layout/subPageLayout';
+import { tokenizeAsset } from '@/data/adapters/browser/taas-web/tokenFactory/tokenizeAsset';
+import toast from 'react-hot-toast';
+import { Formik, Form } from 'formik';
+import { createIssueTokenAssetTransaction } from '@/data/adapters/browser/taas-web/token/createIssueTokenTransaction';
+import { Address } from 'viem';
+import { Input } from '@/components/formPrimitives/input';
+import { executeIssueTokenTransaction } from '@/data/adapters/browser/taas-web/token/issueToken';
 
-const DEMO_TREASURY_WALLET = "0x622eDE672dC30A7cB40CDA9461f8e64fA39bA929" as const;
+const DEMO_TREASURY_WALLET = '0x622eDE672dC30A7cB40CDA9461f8e64fA39bA929' as const;
 
 function bigIntReplacer(key: string, value: unknown): unknown {
-  if (typeof value === "bigint") {
+  if (typeof value === 'bigint') {
     return value.toString(); // Convert BigInt to string
   }
   return value;
@@ -30,11 +30,11 @@ interface PlaygroundConfig {
 
 const PlayGround: NextPageWithLayout = () => {
   const [playgroundConfig, setPlaygroundConfig] = useLocalStorage<Partial<PlaygroundConfig>>(
-    "playgroundConfig",
+    'playgroundConfig',
     {}
   );
   const [playgroundError, setPlaygroundError] = useState<string>();
-  const [issueTokenTxHash, setIssueTokenTxHash] = useLocalStorage<string>("issueTokenTxHash", "");
+  const [issueTokenTxHash, setIssueTokenTxHash] = useLocalStorage<string>('issueTokenTxHash', '');
 
   const updatePlaygroundConfig = (key: keyof PlaygroundConfig, value: Address) => {
     setPlaygroundConfig((prev) => ({
@@ -47,44 +47,49 @@ const PlayGround: NextPageWithLayout = () => {
     const session = await getSession();
     if (!session) return;
 
-    const toastId = toast.loading("Initializing playground");
+    const toastId = toast.loading('Initializing playground');
     try {
-      const safeAddress = playgroundConfig.safeAddress ?? (await deploySafe([session.user.walletAddress], 1));
+      const safeAddress =
+        playgroundConfig.safeAddress ?? (await deploySafe([session.user.walletAddress], 1));
 
-      updatePlaygroundConfig("safeAddress", safeAddress);
+      updatePlaygroundConfig('safeAddress', safeAddress);
       toast.success(`Safe Deployed`);
 
       const { tokenFactory } = playgroundConfig.tokenFactory
         ? { tokenFactory: playgroundConfig.tokenFactory }
         : await deployTokenFactory(safeAddress, DEMO_TREASURY_WALLET);
 
-      updatePlaygroundConfig("tokenFactory", tokenFactory);
+      updatePlaygroundConfig('tokenFactory', tokenFactory);
       toast.success(`Token Factory Deployed`);
 
       const { tokenAddress } = playgroundConfig.tokenAddress
         ? { tokenAddress: playgroundConfig.tokenAddress }
-        : await tokenizeAsset(tokenFactory, "TEST", 500, "Test Token");
+        : await tokenizeAsset(tokenFactory, 'TEST', 500, 'Test Token');
 
-      updatePlaygroundConfig("tokenAddress", tokenAddress);
+      updatePlaygroundConfig('tokenAddress', tokenAddress);
       toast.success(`Token Deployed`);
 
       toast.dismiss(toastId);
-      toast.success("Initialization completed");
+      toast.success('Initialization completed');
     } catch (error) {
       toast.dismiss(toastId);
-      toast.error("Initialization failed");
+      toast.error('Initialization failed');
 
       const stringifiedError = JSON.stringify(error, bigIntReplacer, 2);
 
-      setPlaygroundError(stringifiedError === "{}" ? String(error) : stringifiedError);
+      setPlaygroundError(stringifiedError === '{}' ? String(error) : stringifiedError);
     }
   };
 
   const createIssueTokenTx = async (destinationWallet: Address, amount: number) => {
-    if (!playgroundConfig.safeAddress || !playgroundConfig.tokenAddress || !playgroundConfig.tokenFactory)
+    if (
+      !playgroundConfig.safeAddress ||
+      !playgroundConfig.tokenAddress ||
+      !playgroundConfig.tokenFactory
+    )
       return;
 
-    const toastId = toast.loading("Creating Transaction");
+    const toastId = toast.loading('Creating Transaction');
     try {
       const { txHash } = await createIssueTokenAssetTransaction(playgroundConfig.safeAddress, {
         tokenAddress: playgroundConfig.tokenAddress,
@@ -101,7 +106,7 @@ const PlayGround: NextPageWithLayout = () => {
       console.log(error);
 
       toast.dismiss(toastId);
-      toast.error("Creating Tx failed");
+      toast.error('Creating Tx failed');
 
       setPlaygroundError(JSON.stringify(error, null, 2));
     }
@@ -110,7 +115,7 @@ const PlayGround: NextPageWithLayout = () => {
   const executeIssueTokenTx = async () => {
     if (!playgroundConfig.safeAddress || !issueTokenTxHash) return;
 
-    const toastId = toast.loading("Executing Transaction");
+    const toastId = toast.loading('Executing Transaction');
     try {
       const { txHash } = await executeIssueTokenTransaction(
         playgroundConfig.safeAddress,
@@ -125,13 +130,14 @@ const PlayGround: NextPageWithLayout = () => {
       console.log(error);
 
       toast.dismiss(toastId);
-      toast.error("Executing Tx failed");
+      toast.error('Executing Tx failed');
 
       setPlaygroundError(JSON.stringify(error, null, 2));
     }
   };
 
-  const isInitialized = Object.values(playgroundConfig).filter((value) => value !== undefined).length === 3;
+  const isInitialized =
+    Object.values(playgroundConfig).filter((value) => value !== undefined).length === 3;
 
   return (
     <section className="grid grid-cols-2 gap-6 max-w-[1380px] mx-auto">
@@ -175,7 +181,7 @@ const PlayGround: NextPageWithLayout = () => {
               <div>
                 <Formik
                   initialValues={{
-                    destinationWallet: "",
+                    destinationWallet: '',
                     amount: 0,
                   }}
                   onSubmit={async (values, {}) => {

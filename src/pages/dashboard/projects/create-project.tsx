@@ -1,66 +1,66 @@
-import { Formik, Form, Field, ErrorMessage } from "formik";
-import * as Yup from "yup";
-import { FC } from "react";
-import Select from "react-select";
-import { Input } from "@/components/formPrimitives/input";
-import classNames from "classnames";
-import { NextPageWithLayout } from "@/pages/_app";
-import Link from "next/link";
-import SubPageLayout from "@/components/layout/subPageLayout";
-import toast from "react-hot-toast";
-import { storeProjectItem } from "@/utils/projectIntegration";
-import { deploySafe } from "@/lib/safe/deploySafe";
-import { getSession } from "next-auth/react";
-import { deployTokenFactory } from "@/lib/taas-api/tokenFactory/deployTokenFactory";
-import { Address } from "viem";
-import { saveToActivityLog } from "@/data/adapters/browser/activityLog";
+import { Formik, Form, Field, ErrorMessage } from 'formik';
+import * as Yup from 'yup';
+import { FC } from 'react';
+import Select from 'react-select';
+import { Input } from '@/components/formPrimitives/input';
+import classNames from 'classnames';
+import { NextPageWithLayout } from '@/pages/_app';
+import Link from 'next/link';
+import SubPageLayout from '@/components/layout/subPageLayout';
+import toast from 'react-hot-toast';
+import { storeProjectItem } from '@/data/adapters/browser/taas-web/project';
+import { deploySafe } from '@/data/adapters/browser/safe/deploySafe';
+import { getSession } from 'next-auth/react';
+import { deployTokenFactory } from '@/data/adapters/browser/taas-web/tokenFactory/deployTokenFactory';
+import { Address } from 'viem';
+import { saveToProjectActivityLog } from '@/data/adapters/browser/taas-web/activityLog';
 import {
   ActivityLogCategory,
   ActivityLogProjectSubCategory,
-} from "@/lib/taas-api/activityLog/types";
-import { createActivityLogTitle } from "@/lib/taas-api/activityLog/activityLogUtils";
-import { getTransactionExplorerUrl } from "@/utils/web3/connection";
+} from '@/data/adapters/server/taas-api/activityLog/types';
+import { createActivityLogTitle } from '@/data/adapters/browser/taas-web/activityLog/utils';
+import { getTransactionExplorerUrl } from '@/resources/utils/web3/connection';
 
 const validationSchema = Yup.object({
-  name: Yup.string().required("Name is required"),
-  assetType: Yup.string().required("Asset type is required"),
-  blockchain: Yup.string().required("Blockchain is required"),
-  treasuryWallet: Yup.string().required("Treasury Wallet is required"),
+  name: Yup.string().required('Name is required'),
+  assetType: Yup.string().required('Asset type is required'),
+  blockchain: Yup.string().required('Blockchain is required'),
+  treasuryWallet: Yup.string().required('Treasury Wallet is required'),
 });
 
 const blockchainOptions = [
-  { value: "optimism", label: "Optimism" },
-  { value: "polygon", label: "Polygon" },
-  { value: "scroll", label: "Scroll" },
+  { value: 'optimism', label: 'Optimism' },
+  { value: 'polygon', label: 'Polygon' },
+  { value: 'scroll', label: 'Scroll' },
 ];
 
 const assetOptions = [
-  { value: "realestate", label: "Real Estate" },
-  { value: "startupinvestment", label: "Startup Investment" },
-  { value: "bluegreenbond", label: "Blue/Green Bonds" },
-  { value: "antiques", label: "Antiques" },
+  { value: 'realestate', label: 'Real Estate' },
+  { value: 'startupinvestment', label: 'Startup Investment' },
+  { value: 'bluegreenbond', label: 'Blue/Green Bonds' },
+  { value: 'antiques', label: 'Antiques' },
 ];
 
 const CreateProject: NextPageWithLayout = () => {
   const initialValues = {
-    name: "",
-    blockchain: "",
-    assetType: "",
-    treasuryWallet: "",
+    name: '',
+    blockchain: '',
+    assetType: '',
+    treasuryWallet: '',
   };
   return (
     <Formik
       initialValues={initialValues}
       validationSchema={validationSchema}
       onSubmit={async (values, { setSubmitting, resetForm }) => {
-        const toastOptions = { id: "generate-api-key" };
+        const toastOptions = { id: 'generate-api-key' };
         try {
-          toast.loading("Generating a project", toastOptions);
+          toast.loading('Generating a project', toastOptions);
 
           const session = await getSession();
 
           if (!session) {
-            throw new Error("");
+            throw new Error('');
           }
 
           const safeAddress = await deploySafe([session.user.walletAddress], 1);
@@ -76,24 +76,20 @@ const CreateProject: NextPageWithLayout = () => {
             tokenFactory,
           });
 
-          await saveToActivityLog(project.id, {
+          await saveToProjectActivityLog(project.id, {
             actor,
-            title: createActivityLogTitle(
-              ActivityLogProjectSubCategory["deployFactory"],
-              txHash
-            ),
-            category: ActivityLogCategory["project"],
+            title: createActivityLogTitle(ActivityLogProjectSubCategory['deployFactory'], txHash),
+            category: ActivityLogCategory['project'],
             ctaLink: getTransactionExplorerUrl(txHash),
-            ctaText: "View Transaction",
-            subCategory: ActivityLogProjectSubCategory["deployFactory"],
+            ctaText: 'View Transaction',
+            subCategory: ActivityLogProjectSubCategory['deployFactory'],
           });
 
-          toast.success("Project generated successfully", toastOptions);
+          toast.success('Project generated successfully', toastOptions);
 
           resetForm();
         } catch (error) {
-          const errorMessage =
-            error instanceof Error ? error.message : "Something went wrong";
+          const errorMessage = error instanceof Error ? error.message : 'Something went wrong';
           toast.error(errorMessage, toastOptions);
         } finally {
           setSubmitting(false);
@@ -120,29 +116,25 @@ const CreateProject: NextPageWithLayout = () => {
                 control(base) {
                   return {
                     ...base,
-                    backgroundColor: "#FAFAFA",
-                    padding: "8px",
-                    borderRadius: "4px",
-                    border: "none",
-                    color: "#474747",
-                    fontSize: "14px",
-                    fontWeight: "normal",
+                    backgroundColor: '#FAFAFA',
+                    padding: '8px',
+                    borderRadius: '4px',
+                    border: 'none',
+                    color: '#474747',
+                    fontSize: '14px',
+                    fontWeight: 'normal',
                   };
                 },
               }}
               placeholder="Select an asset"
               options={assetOptions}
-              isOptionDisabled={(option) => option.value !== "realestate"}
+              isOptionDisabled={(option) => option.value !== 'realestate'}
               onChange={(assetOption) => {
                 if (!assetOption) return null;
-                setFieldValue("assetType", assetOption.value);
+                setFieldValue('assetType', assetOption.value);
               }}
             />
-            <ErrorMessage
-              name="assetType"
-              component="div"
-              className="text-red-500"
-            />
+            <ErrorMessage name="assetType" component="div" className="text-red-500" />
           </div>
 
           <div>
@@ -154,13 +146,13 @@ const CreateProject: NextPageWithLayout = () => {
                 control(base) {
                   return {
                     ...base,
-                    backgroundColor: "#FAFAFA",
-                    padding: "8px",
-                    borderRadius: "4px",
-                    border: "none",
-                    color: "#474747",
-                    fontSize: "14px",
-                    fontWeight: "normal",
+                    backgroundColor: '#FAFAFA',
+                    padding: '8px',
+                    borderRadius: '4px',
+                    border: 'none',
+                    color: '#474747',
+                    fontSize: '14px',
+                    fontWeight: 'normal',
                   };
                 },
               }}
@@ -168,14 +160,10 @@ const CreateProject: NextPageWithLayout = () => {
               options={blockchainOptions}
               onChange={(blockchainOption) => {
                 if (!blockchainOption) return null;
-                setFieldValue("blockchain", blockchainOption.value);
+                setFieldValue('blockchain', blockchainOption.value);
               }}
             />
-            <ErrorMessage
-              name="blockchain"
-              component="div"
-              className="text-red-500"
-            />
+            <ErrorMessage name="blockchain" component="div" className="text-red-500" />
           </div>
 
           <Input

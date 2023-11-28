@@ -1,5 +1,5 @@
-import { handleAuthRequest } from "@/lib/magic/utils";
-import NextAuth, { AuthOptions, Awaitable } from "next-auth";
+import { handleAuthRequest } from "@/data/adapters/server/magic/handleAuthRequest";
+import NextAuth, { AuthOptions } from "next-auth";
 import CredentialsProvider from "next-auth/providers/credentials";
 import { Address } from "viem";
 

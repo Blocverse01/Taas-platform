@@ -1,13 +1,13 @@
-import { ApiIntegrations } from "@/components/apiIntegrations";
-import { ComponentProps } from "react";
-import { NextPageWithLayout } from "../_app";
-import { fetcher, getCurrentAuthUser } from "@/utils/constants";
-import type { GetServerSideProps, InferGetServerSidePropsType } from "next";
-import { getUserProjects } from "@/lib/taas-api/project/getUserProjects";
-import DashboardLayout from "@/components/layout/dashboardLayout";
-import useSWR from "swr";
-import { ReloadPage } from "@/components/reloadPage";
-import Skeleton from "react-loading-skeleton";
+import { ApiIntegrations } from '@/components/apiIntegrations';
+import { ComponentProps } from 'react';
+import { NextPageWithLayout } from '../_app';
+import { fetcher, getCurrentAuthUser } from '@/resources/constants';
+import type { GetServerSideProps, InferGetServerSidePropsType } from 'next';
+import { getUserProjects } from '@/data/adapters/server/taas-api/project/getUserProjects';
+import DashboardLayout from '@/components/layout/dashboardLayout';
+import useSWR from 'swr';
+import { ReloadPage } from '@/components/reloadPage';
+import Skeleton from 'react-loading-skeleton';
 
 type ApiIntegrationsProps = ComponentProps<typeof ApiIntegrations>;
 
@@ -16,7 +16,7 @@ export const getServerSideProps = (async (context) => {
   if (!authSession) {
     return {
       redirect: {
-        destination: "/login",
+        destination: '/login',
         permanent: false,
       },
     };
@@ -26,21 +26,21 @@ export const getServerSideProps = (async (context) => {
 
   return { props: { projects } };
 }) satisfies GetServerSideProps<{
-  projects: ApiIntegrationsProps["projects"];
+  projects: ApiIntegrationsProps['projects'];
 }>;
 
 const generateApiKey = async (projectId: string) => {
-  const response = await fetch("/api/user/api-keys/create", {
+  const response = await fetch('/api/user/api-keys/create', {
     body: JSON.stringify({
       projectId,
     }),
-    method: "POST",
+    method: 'POST',
     headers: {
-      "Content-Type": "application/json",
+      'Content-Type': 'application/json',
     },
   });
 
-  if (!response.ok) throw Error("Invalid response");
+  if (!response.ok) throw Error('Invalid response');
 
   const data: {
     data: string;
@@ -50,22 +50,24 @@ const generateApiKey = async (projectId: string) => {
 };
 
 const deleteApiKey = async (apiKeyId: string) => {
-  const response = await fetch("/api/user/api-keys/delete", {
+  const response = await fetch('/api/user/api-keys/delete', {
     body: JSON.stringify({
       apiKeyId,
     }),
-    method: "DELETE",
+    method: 'DELETE',
     headers: {
-      "Content-Type": "application/json",
+      'Content-Type': 'application/json',
     },
   });
 
-  if (!response.ok) throw Error("Invalid response");
+  if (!response.ok) throw Error('Invalid response');
 };
 
-const IntegrationsPage: NextPageWithLayout<InferGetServerSidePropsType<typeof getServerSideProps>> = ({ projects }) => {
+const IntegrationsPage: NextPageWithLayout<
+  InferGetServerSidePropsType<typeof getServerSideProps>
+> = ({ projects }) => {
   const { data, error, mutate } = useSWR<{
-    data?: ApiIntegrationsProps["apiKeys"];
+    data?: ApiIntegrationsProps['apiKeys'];
   }>(`/api/user/api-keys`, fetcher);
 
   const apiKeys = data?.data;

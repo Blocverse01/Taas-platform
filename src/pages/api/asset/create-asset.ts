@@ -1,8 +1,8 @@
-import { HttpError } from "@/lib/errors";
-import { storeTokenizedRealEstate } from "@/lib/taas-api/token/createToken";
-import { storeProjectAssetFormData } from "@/utils/assetIntegrations";
-import { validateAuthInApiHandler } from "@/utils/auth";
-import { BAD_REQUEST, INTERNAL_SERVER_ERROR, OK, UNAUTHORIZED } from "@/utils/constants";
+import { HttpError } from "@/resources/errors";
+import { storeTokenizedRealEstate } from "@/data/adapters/server/taas-api/token/storeToken";
+import { storeProjectAssetFormData } from "@/data/adapters/browser/taas-web/token/tokenizedAsset";
+import { validateAuthInApiHandler } from "@/data/adapters/browser/auth";
+import { BAD_REQUEST, INTERNAL_SERVER_ERROR, OK, UNAUTHORIZED } from "@/resources/constants";
 import { NextApiHandler, NextApiRequest, NextApiResponse } from "next";
 import { Address } from "viem";
 

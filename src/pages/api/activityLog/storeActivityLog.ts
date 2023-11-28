@@ -1,7 +1,7 @@
-import { HttpError } from "@/lib/errors";
-import { storeProjectActivityLogItem } from "@/lib/taas-api/activityLog/createActivityLog";
-import { validateAuthInApiHandler } from "@/utils/auth";
-import { BAD_REQUEST, INTERNAL_SERVER_ERROR, OK } from "@/utils/constants";
+import { HttpError } from "@/resources/errors";
+import { storeProjectActivityLogItem } from "@/data/adapters/server/taas-api/activityLog/createActivityLog";
+import { validateAuthInApiHandler } from "@/data/adapters/browser/auth";
+import { BAD_REQUEST, INTERNAL_SERVER_ERROR, OK } from "@/resources/constants";
 import { NextApiHandler, NextApiRequest, NextApiResponse } from "next";
 
 const handler: NextApiHandler = async (
