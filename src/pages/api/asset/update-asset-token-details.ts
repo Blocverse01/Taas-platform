@@ -1,9 +1,7 @@
-
-
 import { HttpError } from "@/lib/errors";
 import { AssetTokenDetails } from "@/lib/taas-api/asset/types";
-import { UpdateAssetDetails } from "@/lib/taas-api/asset/updateAsset";
-import { AssetDetailsSchema } from "@/lib/taas-api/asset/validationSchema";
+import { UpdateAssetDetails, UpdateTokenDetails } from "@/lib/taas-api/asset/updateAsset";
+import { AssetTokenDetailsSchema } from "@/lib/taas-api/asset/validationSchema";
 import { validateAuthInApiHandler } from "@/utils/auth";
 import { INTERNAL_SERVER_ERROR, OK } from "@/utils/constants";
 import { NextApiHandler, NextApiRequest, NextApiResponse } from "next";
@@ -12,11 +10,11 @@ const handler: NextApiHandler = async (req: NextApiRequest, res: NextApiResponse
     try {
         await validateAuthInApiHandler(req, res);
 
-        const { propertyDescription, propertyLocation, propertySize, assetId, valuation } = await AssetDetailsSchema.validate(req.body);
+        const { propertyName, tokenTicker, pricePerToken, assetId } = await AssetTokenDetailsSchema.validate(req.body);
 
-        await UpdateAssetDetails({ propertyDescription, propertyLocation, propertySize, assetId, valuation });
+        await UpdateTokenDetails({ propertyName, tokenTicker, pricePerToken, assetId });
 
-        res.status(OK).json({ message: "Asset Details Updated Successfully" });
+        res.status(OK).json({ message: "Asset Token Details Updated Successfully" });
 
     } catch (error: any) {
 

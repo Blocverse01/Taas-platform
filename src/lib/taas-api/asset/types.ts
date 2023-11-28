@@ -1,9 +1,16 @@
-export interface TokenizedRealEstateData {
+
+
+export interface AssetTokenDetails {
+    assetId: string;
     propertyName: string;
+    tokenTicker: string;
+    pricePerToken: string,
+}
+
+export interface AssetDetails {
     propertyDescription: string;
     propertyLocation: string;
     propertySize: number;
-    tokenTicker: string;
-    pricePerToken: number;
     valuation: number;
+    assetId: string
 }

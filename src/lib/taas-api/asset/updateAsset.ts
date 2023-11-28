@@ -1,35 +1,41 @@
-import { assetDocumentRepository, assetPropertyRepository, projectRepository } from "@/utils/constants";
-import { TokenizedRealEstateData } from "./types";
+import { NOT_FOUND, assetDocumentRepository, assetPropertyRepository } from "@/utils/constants";
+import { AssetDetails, AssetTokenDetails } from "./types";
+import { HttpError } from "@/lib/errors";
 
-export async function updateTokenizedRealEstateDetails(
-    assetId: string,
-    realEstateData: TokenizedRealEstateData
+export async function UpdateAssetDetails(
+    data: AssetDetails
 ) {
-    const asset = await assetPropertyRepository().read(assetId);
+    const asset = await assetPropertyRepository().read(data.assetId);
 
     if (!asset) {
-        throw new Error("Asset Not Found");
+        throw new HttpError(NOT_FOUND, 'Asset Not Found"')
     }
 
-    const {
-        propertyName,
-        propertyDescription,
-        propertyLocation,
-        propertySize,
-        tokenTicker,
-        pricePerToken,
-        valuation
-    } = realEstateData;
-
     await asset.update({
-        tokenTicker,
-        name: propertyName,
-        description: propertyDescription,
-        location: propertyLocation,
-        size: propertySize,
-        tokenPrice: pricePerToken,
-        valuation: parseFloat(`${valuation}`),
+        description: data.propertyDescription,
+        location: data.propertyLocation,
+        size: data.propertySize,
+        valuation: parseFloat(`${data.valuation}`),
     });
+
+}
+
+
+export async function UpdateTokenDetails(
+    data: AssetTokenDetails
+) {
+
+    const asset = await assetPropertyRepository().read(data.assetId);
+
+    // if (!asset) {
+    //     throw new HttpError(NOT_FOUND, 'Asset Not Found"')
+    // }
+
+    // await asset.update({
+    //     tokenTicker: data.tokenTicker,
+    //     tokenPrice: data.pricePerToken,
+    //     valuation : 
+    // });
 
 }
 
@@ -54,4 +60,5 @@ export async function updateAssetDocumentLabel(
 
     await document.update({ label });
 }
+
 
