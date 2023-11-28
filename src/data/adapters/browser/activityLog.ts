@@ -22,7 +22,10 @@ const saveToActivityLog = async (
 
   const response = await fetch(endpoint, {
     method: "POST",
-    body: JSON.stringify(payload),
+    body: JSON.stringify({
+      projectId,
+      logItem: payload,
+    }),
     headers: {
       Accept: "application/json",
       "Content-Type": "application/json",
