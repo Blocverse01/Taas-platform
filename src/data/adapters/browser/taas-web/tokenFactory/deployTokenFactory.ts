@@ -51,7 +51,11 @@ const deployTokenFactory = async (
     const receipt = await publicClient.getTransactionReceipt({
       hash: txHash,
     });
-    return extractResponseFromReceipt(receipt, platformEntryAddress);
+
+    return {
+      ...extractResponseFromReceipt(receipt, platformEntryAddress),
+      actor: account
+    };
   }
 
   const { request } = await publicClient.simulateContract({
