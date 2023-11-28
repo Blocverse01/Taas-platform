@@ -11,12 +11,23 @@ interface TokenManagementProps {
     totalSupply: number;
     assetHoldersCount: number;
   }>;
-  issueToken: (tokenAddress: Address, destinationWallet: Address, amount: number) => Promise<void>;
+  issueToken: (
+    tokenAddress: Address,
+    destinationWallet: Address,
+    amount: number
+  ) => Promise<void>;
 }
 
-const TokenManagement: FC<TokenManagementProps> = ({ tokenAddress, tokenPrice, getTokenInformation, issueToken }) => {
+const TokenManagement: FC<TokenManagementProps> = ({
+  tokenAddress,
+  tokenPrice,
+  getTokenInformation,
+  issueToken,
+}) => {
   const key = `/tokens/${tokenAddress}/information`;
-  const { data: tokenInformation, error } = useSwr(key, () => getTokenInformation(tokenAddress));
+  const { data: tokenInformation, error } = useSwr(key, () =>
+    getTokenInformation(tokenAddress)
+  );
 
   const totalSupply = tokenInformation?.totalSupply;
   const assetHoldersCount = tokenInformation?.assetHoldersCount;
@@ -35,24 +46,36 @@ const TokenManagement: FC<TokenManagementProps> = ({ tokenAddress, tokenPrice, g
         <div className="flex gap-16">
           <div className="flex flex-col gap-4">
             <span className="text-t-black text-base">Total Supply</span>
-            <span className="text-t-gray-4 text-base">{!totalSupply && !error ? <Skeleton /> : totalSupply}</span>
+            <span className="text-t-gray-4 text-base">
+              {totalSupply === undefined && !error ? <Skeleton /> : totalSupply}
+            </span>
           </div>
           <div className="flex flex-col gap-4">
-            <span className="text-t-black text-base">No. of Wallets Holding Asset</span>
+            <span className="text-t-black text-base">
+              No. of Wallets Holding Asset
+            </span>
             <span className="text-t-gray-4 text-base">
-              {!assetHoldersCount && !error ? <Skeleton /> : assetHoldersCount}
+              {assetHoldersCount === undefined && !error ? (
+                <Skeleton />
+              ) : (
+                assetHoldersCount
+              )}
             </span>
           </div>
           <div className="flex flex-col gap-4">
             <span className="text-t-black text-base">Price</span>
-            <span className="text-t-gray-4 text-base">{"$" + `${tokenPrice}`}</span>
+            <span className="text-t-gray-4 text-base">
+              {"$" + `${tokenPrice}`}
+            </span>
           </div>
         </div>
         <div>
           {
             // Todo: Request for token transfer designs and implement.
           }
-          <button className="underline text-t-purple text-base">Transfer Token to Wallet</button>
+          <button className="underline text-t-purple text-base">
+            Transfer Token to Wallet
+          </button>
         </div>
       </section>
     </section>
