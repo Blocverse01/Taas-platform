@@ -1,7 +1,7 @@
-"use client";
-import { useState } from "react";
-import { Link as ScrollLink } from "react-scroll";
-import Link from "next/link";
+'use client';
+import { useState, FC } from 'react';
+import { Link as ScrollLink } from 'react-scroll';
+import Link from 'next/link';
 
 interface MenuItem {
   title: string;
@@ -14,17 +14,20 @@ type NavbarProps = {
   menuItems: MenuItem[];
   isLoggedIn: boolean;
 };
-const Navbar: React.FC<NavbarProps> = ({ menuItems, isLoggedIn }) => {
-  const [active, setActive] = useState("nav-menu");
-  const [toggleIcon, setToggleIcon] = useState("nav-toggler");
+const Navbar: FC<NavbarProps> = ({ menuItems, isLoggedIn }) => {
+  const [active, setActive] = useState('nav-menu');
+  const [toggleIcon, setToggleIcon] = useState('nav-toggler');
   const navToggler = () => {
-    active === "nav-menu"
-      ? setActive("nav-menu nav-active")
-      : setActive("nav-menu");
+    active === 'nav-menu' ? setActive('nav-menu nav-active') : setActive('nav-menu');
 
-    toggleIcon === "nav-toggler"
-      ? setToggleIcon("nav-toggler toggler")
-      : setToggleIcon("nav-toggler");
+    toggleIcon === 'nav-toggler'
+      ? setToggleIcon('nav-toggler toggler')
+      : setToggleIcon('nav-toggler');
+  };
+
+  const closeMenu = () => {
+    setActive('nav-menu');
+    setToggleIcon('nav-toggler');
   };
 
   return (
@@ -44,29 +47,33 @@ const Navbar: React.FC<NavbarProps> = ({ menuItems, isLoggedIn }) => {
               {menuitem.isScrollLink ? (
                 <ScrollLink
                   href="#"
-                  to={menuitem.target ?? " "}
+                  to={menuitem.target ?? ''}
                   offset={50}
                   smooth={true}
                   duration={500}
+                  onClick={closeMenu}
                 >
                   {menuitem.title}
                 </ScrollLink>
               ) : (
-                <a href={menuitem.href}>{menuitem.title}</a>
+                <a onClick={closeMenu} target={menuitem.target} rel={menuitem.target === "_blank" ? "noopener" : ""} href={menuitem.href}>
+                  {menuitem.title}
+                </a>
               )}
             </li>
           ))}
+          <li className="text-t-black link select-none cursor-pointer  text-[20px] md:text-sm  font-medium">
+            <a href="mailto:info@blocverse.com"> Contact Us</a>
+          </li>
         </ul>
       </div>
       {isLoggedIn ? (
-        <li>
-          <Link
-            href="/dashboard"
-            className="hover:-translate-y-[3px] duration-200 font-medium gradient-bg rounded-lg text-[20px] block py-2 px-10"
-          >
-            Dashboard
-          </Link>
-        </li>
+        <Link
+          href="/dashboard"
+          className="hover:-translate-y-[3px] duration-200 font-medium gradient-bg rounded-lg text-[20px] block py-2 px-10"
+        >
+          Dashboard
+        </Link>
       ) : (
         <div className="flex space-x-5 items-center">
           <Link href="/login">
