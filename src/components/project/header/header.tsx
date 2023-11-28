@@ -10,12 +10,12 @@ const ProjectHeader: FC<ProjectHeaderProps> = ({ breadcrumbs }) => {
     <header className="relative flex justify-between items-center px-10 pb-6 pt-12 capitalize ">
       <p className="flex text-[20px] font-medium items-center space-x-2">
         {breadcrumbs.map((breadcrumb, i) => (
-          <>
-            <span key={breadcrumb} className="text-t-gray-11 capitalize last:text-t-purple">
+          <div key={breadcrumb} className="flex items-center gap-2">
+            <span className="text-t-gray-11 capitalize last:text-t-purple">
               {breadcrumb}
             </span>
             {i !== breadcrumbs.length - 1 && <CaretIcon />}
-          </>
+          </div>
         ))}
       </p>
       <div className="flex items-center space-x-2.5">
