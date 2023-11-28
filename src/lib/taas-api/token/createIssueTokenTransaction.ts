@@ -7,11 +7,6 @@ import { utils } from "@/utils/web3/utils";
 import { AddressZero } from "@biconomy/common";
 import { OperationType, SafeTransactionDataPartial } from "@safe-global/safe-core-sdk-types";
 import { Address, encodeFunctionData } from "viem";
-import { storeProjectActivityLogItem } from "../activityLog/createActivityLog";
-import { ActivityLogAssetSubCategory, ActivityLogCategory, ActivityLogProjectSubCategory } from "../activityLog/types";
-import { createActivityLogTitle } from "../activityLog/activityLogUtils";
-import { getTransactionExplorerUrl } from "@/utils/web3/connection";
-import { getAsset } from "./getTokenInformation";
 
 interface IssueTokenPayload {
     tokenFactory: Address;
@@ -58,17 +53,5 @@ export const createIssueTokenAssetTransaction = async (
         currentUser.user.walletAddress
     );
 
-    //get token using tokenAddress
-    const token = await getAsset(tokenAddress);
-
-    await storeProjectActivityLogItem(token.project?.id as string, {
-        title: createActivityLogTitle(ActivityLogAssetSubCategory["issueTokenTxn"], ActivityLogCategory["asset"], token.name),
-        category: ActivityLogCategory["asset"],
-        ctaLink: getTransactionExplorerUrl(txHash),
-        ctaText: "View Transaction",
-        subCategory: ActivityLogAssetSubCategory["issueTokenTxn"],
-        actor: currentUser.user.walletAddress
-    });
-
-    return { txHash, nonce };
+    return { txHash, nonce, actor: currentUser.user.walletAddress };
 }

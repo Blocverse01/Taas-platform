@@ -19,6 +19,7 @@ const CONTRACT_FUNCTION_NAME = "createTokenFactory" as const;
 interface DeployFactoryResponse {
   tokenFactory: Address;
   txHash: Address;
+  actor: Address;
 }
 
 const deployTokenFactory = async (
@@ -66,7 +67,10 @@ const deployTokenFactory = async (
     hash: txHash,
   });
 
-  return extractResponseFromReceipt(receipt, platformEntryAddress);
+  return {
+    ...extractResponseFromReceipt(receipt, platformEntryAddress),
+    actor: account,
+  };
 };
 
 const extractResponseFromReceipt = (

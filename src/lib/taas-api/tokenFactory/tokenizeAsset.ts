@@ -3,7 +3,7 @@ import {
   decodeEventLog,
   encodeFunctionData,
   TransactionReceipt as PreciseTransactionReceipt,
-  hashMessage
+  hashMessage,
 } from "viem";
 import { TOKEN_FACTORY, PLATFORM_ENTRY } from "@/utils/web3/abis";
 import {
@@ -17,11 +17,13 @@ import { sponsorTransaction } from "@/lib/biconomy";
 import { SPONSOR_TRANSACTION } from "@/utils/constants";
 
 const CONTRACT_FUNCTION_NAME = "createToken" as const;
-const INTER_CHAIN_TOKEN_SERVICE = "0xF786e21509A9D50a9aFD033B5940A2b7D872C208" as const;
+const INTER_CHAIN_TOKEN_SERVICE =
+  "0xF786e21509A9D50a9aFD033B5940A2b7D872C208" as const;
 
 interface TokenizeAssetResponse {
   tokenAddress: Address;
   txHash: Address;
+  actor: Address;
 }
 
 const tokenizeAsset = async (
@@ -76,7 +78,10 @@ const tokenizeAsset = async (
     hash: txHash,
   });
 
-  return extractResponseFromReceipt(receipt, tokenFactory);
+  return {
+    ...extractResponseFromReceipt(receipt, tokenFactory),
+    actor: account,
+  };
 };
 
 const extractResponseFromReceipt = (

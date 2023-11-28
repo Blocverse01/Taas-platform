@@ -1,11 +1,18 @@
-import { FC } from 'react';
-import { CreateRealEstateAssetForm } from './form';
-import { Address } from 'viem';
-import { tokenizeAsset } from '@/lib/taas-api/tokenFactory/tokenizeAsset';
-import { useRouter } from 'next/router';
-import { storeProjectAssetFormData } from '@/utils/assetIntegrations';
-import { useLocalStorage } from 'usehooks-ts';
-import { getConcatenatedId } from '@/utils/helperfunctions';
+import { FC } from "react";
+import { CreateRealEstateAssetForm } from "./form";
+import { Address } from "viem";
+import { tokenizeAsset } from "@/lib/taas-api/tokenFactory/tokenizeAsset";
+import { useRouter } from "next/router";
+import { storeProjectAssetFormData } from "@/utils/assetIntegrations";
+import { useLocalStorage } from "usehooks-ts";
+import { getConcatenatedId } from "@/utils/helperfunctions";
+import { saveToActivityLog } from "@/data/adapters/browser/activityLog";
+import { getTransactionExplorerUrl } from "@/utils/web3/connection";
+import {
+  ActivityLogCategory,
+  ActivityLogProjectSubCategory,
+} from "@/lib/taas-api/activityLog/types";
+import { createActivityLogTitle } from "@/lib/taas-api/activityLog/activityLogUtils";
 
 interface CreateRealEstateAssetProps {
   projectId: string;
@@ -32,7 +39,7 @@ const CreateRealEstateAsset: FC<CreateRealEstateAssetProps> = ({
 
   const [unStoredTokenization, setUnStoredTokenization] = useLocalStorage<
     UnStoredTokenization | undefined
-  >('unStoredTokenization', undefined);
+  >("unStoredTokenization", undefined);
 
   function getUnStoredTokenization(tokenOptions: TokenOptions) {
     if (!unStoredTokenization) return undefined;
@@ -54,7 +61,7 @@ const CreateRealEstateAsset: FC<CreateRealEstateAssetProps> = ({
   async function handleAssetTokenization(tokenOptions: TokenOptions) {
     const { tokenTicker, pricePerToken, propertyName } = tokenOptions;
 
-    const { tokenAddress, txHash } = await tokenizeAsset(
+    const { tokenAddress, txHash, actor } = await tokenizeAsset(
       projectTokenFactory,
       tokenTicker,
       pricePerToken,
@@ -72,6 +79,18 @@ const CreateRealEstateAsset: FC<CreateRealEstateAssetProps> = ({
       ),
     });
 
+    await saveToActivityLog(projectId, {
+      actor,
+      title: createActivityLogTitle(
+        ActivityLogProjectSubCategory["tokenizeAsset"],
+        txHash
+      ),
+      category: ActivityLogCategory["project"],
+      ctaLink: getTransactionExplorerUrl(txHash),
+      ctaText: "View Transaction",
+      subCategory: ActivityLogProjectSubCategory["tokenizeAsset"],
+    });
+
     return { txHash, tokenAddress };
   }
 
@@ -80,7 +99,9 @@ const CreateRealEstateAsset: FC<CreateRealEstateAssetProps> = ({
   return (
     <section>
       <div className="mb-8 w-fit mx-auto flex flex-col gap-4">
-        <h3 className="text-2xl font-medium text-t-black text-center">Real Estate Tokenization</h3>
+        <h3 className="text-2xl font-medium text-t-black text-center">
+          Real Estate Tokenization
+        </h3>
         <p className="text-t-black text-base text-center">
           Fill this form to create a new real estate asset.
         </p>
@@ -93,7 +114,8 @@ const CreateRealEstateAsset: FC<CreateRealEstateAssetProps> = ({
           const tokenOptions = { tokenTicker, pricePerToken, propertyName };
 
           const { tokenAddress, txHash } =
-            getUnStoredTokenization(tokenOptions) ?? (await handleAssetTokenization(tokenOptions));
+            getUnStoredTokenization(tokenOptions) ??
+            (await handleAssetTokenization(tokenOptions));
 
           await storeProjectAssetFormData(projectId, tokenAddress as Address, {
             ...values,
@@ -102,7 +124,7 @@ const CreateRealEstateAsset: FC<CreateRealEstateAssetProps> = ({
 
           setUnStoredTokenization(undefined);
 
-          router.push(assetsPageLink);
+          await router.push(assetsPageLink);
         }}
         backLink={assetsPageLink}
       />

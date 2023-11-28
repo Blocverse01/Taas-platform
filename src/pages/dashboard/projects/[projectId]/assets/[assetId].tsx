@@ -19,7 +19,7 @@ export const getServerSideProps = (async (context) => {
 }>;
 
 const ProjectAssetPage: NextPageWithLayout<InferGetServerSidePropsType<typeof getServerSideProps>> = ({ asset }) => {
-  return <AssetPage projectSafeWallet={asset.project.multiSigController} projectTokenFactory={asset.project.tokenFactory} assetType={asset.type} asset={asset} />;
+  return <AssetPage projectId={asset.project.id} projectSafeWallet={asset.project.multiSigController} projectTokenFactory={asset.project.tokenFactory} assetType={asset.type} asset={asset} />;
 };
 
 ProjectAssetPage.getLayout = (page) => (

@@ -6,6 +6,13 @@ import { DangerZone } from "./dangerZone";
 import { createIssueTokenAssetTransaction } from "@/lib/taas-api/token/createIssueTokenTransaction";
 import { Address } from "viem";
 import { getTokenInformation } from "@/lib/taas-api/token/getTokenInformation";
+import {saveToActivityLog} from "@/data/adapters/browser/activityLog";
+import { createActivityLogTitle } from "@/lib/taas-api/activityLog/activityLogUtils";
+import {
+  ActivityLogAssetSubCategory,
+  ActivityLogCategory,
+} from "@/lib/taas-api/activityLog/types";
+import { getTransactionExplorerUrl } from "@/utils/web3/connection";
 
 type TokenManagementProps = ComponentProps<typeof TokenManagement>;
 type DocumentsManagementProps = ComponentProps<typeof DocumentsManagement>;
@@ -24,6 +31,7 @@ interface AssetPageProps {
   asset: RealEstateAsset; // Todo: add other possible asset types
   projectSafeWallet: Address;
   projectTokenFactory: Address;
+  projectId: string;
 }
 
 function renderAssetDetails(assetType: AssetType, asset: RealEstateAsset) {
@@ -33,7 +41,26 @@ function renderAssetDetails(assetType: AssetType, asset: RealEstateAsset) {
   return <></>;
 }
 
-const AssetPage: FC<AssetPageProps> = ({ assetType, asset, projectSafeWallet, projectTokenFactory }) => {
+const AssetPage: FC<AssetPageProps> = ({ assetType, asset, projectSafeWallet, projectTokenFactory, projectId }) => {
+
+  const handleIssueToken = async(tokenAddress: Address, destinationWallet: Address, amount: number) => {
+    const { txHash, actor} = await createIssueTokenAssetTransaction(projectSafeWallet, {
+      destinationWallet,
+      amount,
+      tokenAddress,
+      tokenFactory: projectTokenFactory
+    });
+
+    await saveToActivityLog(projectId, {
+      actor,
+      title: createActivityLogTitle(ActivityLogAssetSubCategory["executeTxn"], ActivityLogCategory["asset"], asset.name),
+      category: ActivityLogCategory["asset"],
+      ctaLink: getTransactionExplorerUrl(txHash),
+      ctaText: "View Transaction",
+      subCategory: ActivityLogAssetSubCategory["executeTxn"],
+    });
+  }
+
   return (
     <section className="flex-col flex gap-10">
       {renderAssetDetails(assetType, asset)}
@@ -49,14 +76,7 @@ const AssetPage: FC<AssetPageProps> = ({ assetType, asset, projectSafeWallet, pr
           }
         }
         }
-        issueToken={async (tokenAddress, destinationWallet, amount) => {
-          const { } = await createIssueTokenAssetTransaction(projectSafeWallet, {
-            destinationWallet,
-            amount,
-            tokenAddress,
-            tokenFactory: projectTokenFactory
-          });
-        }} // Todo: add real token issue functionality
+        issueToken={handleIssueToken} // Todo: add real token issue functionality
       />
       <DangerZone
         delistAsset={(assetId) => Promise.resolve()} // Todo: add real delist asset functionality
