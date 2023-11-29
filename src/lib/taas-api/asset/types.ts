@@ -4,7 +4,7 @@ export interface AssetTokenDetails {
     assetId: string;
     propertyName: string;
     tokenTicker: string;
-    pricePerToken: string,
+    pricePerToken: number,
 }
 
 export interface AssetDetails {
@@ -13,4 +13,24 @@ export interface AssetDetails {
     propertySize: number;
     valuation: number;
     assetId: string
+}
+
+export interface AssetPhoto {
+    assetId: string,
+    photos: Array<string>
+}
+
+
+export interface AssetDocumentLable {
+    documentId: string,
+    label: string
+}
+
+export interface AssetDocument {
+    ownerId: string
+    fileURI: string,
+    label: string,
+    fileSize: number,
+    fileType: string,
+    assetId: string,
 }

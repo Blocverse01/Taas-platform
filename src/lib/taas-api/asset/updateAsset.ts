@@ -1,8 +1,8 @@
 import { NOT_FOUND, assetDocumentRepository, assetPropertyRepository } from "@/utils/constants";
-import { AssetDetails, AssetTokenDetails } from "./types";
+import { AssetDetails, AssetDocumentLable, AssetPhoto, AssetTokenDetails } from "./types";
 import { HttpError } from "@/lib/errors";
 
-export async function UpdateAssetDetails(
+export async function updateAssetDetails(
     data: AssetDetails
 ) {
     const asset = await assetPropertyRepository().read(data.assetId);
@@ -21,44 +21,44 @@ export async function UpdateAssetDetails(
 }
 
 
-export async function UpdateTokenDetails(
+export async function updateTokenDetails(
     data: AssetTokenDetails
 ) {
 
     const asset = await assetPropertyRepository().read(data.assetId);
 
-    // if (!asset) {
-    //     throw new HttpError(NOT_FOUND, 'Asset Not Found"')
-    // }
+    if (!asset) {
+        throw new HttpError(NOT_FOUND, 'Asset Not Found"')
+    }
 
-    // await asset.update({
-    //     tokenTicker: data.tokenTicker,
-    //     tokenPrice: data.pricePerToken,
-    //     valuation : 
-    // });
+    await asset.update({
+        name: data.propertyName,
+        tokenTicker: data.tokenTicker,
+        tokenPrice: data.pricePerToken
+    });
 
 }
 
-export async function updateTokenizedRealEstatePhotos(
-    assetId: string, photos: Array<string>
+export async function updateAssetPhotos(
+    data: AssetPhoto
 ) {
-    const asset = await assetPropertyRepository().read(assetId);
+    const asset = await assetPropertyRepository().read(data.assetId);
     if (!asset) {
-        throw new Error("Asset Not Found");
+        throw new HttpError(NOT_FOUND, "Asset Not Found");
     }
-    await asset.update({ photos });
+    await asset.update({ photos: data.photos });
 }
 
 export async function updateAssetDocumentLabel(
-    documentId: string, label: string
+    data: AssetDocumentLable
 ) {
-    const document = await assetDocumentRepository().read(documentId);
+    const document = await assetDocumentRepository().read(data.documentId);
 
     if (!document) {
         throw new Error("Document Not Found");
     }
 
-    await document.update({ label });
+    await document.update({ label: data.label });
 }
 
 
