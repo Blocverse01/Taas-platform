@@ -1,15 +1,15 @@
 import { Meta, StoryObj } from "@storybook/react";
-import { RecentTransactions } from ".";
+import { RecentActivities } from ".";
 import { dummyTransactionData } from "./demoData";
 
 const meta = {
-  title: "Project/Recent Transactions",
-  component: RecentTransactions,
+  title: "Project/Recent Activities",
+  component: RecentActivities,
   tags: ["autodocs"],
   args: {
-    transactions: dummyTransactionData,
+    activities: dummyTransactionData,
   },
-} satisfies Meta<typeof RecentTransactions>;
+} satisfies Meta<typeof RecentActivities>;
 
 export default meta;
 type Story = StoryObj<typeof meta>;
