@@ -29,7 +29,7 @@ export async function storeTokenizedRealEstate(
     const project = await projectRepository().read(projectId);
 
     if (!project) {
-        throw new Error("");
+        throw new Error("Project Not Found");
     }
 
     const {
