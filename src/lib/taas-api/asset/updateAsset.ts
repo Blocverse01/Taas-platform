@@ -1,6 +1,6 @@
-import { NOT_FOUND, assetDocumentRepository, assetPropertyRepository } from "@/utils/constants";
+import { NOT_FOUND, assetDocumentRepository, assetPropertyRepository } from "@/resources/constants";
 import { AssetDetails, AssetDocumentLable, AssetPhoto, AssetTokenDetails } from "./types";
-import { HttpError } from "@/lib/errors";
+import { HttpError } from "@/resources/errors";
 
 export async function updateAssetDetails(
     data: AssetDetails
