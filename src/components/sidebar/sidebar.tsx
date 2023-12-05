@@ -1,9 +1,10 @@
 import Link from "next/link";
-import { Dashboard, Integrations } from "@/assets/icon";
+import { Dashboard, Integrations, Logout } from "@/assets/icon";
 import logo from "@/assets/logo.svg";
 import { useRouter } from "next/router";
 import Image from "next/image";
 import { LogoutDialog } from "../logout";
+import { logOut } from "@/utils/auth";
 
 const navItems = [
   {
@@ -46,7 +47,7 @@ const Sidebar = () => {
           </div>
         </nav>
         <div className="ml-9">
-          <LogoutDialog />
+          <LogoutDialog logout={logOut} />
         </div>
       </div>
     </aside>

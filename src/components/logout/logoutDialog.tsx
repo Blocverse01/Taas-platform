@@ -4,6 +4,7 @@ import { motion } from "framer-motion";
 import { CrossIcon, Logout } from "@/assets/icon";
 import { useModalParent } from "@/lib/zustand/modalSlice";
 import toast from "react-hot-toast";
+import { useRouter } from "next/router";
 
 interface LogoutDialogProps {
   logout: () => Promise<void>;
@@ -12,16 +13,19 @@ interface LogoutDialogProps {
 const LogoutDialog: FC<LogoutDialogProps> = ({ logout }) => {
   const dialogContainer = useModalParent();
   const [loggingOut, setLoggingOut] = useState<boolean>();
-
+  const router = useRouter();
+  const REDIRECT_TO = "/";
   const handleLogout = async () => {
     setLoggingOut(true);
-
     try {
       toast.loading("Logging out");
       await logout();
+      toast.success("Logout successful");
+      router.push(REDIRECT_TO);
     } catch (error) {
       toast.error("Logout failed");
     } finally {
+      toast.dismiss();
       setLoggingOut(false);
     }
   };
