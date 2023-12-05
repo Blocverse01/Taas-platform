@@ -3,6 +3,7 @@ import { Dashboard, Integrations } from "@/assets/icon";
 import logo from "@/assets/logo.svg";
 import { useRouter } from "next/router";
 import Image from "next/image";
+import { LogoutDialog } from "../logout";
 
 const navItems = [
   {
@@ -24,7 +25,7 @@ const Sidebar = () => {
 
   return (
     <aside className="border-r-[1px] border-t-grey-3">
-      <div className="flex flex-col gap-8 pt-12 text-center">
+      <div className="flex flex-col h-full justify-between pb-20 gap-8 pt-12 text-center">
         <nav className="flex flex-col gap-6 list-none">
           <p className="text-[12px] font-medium flex items-center text-t-purple  w-fit mx-auto">
             <Image className="mr-2" src={logo} alt="logo" /> TAAS
@@ -44,6 +45,9 @@ const Sidebar = () => {
             ))}
           </div>
         </nav>
+        <div className="ml-9">
+          <LogoutDialog />
+        </div>
       </div>
     </aside>
   );

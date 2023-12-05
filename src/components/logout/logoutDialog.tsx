@@ -1,11 +1,30 @@
-import React from "react";
+import React, { FC, useState } from "react";
 import * as AlertDialog from "@radix-ui/react-alert-dialog";
 import { motion } from "framer-motion";
 import { CrossIcon, Logout } from "@/assets/icon";
 import { useModalParent } from "@/lib/zustand/modalSlice";
+import toast from "react-hot-toast";
 
-const LogoutDialog = () => {
+interface LogoutDialogProps {
+  logout: () => Promise<void>;
+}
+
+const LogoutDialog: FC<LogoutDialogProps> = ({ logout }) => {
   const dialogContainer = useModalParent();
+  const [loggingOut, setLoggingOut] = useState<boolean>();
+
+  const handleLogout = async () => {
+    setLoggingOut(true);
+
+    try {
+      toast.loading("Logging out");
+      await logout();
+    } catch (error) {
+      toast.error("Logout failed");
+    } finally {
+      setLoggingOut(false);
+    }
+  };
 
   return (
     <AlertDialog.Root>
@@ -23,7 +42,7 @@ const LogoutDialog = () => {
             animate={{ scale: 1 }}
             exit={{ scale: 0 }}
             transition={{ duration: 0.3 }}
-            className="flex flex-col items-center justify-center w-[95vw] max-w-[570px] bg-white border rounded-xl pt-[29px] px-[57px] pb-[59px] focus:outline-none"
+            className="flex flex-col items-center justify-center w-[95vw] max-w-[570px] bg-white border rounded-xl pt-[40px] px-[53px] pb-[59px] focus:outline-none"
           >
             <AlertDialog.Cancel asChild>
               <button
@@ -34,11 +53,11 @@ const LogoutDialog = () => {
                 <CrossIcon />
               </button>
             </AlertDialog.Cancel>
-            <div className="w-full flex flex-col mt-6 space-y-6">
+            <div className="w-full flex flex-col mt-6 space-y-8">
               <p className="text-xl">
                 Are you sure you want to logout from this account?
               </p>
-              <div className="grid  grid-cols-2 gap-x-2">
+              <div className="grid   grid-cols-2 gap-x-2">
                 <AlertDialog.Cancel asChild>
                   <button
                     type="button"
@@ -49,6 +68,8 @@ const LogoutDialog = () => {
                 </AlertDialog.Cancel>
                 <button
                   type="button"
+                  disabled={loggingOut}
+                  onClick={handleLogout}
                   className="text-white py-[18px] px-[70px] text-[18px] rounded bg-t-red-1"
                 >
                   Logout
