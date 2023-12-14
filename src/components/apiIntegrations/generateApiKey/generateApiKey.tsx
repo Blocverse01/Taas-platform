@@ -58,15 +58,14 @@ const GenerateApiKey: FC<GenerateApiKeyProps> = ({
           <section>
             <Select
               styles={{
-                control(base) {
-                  return {
-                    ...base,
-                    backgroundColor: "#FAFAFA",
-                    padding: "16px",
-                    borderRadius: "4px",
-                    border: "none",
-                    color: "#1A1A1A",
-                  };
+                control(base) {                  
+                  base.backgroundColor = "#FAFAFA";
+                  base.padding = "16px";
+                  base.borderRadius ="4px";
+                  base.border = "none";
+                  base.color="#1A1A1A";
+                  
+                  return base;
                 },
               }}
               placeholder="Select a project"

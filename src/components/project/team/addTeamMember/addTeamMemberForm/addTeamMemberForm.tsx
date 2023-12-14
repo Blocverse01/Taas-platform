@@ -80,14 +80,12 @@ const AddTeamMemberForm: FC<AddTeamMemberDialogProps> = ({ backButton, handleCre
             <Select
               styles={{
                 control(base) {
-                  return {
-                    ...base,
-                    backgroundColor: "#FAFAFA",
-                    padding: "8px",
-                    borderRadius: "4px",
-                    border: "none",
-                    color: "#1A1A1A",
-                  };
+                  base.backgroundColor = "#FAFAFA";
+                  base.padding = "8px";
+                  base.borderRadius = "4px";
+                  base.border = "none";
+                  base.color = "#1A1A1A";
+                  return base;
                 },
               }}
               placeholder="Select role"
