@@ -14,7 +14,7 @@ const LogoutDialog: FC<LogoutDialogProps> = ({ logout }) => {
   const dialogContainer = useModalParent();
   const [loggingOut, setLoggingOut] = useState<boolean>();
   const router = useRouter();
-  const REDIRECT_TO = "/";
+  const REDIRECT_TO = "/login";
   const handleLogout = async () => {
     setLoggingOut(true);
     try {

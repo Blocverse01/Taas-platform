@@ -3,6 +3,7 @@ import type { NextApiRequest, NextApiResponse } from "next";
 import { signIn, signOut } from "next-auth/react";
 import { UNAUTHORIZED, getCurrentAuthUser } from "../constants";
 import { HttpError } from "@/lib/errors";
+import { getMagicClient } from "@/lib/magic/clients/web";
 
 const signInWithEmail = async (email: string) => {
   const didToken = await authenticateEmail(email);
@@ -21,6 +22,10 @@ const validateAuthInApiHandler = async (
 };
 
 const logOut = async () => {
+  const client = getMagicClient();
+
+  await client.user.logout();
+
   await signOut({ redirect: false, callbackUrl: "/" });
 };
 
