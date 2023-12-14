@@ -4,8 +4,16 @@ import logo from "@/assets/logo.svg";
 import { useRouter } from "next/router";
 import Image from "next/image";
 import { FC } from "react";
-import { Assets, Dashboard, Authorization, Settings, TeamIcon } from "@/assets/icon";
+import {
+  Assets,
+  Dashboard,
+  Authorization,
+  Settings,
+  TeamIcon,
+} from "@/assets/icon";
 import { derivePageTitle } from "@/utils/helperfunctions";
+import { LogoutDialog } from "@/components/logout/logoutDialog";
+import { logOut } from "@/utils/auth";
 
 interface ProjectSidebarProps {
   projectId: string;
@@ -46,7 +54,7 @@ const ProjectSidebar: FC<ProjectSidebarProps> = ({ projectId }) => {
 
   return (
     <aside className="border-r-[1px] border-t-grey-3">
-      <div className="flex flex-col gap-8 pt-12 text-center">
+      <div className="flex flex-col justify-between pb-20 h-full gap-8 pt-12 text-center">
         <nav className="flex flex-col gap-10 list-none">
           <p className="text-[12px] font-medium flex items-center text-t-purple  w-fit mx-auto">
             <Image className="mr-2" src={logo} alt="logo" /> TAAS
@@ -66,6 +74,9 @@ const ProjectSidebar: FC<ProjectSidebarProps> = ({ projectId }) => {
             ))}
           </div>
         </nav>
+        <div className="ml-11">
+          <LogoutDialog logout={logOut} />
+        </div>
       </div>
     </aside>
   );
