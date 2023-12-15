@@ -13,7 +13,8 @@ import {
 } from "@/assets/icon";
 import { LogoutDialog } from "@/components/logout/logoutDialog";
 import { derivePageTitle } from '@/resources/utils/helperfunctions';
-import { logOut } from "@/utils/auth";
+import { logOut } from "@/data/adapters/browser/auth";
+
 
 interface ProjectSidebarProps {
   projectId: string;

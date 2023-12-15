@@ -1,9 +1,9 @@
 import { authenticateEmail } from "../magic/authenticateEmail";
 import type { NextApiRequest, NextApiResponse } from "next";
 import { signIn, signOut } from "next-auth/react";
-import { UNAUTHORIZED, getCurrentAuthUser } from "../constants";
-import { HttpError } from "@/lib/errors";
-import { getMagicClient } from "@/lib/magic/clients/web";
+import { UNAUTHORIZED, getCurrentAuthUser } from "@/resources/constants";
+import { HttpError } from "@/resources/errors";
+import { getMagicClient } from "../magic/webClient";
 
 const signInWithEmail = async (email: string) => {
   const didToken = await authenticateEmail(email);
