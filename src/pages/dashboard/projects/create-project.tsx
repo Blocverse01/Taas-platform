@@ -108,62 +108,74 @@ const CreateProject: NextPageWithLayout = () => {
           />
 
           <div>
-            <label htmlFor="assetType" className="block mb-4 text-t-black ">
+            <label
+              htmlFor="assetType"
+              className="block mb-4 text-t-black "
+            >
               Type of Asset
             </label>
             <Select
               styles={{
                 control(base) {
-                  return {
-                    ...base,
-                    backgroundColor: '#FAFAFA',
-                    padding: '8px',
-                    borderRadius: '4px',
-                    border: 'none',
-                    color: '#474747',
-                    fontSize: '14px',
-                    fontWeight: 'normal',
-                  };
+                  base.backgroundColor = "#FAFAFA";
+                  base.padding = "8px";
+                  base.borderRadius = "4px";
+                  base.border = "none";
+                  base.color = "#474747";
+                  base.fontSize = "14px";
+                  base.fontWeight = "normal";
+
+                  return base;
                 },
               }}
               placeholder="Select an asset"
               options={assetOptions}
-              isOptionDisabled={(option) => option.value !== 'realestate'}
+              isOptionDisabled={(option) => option.value !== "realestate"}
               onChange={(assetOption) => {
                 if (!assetOption) return null;
-                setFieldValue('assetType', assetOption.value);
+                setFieldValue("assetType", assetOption.value);
               }}
             />
-            <ErrorMessage name="assetType" component="div" className="text-red-500" />
+            <ErrorMessage
+              name="assetType"
+              component="div"
+              className="text-red-500"
+            />
           </div>
 
           <div>
-            <label htmlFor="blockchain" className="block mb-4 text-t-black">
+            <label
+              htmlFor="blockchain"
+              className="block mb-4 text-t-black"
+            >
               Blockchain(select blockchain)
             </label>
             <Select
               styles={{
                 control(base) {
-                  return {
-                    ...base,
-                    backgroundColor: '#FAFAFA',
-                    padding: '8px',
-                    borderRadius: '4px',
-                    border: 'none',
-                    color: '#474747',
-                    fontSize: '14px',
-                    fontWeight: 'normal',
-                  };
+                  base.backgroundColor = "#FAFAFA";
+                  base.padding = "8px";
+                  base.borderRadius = "4px";
+                  base.border = "none";
+                  base.color = "#474747"
+                  base.fontSize = "14px";
+                  base.fontWeight = "normal";
+
+                  return base;
                 },
               }}
               placeholder="Select Blockchain"
               options={blockchainOptions}
               onChange={(blockchainOption) => {
                 if (!blockchainOption) return null;
-                setFieldValue('blockchain', blockchainOption.value);
+                setFieldValue("blockchain", blockchainOption.value);
               }}
             />
-            <ErrorMessage name="blockchain" component="div" className="text-red-500" />
+            <ErrorMessage
+              name="blockchain"
+              component="div"
+              className="text-red-500"
+            />
           </div>
 
           <Input
