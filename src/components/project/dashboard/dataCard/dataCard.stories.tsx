@@ -6,8 +6,8 @@ const meta = {
   component: DataCard,
   tags: ["autodocs"],
   args: {
-    title: "Gross Investment Volume",
-    value: "$50000.00",
+    title: "Treasury Balance",
+    value: "$1000.00",
     weeklyTrend: 4,
   },
 } satisfies Meta<typeof DataCard>;
