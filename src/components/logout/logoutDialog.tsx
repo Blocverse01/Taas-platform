@@ -2,9 +2,10 @@ import React, { FC, useState } from "react";
 import * as AlertDialog from "@radix-ui/react-alert-dialog";
 import { motion } from "framer-motion";
 import { CrossIcon, Logout } from "@/assets/icon";
-import { useModalParent } from "@/lib/zustand/modalSlice";
+// import { useModalParent } from "@/lib/zustand/modalSlice";
 import toast from "react-hot-toast";
 import { useRouter } from "next/router";
+import { useModalParent } from "@/data/store/zustand/modalSlice";
 
 interface LogoutDialogProps {
   logout: () => Promise<void>;
