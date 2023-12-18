@@ -1,25 +1,23 @@
-import React, { ComponentProps, FC } from "react";
+import React, { ComponentProps, FC, useEffect } from "react";
 import { DataCard } from "./dataCard";
 import { RecentActivities } from "./recentActivities";
 import useSWR from "node_modules/swr/core/dist/index.mjs";
 import Skeleton from "react-loading-skeleton";
 import { ReloadPage } from "@/components/reloadPage";
 
-interface ProjectAnalytics {
-  treasuryBalance: {
-    amount: number;
-    weeklyTrend: number;
-  };
-  assets: {
-    volume: number;
-    weeklyTrend: number;
-  };
-  recentActivities: ComponentProps<typeof RecentActivities>["activities"];
+type Activities = ComponentProps<typeof RecentActivities>['activities'];
+type AnalyticData = {
+  volume: number;
+  weeklyTrend: number;
 }
 
 interface ProjectDashboardProps {
   projectId: string;
-  getAnalytics: (projectId: string) => Promise<ProjectAnalytics>;
+  getAnalytics: (projectId: string) => Promise<{
+    recentActivities: Activities,
+    treasuryBalance: AnalyticData;
+    assets: AnalyticData;
+  }>;
 }
 
 const ProjectDashboard: FC<ProjectDashboardProps> = ({
@@ -42,7 +40,7 @@ const ProjectDashboard: FC<ProjectDashboardProps> = ({
           <>
             <DataCard
               title="Treasury Balance"
-              value={"$" + projectAnalytics.treasuryBalance.amount.toFixed(2)}
+              value={"$" + projectAnalytics.treasuryBalance.volume.toFixed(2)}
               weeklyTrend={projectAnalytics.treasuryBalance.weeklyTrend}
             />
             <DataCard
@@ -59,7 +57,7 @@ const ProjectDashboard: FC<ProjectDashboardProps> = ({
       </div>
 
       <div className="mt-28">
-        {projectAnalytics && (
+        {projectAnalytics && projectAnalytics.recentActivities && (
           <RecentActivities activities={projectAnalytics.recentActivities} />
         )}
         {isLoading && (
