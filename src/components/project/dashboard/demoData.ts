@@ -13,7 +13,7 @@ const getDummyProjectAnalytics: GetAnalytics = async (projectId: string) => {
           weeklyTrend: 4,
         },
         treasuryBalance: {
-          amount: 1000,
+          volume: 1000,
           weeklyTrend: 10,
         },
         recentActivities: dummyTransactionData,
