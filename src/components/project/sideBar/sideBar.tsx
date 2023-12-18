@@ -11,9 +11,10 @@ import {
   Settings,
   TeamIcon,
 } from "@/assets/icon";
-import { derivePageTitle } from "@/utils/helperfunctions";
 import { LogoutDialog } from "@/components/logout/logoutDialog";
-import { logOut } from "@/utils/auth";
+import { derivePageTitle } from '@/resources/utils/helperfunctions';
+import { logOut } from "@/data/adapters/browser/auth";
+
 
 interface ProjectSidebarProps {
   projectId: string;
@@ -26,27 +27,27 @@ const ProjectSidebar: FC<ProjectSidebarProps> = ({ projectId }) => {
 
   const navItems = [
     {
-      name: "dashboard",
+      name: 'dashboard',
       href: `/dashboard/projects/${projectId}`,
       icon: <Dashboard />,
     },
     {
-      name: "assets",
+      name: 'assets',
       href: `/dashboard/projects/${projectId}/assets`,
       icon: <Assets />,
     },
     {
-      name: "team",
+      name: 'team',
       href: `/dashboard/projects/${projectId}/team`,
       icon: <TeamIcon />,
     },
     {
-      name: "settings",
+      name: 'settings',
       href: `/dashboard/projects/${projectId}/settings`,
       icon: <Settings />,
     },
     {
-      name: "authorizations",
+      name: 'authorizations',
       href: `/dashboard/projects/${projectId}/authorizations`,
       icon: <Authorization />,
     },
@@ -63,7 +64,7 @@ const ProjectSidebar: FC<ProjectSidebarProps> = ({ projectId }) => {
             {navItems.map((item) => (
               <Link
                 className={`flex relative rounded gap-2 py-[10.5px] px-[19px] items-center ${
-                  pageTitle === item.name ? "bg-t-purple text-white" : ""
+                  pageTitle === item.name ? 'bg-t-purple text-white' : ''
                 }`}
                 key={item.href}
                 href={item.href}

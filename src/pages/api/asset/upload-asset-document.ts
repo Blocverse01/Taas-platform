@@ -1,8 +1,7 @@
-import { HttpError } from "@/lib/errors";
+import { validateAuthInApiHandler } from "@/data/adapters/browser/auth";
 import { uploadAssetDocument } from "@/lib/taas-api/asset/uploadAssetDocument";
 import { AssetDocumentSchema } from "@/lib/taas-api/asset/validationSchema";
-import { validateAuthInApiHandler } from "@/utils/auth";
-import { INTERNAL_SERVER_ERROR, OK, UNAUTHORIZED } from "@/utils/constants";
+import { INTERNAL_SERVER_ERROR, OK, UNAUTHORIZED } from "@/resources/constants";
 import { NextApiHandler, NextApiRequest, NextApiResponse } from "next";
 
 const handler: NextApiHandler = async (req: NextApiRequest, res: NextApiResponse) => {

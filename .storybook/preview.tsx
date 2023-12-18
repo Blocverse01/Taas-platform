@@ -3,7 +3,7 @@ import type { Preview } from '@storybook/react';
 import '@/styles/globals.css';
 import { aeonikFont } from '../src/font/setup';
 import 'react-loading-skeleton/dist/skeleton.css';
-import { useSetModalParent } from '../src/lib/zustand/modalSlice';
+import { useSetModalParent } from '../src/data/store/zustand/modalSlice';
 import { Toaster } from 'react-hot-toast';
 import { TAAS_PURPLE } from '../tailwind.config';
 

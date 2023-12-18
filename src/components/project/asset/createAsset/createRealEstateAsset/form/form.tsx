@@ -3,8 +3,9 @@ import { DocumentUploaderDialog } from '@/components/documentUploader';
 import { Input } from '@/components/formPrimitives/input';
 import { Textarea } from '@/components/formPrimitives/textarea';
 import { PhotoUploader } from '@/components/photoUploader';
-import { removeArrayIndex } from '@/utils/arrays';
-import { formatFileSize, uploadFile } from '@/utils/files';
+import { removeArrayIndex } from '@/resources/utils/array';
+import { uploadFile } from '@/data/adapters/browser/files/files';
+import { formatFileSize } from '@/resources/utils/file';
 import classNames from 'classnames';
 import { ErrorMessage, Form, Formik } from 'formik';
 import Image from 'next/image';
@@ -84,12 +85,9 @@ const CreateRealEstateAssetForm: FC<CreateAssetFormProps> = ({ backLink, handleC
         <div className="flex items-center w-fit mx-auto">
           <div className="flex flex-col items-center">
             <div
-              className={classNames(
-                {
-                  'bg-t-purple text-white': step >= 1,
-                },
-                'h-8 w-8 flex items-center justify-center text-sm rounded-full mb-1'
-              )}
+              className={
+                'bg-t-purple text-white h-8 w-8 flex items-center justify-center text-sm rounded-full mb-1'
+              }
             >
               1
             </div>

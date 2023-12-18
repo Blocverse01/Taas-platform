@@ -1,10 +1,10 @@
-import * as AlertDialog from "@radix-ui/react-alert-dialog";
-import { motion } from "framer-motion";
-import { CrossIcon, PlusSign } from "@/assets/icon";
-import { useModalParent } from "@/lib/zustand/modalSlice";
-import { AddTeamMemberForm } from "../addTeamMemberForm";
-import { FC } from "react";
-import { useSWRConfig } from "node_modules/swr/_internal/dist/index.mjs";
+import * as AlertDialog from '@radix-ui/react-alert-dialog';
+import { motion } from 'framer-motion';
+import { CrossIcon, PlusSign } from '@/assets/icon';
+import { useModalParent } from '@/data/store/zustand/modalSlice';
+import { AddTeamMemberForm } from '../addTeamMemberForm';
+import { FC } from 'react';
+import { useSWRConfig } from 'node_modules/swr/_internal/dist/index.mjs';
 
 interface AddTeamMemberProps {
   projectId: string;
@@ -49,15 +49,18 @@ const AddTeamMemberDialog: FC<AddTeamMemberProps> = ({ projectId }) => {
             <div className="w-full">
               <AddTeamMemberForm
                 handleCreateTeamMember={async (values) => {
-                  const response = await fetch(`/api/user/projects/${projectId}/team/add-team-member`, {
-                    method: "POST",
-                    headers: {
-                      "Content-Type": "Application/json",
-                    },
-                    body: JSON.stringify(values)
-                  })
+                  const response = await fetch(
+                    `/api/user/projects/${projectId}/team/add-team-member`,
+                    {
+                      method: 'POST',
+                      headers: {
+                        'Content-Type': 'Application/json',
+                      },
+                      body: JSON.stringify(values),
+                    }
+                  );
 
-                  mutate(teamMembersSwrKey, [values])
+                  mutate(teamMembersSwrKey, [values]);
 
                   if (!response.ok) throw new Error('Invalid response');
                 }}

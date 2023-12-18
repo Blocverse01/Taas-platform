@@ -1,30 +1,35 @@
-import React, { ComponentProps, FC } from "react";
+import React, { ComponentProps, FC, useEffect } from "react";
 import { DataCard } from "./dataCard";
-import { RecentTransactions } from "./recentTransactions";
+import { RecentActivities } from "./recentActivities";
 import useSWR from "node_modules/swr/core/dist/index.mjs";
 import Skeleton from "react-loading-skeleton";
 import { ReloadPage } from "@/components/reloadPage";
 
-interface ProjectAnalytics {
-  investment: {
-    volume: number;
-    weeklyTrend: number;
-  };
-  assets: {
-    volume: number;
-    weeklyTrend: number;
-  };
-  recentTransactions: ComponentProps<typeof RecentTransactions>["transactions"];
+type Activities = ComponentProps<typeof RecentActivities>['activities'];
+type AnalyticData = {
+  volume: number;
+  weeklyTrend: number;
 }
 
 interface ProjectDashboardProps {
   projectId: string;
-  getAnalytics: (projectId: string) => Promise<ProjectAnalytics>;
+  getAnalytics: (projectId: string) => Promise<{
+    recentActivities: Activities,
+    treasuryBalance: AnalyticData;
+    assets: AnalyticData;
+  }>;
 }
 
-const ProjectDashboard: FC<ProjectDashboardProps> = ({ getAnalytics, projectId }) => {
+const ProjectDashboard: FC<ProjectDashboardProps> = ({
+  getAnalytics,
+  projectId,
+}) => {
   const key = `projects/${projectId}`;
-  const { data: projectAnalytics, error, isLoading } = useSWR(key, () => getAnalytics(projectId));
+  const {
+    data: projectAnalytics,
+    error,
+    isLoading,
+  } = useSWR(key, () => getAnalytics(projectId));
 
   if (error) return <ReloadPage />;
 
@@ -34,9 +39,9 @@ const ProjectDashboard: FC<ProjectDashboardProps> = ({ getAnalytics, projectId }
         {projectAnalytics && (
           <>
             <DataCard
-              title="Gross Investment Volume"
-              value={"$" + projectAnalytics.investment.volume.toFixed(2)}
-              weeklyTrend={projectAnalytics.investment.weeklyTrend}
+              title="Treasury Balance"
+              value={"$" + projectAnalytics.treasuryBalance.volume.toFixed(2)}
+              weeklyTrend={projectAnalytics.treasuryBalance.weeklyTrend}
             />
             <DataCard
               title="Total Assets"
@@ -45,11 +50,16 @@ const ProjectDashboard: FC<ProjectDashboardProps> = ({ getAnalytics, projectId }
             />
           </>
         )}
-        {isLoading && [1, 2].map((value) => <Skeleton key={value} width={250} height={145} />)}
+        {isLoading &&
+          [1, 2].map((value) => (
+            <Skeleton key={value} width={250} height={145} />
+          ))}
       </div>
 
       <div className="mt-28">
-        {projectAnalytics && <RecentTransactions transactions={projectAnalytics.recentTransactions} />}
+        {projectAnalytics && projectAnalytics.recentActivities && (
+          <RecentActivities activities={projectAnalytics.recentActivities} />
+        )}
         {isLoading && (
           <div className="flex flex-col gap-4">
             {[1, 2, 3].map((value) => (

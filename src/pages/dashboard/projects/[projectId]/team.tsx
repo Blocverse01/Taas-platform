@@ -1,16 +1,16 @@
-import ProjectLayout from "@/components/layout/projectLayout";
-import { TeamPage } from "@/components/project/team/teamPage";
-import { ReloadPage } from "@/components/reloadPage";
-import { getProjectPageProp } from "@/lib/taas-api/project/page-utils";
-import { NextPageWithLayout } from "@/pages/_app";
-import { fetcher } from "@/utils/constants";
-import type { GetServerSideProps, InferGetServerSidePropsType } from "next";
-import { ComponentProps } from "react";
-import Skeleton from "react-loading-skeleton";
-import useSWR from "swr";
+import ProjectLayout from '@/components/layout/projectLayout';
+import { TeamPage } from '@/components/project/team/teamPage';
+import { ReloadPage } from '@/components/reloadPage';
+import { getProjectPageProp } from '@/data/adapters/server/taas-api/project/page-utils';
+import { NextPageWithLayout } from '@/pages/_app';
+import { fetcher } from '@/resources/constants';
+import type { GetServerSideProps, InferGetServerSidePropsType } from 'next';
+import { ComponentProps } from 'react';
+import Skeleton from 'react-loading-skeleton';
+import useSWR from 'swr';
 
-type Project = Required<Awaited<ReturnType<typeof getProjectPageProp>>>["project"];
-type TeamMembers = ComponentProps<typeof TeamPage>["teamMembers"];
+type Project = Required<Awaited<ReturnType<typeof getProjectPageProp>>>['project'];
+type TeamMembers = ComponentProps<typeof TeamPage>['teamMembers'];
 
 export const getServerSideProps = (async (context) => {
   const { project, redirect } = await getProjectPageProp(context);
@@ -24,7 +24,9 @@ export const getServerSideProps = (async (context) => {
   project: Project;
 }>;
 
-const ProjectTeamPage: NextPageWithLayout<InferGetServerSidePropsType<typeof getServerSideProps>> = ({ project }) => {
+const ProjectTeamPage: NextPageWithLayout<
+  InferGetServerSidePropsType<typeof getServerSideProps>
+> = ({ project }) => {
   const { data, error } = useSWR<{
     data?: TeamMembers;
   }>(`/api/user/projects/${project.id}/team`, fetcher);
@@ -51,7 +53,7 @@ const ProjectTeamPage: NextPageWithLayout<InferGetServerSidePropsType<typeof get
 };
 
 ProjectTeamPage.getLayout = (page) => (
-  <ProjectLayout projectId={page.props.project.id} breadcrumbs={[page.props.project.name, "team"]}>
+  <ProjectLayout projectId={page.props.project.id} breadcrumbs={[page.props.project.name, 'team']}>
     {page}
   </ProjectLayout>
 );

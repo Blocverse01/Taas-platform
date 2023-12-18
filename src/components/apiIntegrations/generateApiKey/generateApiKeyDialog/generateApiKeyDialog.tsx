@@ -1,20 +1,14 @@
-import { ComponentProps, FC, useState } from "react";
-import { GenerateApiKey } from "../generateApiKey";
-import * as AlertDialog from "@radix-ui/react-alert-dialog";
-import { motion } from "framer-motion";
-import { CrossIcon } from "@/assets/icon";
-import { useModalParent } from "@/lib/zustand/modalSlice";
-import { DisplayApiKey } from "../displayApiKey";
+import { ComponentProps, FC, useState } from 'react';
+import { GenerateApiKey } from '../generateApiKey';
+import * as AlertDialog from '@radix-ui/react-alert-dialog';
+import { motion } from 'framer-motion';
+import { CrossIcon } from '@/assets/icon';
+import { useModalParent } from '@/data/store/zustand/modalSlice';
+import { DisplayApiKey } from '../displayApiKey';
 
-type GenerateApiKeyDialogProps = Omit<
-  ComponentProps<typeof GenerateApiKey>,
-  "backButton"
->;
+type GenerateApiKeyDialogProps = Omit<ComponentProps<typeof GenerateApiKey>, 'backButton'>;
 
-const GenerateApiKeyDialog: FC<GenerateApiKeyDialogProps> = ({
-  generateApiKey,
-  projects,
-}) => {
+const GenerateApiKeyDialog: FC<GenerateApiKeyDialogProps> = ({ generateApiKey, projects }) => {
   const dialogContainer = useModalParent();
 
   const [open, setOpen] = useState<boolean>(false);

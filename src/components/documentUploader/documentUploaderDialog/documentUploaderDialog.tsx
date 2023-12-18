@@ -1,14 +1,11 @@
-import { ComponentProps, FC, useState } from "react";
-import { DocumentUploader } from "../documentUploader";
-import * as AlertDialog from "@radix-ui/react-alert-dialog";
-import { motion } from "framer-motion";
-import { CrossIcon, UploadCircleIcon } from "@/assets/icon";
-import { useModalParent } from "@/lib/zustand/modalSlice";
+import { ComponentProps, FC, useState } from 'react';
+import { DocumentUploader } from '../documentUploader';
+import * as AlertDialog from '@radix-ui/react-alert-dialog';
+import { motion } from 'framer-motion';
+import { CrossIcon, UploadCircleIcon } from '@/assets/icon';
+import { useModalParent } from '@/data/store/zustand/modalSlice';
 
-type DocumentUploaderDialogProps = Omit<
-  ComponentProps<typeof DocumentUploader>,
-  "backButton"
->;
+type DocumentUploaderDialogProps = Omit<ComponentProps<typeof DocumentUploader>, 'backButton'>;
 
 const DocumentUploaderDialog: FC<DocumentUploaderDialogProps> = ({
   onUploadComplete,
@@ -26,9 +23,7 @@ const DocumentUploaderDialog: FC<DocumentUploaderDialogProps> = ({
           type="button"
           className="flex items-center justify-between py-5 px-4 bg-t-gray-7 text-t-black w-full rounded"
         >
-          <span className="text-t-gray-4 text-sm">
-            Upload Document and Input Label
-          </span>
+          <span className="text-t-gray-4 text-sm">Upload Document and Input Label</span>
           <UploadCircleIcon />
         </button>
       </AlertDialog.Trigger>

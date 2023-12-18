@@ -1,22 +1,22 @@
-import ProjectLayout from "@/components/layout/projectLayout";
-import { PendingAuthorizations } from "@/components/project/pendingAuthorizations";
-import { getSafeService } from "@/lib/safe";
-import { getProjectPageProp } from "@/lib/taas-api/project/page-utils";
-import { getTeamMembers } from "@/lib/taas-api/team";
-import { NextPageWithLayout } from "@/pages/_app";
-import { ASSET_TOKEN, PLATFORM_ENTRY } from "@/utils/web3/abis";
-import { getContractAddress } from "@/utils/web3/contracts";
-import type { GetServerSideProps, InferGetServerSidePropsType } from "next";
-import { ComponentProps, useState } from "react";
-import { Address, decodeFunctionData, formatEther } from "viem";
-import useSWR from "swr";
-import { AuthorizationBreakdown } from "@/components/project/pendingAuthorizations/authorizationBreakdown/authorizationBreakdown";
-import { acceptTransaction } from "@/lib/safe/executeTransaction";
-import { executeIssueTokenTransaction } from "@/lib/taas-api/token/issueToken";
-import { OLD_PLATFORM_ENTRY_CONTRACTS } from "@/utils/constants";
-import { getSafeOwnersWhoHaveApproved } from "@/lib/safe/getSafeDetails";
+import ProjectLayout from '@/components/layout/projectLayout';
+import { PendingAuthorizations } from '@/components/project/pendingAuthorizations';
+import { getSafeService } from '@/data/adapters/browser/safe';
+import { getProjectPageProp } from '@/data/adapters/server/taas-api/project/page-utils';
+import { getTeamMembers } from '@/data/adapters/server/taas-api/team';
+import { NextPageWithLayout } from '@/pages/_app';
+import { ASSET_TOKEN, PLATFORM_ENTRY } from '@/resources/utils/web3/abis';
+import { getContractAddress } from '@/resources/utils/web3/contracts';
+import type { GetServerSideProps, InferGetServerSidePropsType } from 'next';
+import { ComponentProps, useState } from 'react';
+import { Address, decodeFunctionData, formatEther } from 'viem';
+import useSWR from 'swr';
+import { AuthorizationBreakdown } from '@/components/project/pendingAuthorizations/authorizationBreakdown/authorizationBreakdown';
+import { acceptTransaction } from '@/data/adapters/browser/safe/executeTransaction';
+import { executeIssueTokenTransaction } from '@/data/adapters/browser/taas-web/token/issueToken';
+import { OLD_PLATFORM_ENTRY_CONTRACTS } from '@/resources/constants';
+import { getSafeOwnersWhoHaveApproved } from '@/data/adapters/browser/safe/getSafeDetails';
 
-type Project = Required<Awaited<ReturnType<typeof getProjectPageProp>>>["project"];
+type Project = Required<Awaited<ReturnType<typeof getProjectPageProp>>>['project'];
 
 type SafeTransactionProps = ComponentProps<typeof PendingAuthorizations>;
 
@@ -39,7 +39,9 @@ type AuthorizationsProps = InferGetServerSidePropsType<typeof getServerSideProps
 const AuthorizationsPage: NextPageWithLayout<AuthorizationsProps> = ({ teamMembers, project }) => {
   const key = `projects/${project.id}/authorizations`;
 
-  const { data, mutate } = useSWR(key, () => getSafeService().getPendingTransactions(project.multisigController));
+  const { data, mutate } = useSWR(key, () =>
+    getSafeService().getPendingTransactions(project.multisigController)
+  );
   const [selectedAuthorization, setSelectedAuthorization] = useState<
     ReturnType<typeof parseTransaction> & {
       assetDetails: Awaited<ReturnType<typeof getAssetDetails>>;
@@ -49,16 +51,19 @@ const AuthorizationsPage: NextPageWithLayout<AuthorizationsProps> = ({ teamMembe
 
   const safeTransactions = data?.results;
 
-  const parseTransaction = (safeTransaction: SafeTransactionProps["safeTransactions"][number]) => {
-    if (!safeTransaction.data) throw new Error("Invalid transaction");
+  const parseTransaction = (safeTransaction: SafeTransactionProps['safeTransactions'][number]) => {
+    if (!safeTransaction.data) throw new Error('Invalid transaction');
     let actionTitle: string | undefined;
     let assetAddress: Address | undefined;
     let toUser: Address | undefined;
     let assetTokenValue: string | undefined;
 
-    const platformEntry = getContractAddress("PLATFORM_ENTRY");
+    const platformEntry = getContractAddress('PLATFORM_ENTRY');
 
-    if (safeTransaction.to == platformEntry || OLD_PLATFORM_ENTRY_CONTRACTS.includes(safeTransaction.to)) {
+    if (
+      safeTransaction.to == platformEntry ||
+      OLD_PLATFORM_ENTRY_CONTRACTS.includes(safeTransaction.to)
+    ) {
       const { functionName, args } = decodeFunctionData({
         abi: PLATFORM_ENTRY,
         data: safeTransaction.data as Address,
@@ -66,10 +71,10 @@ const AuthorizationsPage: NextPageWithLayout<AuthorizationsProps> = ({ teamMembe
       const actionTitles: {
         [key in typeof functionName]?: string;
       } = {
-        issueToken: "Token Issuance",
+        issueToken: 'Token Issuance',
       };
       actionTitle = actionTitles[functionName];
-      if (functionName === "issueToken") {
+      if (functionName === 'issueToken') {
         assetAddress = args[1];
         toUser = args[2];
         assetTokenValue = formatEther(args[3]);
@@ -82,10 +87,10 @@ const AuthorizationsPage: NextPageWithLayout<AuthorizationsProps> = ({ teamMembe
       const actionTitles: {
         [key in typeof functionName]?: string;
       } = {
-        controllerTransfer: "Token Transfer",
+        controllerTransfer: 'Token Transfer',
       };
       actionTitle = actionTitles[functionName];
-      if (functionName === "controllerTransfer") {
+      if (functionName === 'controllerTransfer') {
         assetAddress = safeTransaction.to as Address;
         toUser = args[1];
         assetTokenValue = formatEther(args[2]);
@@ -111,7 +116,7 @@ const AuthorizationsPage: NextPageWithLayout<AuthorizationsProps> = ({ teamMembe
   const getAssetDetails = async (assetAddress: Address) => {
     const response = await fetch(`/api/user/projects/${project.id}/assets/${assetAddress}`);
 
-    if (!response.ok) throw Error("Invalid response");
+    if (!response.ok) throw Error('Invalid response');
 
     const data: {
       data: {
@@ -135,7 +140,7 @@ const AuthorizationsPage: NextPageWithLayout<AuthorizationsProps> = ({ teamMembe
       approvals={selectedAuthorization.approvals}
       approveTransaction={async (safeTxHash) => {
         const receipt = await acceptTransaction(project.multisigController, safeTxHash);
-        if (!receipt.status) throw new Error("Transaction reverted");
+        if (!receipt.status) throw new Error('Transaction reverted');
         mutate();
       }}
       executeTransaction={async (safeTxHash) => {
@@ -151,13 +156,18 @@ const AuthorizationsPage: NextPageWithLayout<AuthorizationsProps> = ({ teamMembe
       getAssetDetails={getAssetDetails}
       safeTransactions={safeTransactions}
       parseTransaction={parseTransaction}
-      getOwnersWhoApproved={(safeTxHash) => getSafeOwnersWhoHaveApproved(safeTxHash, project.multisigController)}
+      getOwnersWhoApproved={(safeTxHash) =>
+        getSafeOwnersWhoHaveApproved(safeTxHash, project.multisigController)
+      }
     />
   );
 };
 
 AuthorizationsPage.getLayout = (page) => (
-  <ProjectLayout breadcrumbs={[page.props.project.name, "Authorizations"]} projectId={page.props.project.id}>
+  <ProjectLayout
+    breadcrumbs={[page.props.project.name, 'Authorizations']}
+    projectId={page.props.project.id}
+  >
     {page}
   </ProjectLayout>
 );

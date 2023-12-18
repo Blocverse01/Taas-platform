@@ -1,11 +1,18 @@
 import { FC } from 'react';
 import { CreateRealEstateAssetForm } from './form';
 import { Address } from 'viem';
-import { tokenizeAsset } from '@/lib/taas-api/tokenFactory/tokenizeAsset';
+import { tokenizeAsset } from '@/data/adapters/browser/taas-web/tokenFactory/tokenizeAsset';
 import { useRouter } from 'next/router';
-import { storeProjectAssetFormData } from '@/utils/assetIntegrations';
+import { storeProjectAssetFormData } from '@/data/adapters/browser/taas-web/token/tokenizedAsset';
 import { useLocalStorage } from 'usehooks-ts';
-import { getConcatenatedId } from '@/utils/helperfunctions';
+import { getConcatenatedId } from '@/resources/utils/helperfunctions';
+import { saveToProjectActivityLog } from '@/data/adapters/browser/taas-web/activityLog';
+import { getTransactionExplorerUrl } from '@/resources/utils/web3/connection';
+import {
+  ActivityLogCategory,
+  ActivityLogProjectSubCategory,
+} from '@/data/adapters/server/taas-api/activityLog/types';
+import { createActivityLogTitle } from '@/data/adapters/browser/taas-web/activityLog/utils';
 
 interface CreateRealEstateAssetProps {
   projectId: string;
@@ -54,7 +61,7 @@ const CreateRealEstateAsset: FC<CreateRealEstateAssetProps> = ({
   async function handleAssetTokenization(tokenOptions: TokenOptions) {
     const { tokenTicker, pricePerToken, propertyName } = tokenOptions;
 
-    const { tokenAddress, txHash } = await tokenizeAsset(
+    const { tokenAddress, txHash, actor } = await tokenizeAsset(
       projectTokenFactory,
       tokenTicker,
       pricePerToken,
@@ -70,6 +77,15 @@ const CreateRealEstateAsset: FC<CreateRealEstateAssetProps> = ({
         pricePerToken.toString(),
         propertyName
       ),
+    });
+
+    await saveToProjectActivityLog(projectId, {
+      actor,
+      title: createActivityLogTitle(ActivityLogProjectSubCategory['tokenizeAsset'], txHash),
+      category: ActivityLogCategory['project'],
+      ctaLink: getTransactionExplorerUrl(txHash),
+      ctaText: 'View Transaction',
+      subCategory: ActivityLogProjectSubCategory['tokenizeAsset'],
     });
 
     return { txHash, tokenAddress };
@@ -102,7 +118,7 @@ const CreateRealEstateAsset: FC<CreateRealEstateAssetProps> = ({
 
           setUnStoredTokenization(undefined);
 
-          router.push(assetsPageLink);
+          await router.push(assetsPageLink);
         }}
         backLink={assetsPageLink}
       />

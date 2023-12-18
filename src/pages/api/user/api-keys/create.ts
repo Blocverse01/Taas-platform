@@ -1,8 +1,8 @@
 import { NextApiHandler, NextApiResponse } from "next";
-import { BAD_REQUEST, INTERNAL_SERVER_ERROR } from "@/utils/constants";
-import { validateAuthInApiHandler } from "@/utils/auth";
-import { createUserApiKey } from "@/lib/taas-api/apiKeys/createUserApiKey";
-import { HttpError } from "@/lib/errors";
+import { BAD_REQUEST, INTERNAL_SERVER_ERROR } from "@/resources/constants";
+import { validateAuthInApiHandler } from "@/data/adapters/browser/auth";
+import { createUserApiKey } from "@/data/adapters/server/taas-api/apiKeys/createUserApiKey";
+import { HttpError } from "@/resources/errors";
 
 type ApiResponse = {
     message?: string;

@@ -1,6 +1,6 @@
 import { CrossIcon, UploadCircleIcon } from '@/assets/icon';
 import { Input } from '@/components/formPrimitives/input';
-import { formatFileSize } from '@/utils/files';
+import { formatFileSize } from '@/resources/utils/file';
 import classNames from 'classnames';
 import { ErrorMessage, Form, Formik } from 'formik';
 import { FC, useRef, useState } from 'react';

@@ -1,24 +1,38 @@
-import { HttpError } from "@/lib/errors";
-import { getProjectActivityLog, storeProjectActivityLogItem } from "@/lib/taas-api/activityLog/createActivityLog";
-import { validateAuthInApiHandler } from "@/utils/auth";
-import { BAD_REQUEST, INTERNAL_SERVER_ERROR, OK } from "@/utils/constants";
+import { HttpError } from "@/resources/errors";
+import { getProjectActivityLog } from "@/data/adapters/server/taas-api/activityLog/createActivityLog";
+import { validateAuthInApiHandler } from "@/data/adapters/browser/auth";
+import { BAD_REQUEST, INTERNAL_SERVER_ERROR, OK } from "@/resources/constants";
 import { NextApiHandler, NextApiRequest, NextApiResponse } from "next";
+import { ActivityLogResponseItem } from "@/types/api/ActivityLog";
 
-const handler: NextApiHandler = async (req: NextApiRequest, res: NextApiResponse) => {
+type ActivityLogResponse = {
+    message?: string,
+    data?: {
+        recentActivities: Array<ActivityLogResponseItem>
+    }
+}
+
+const handler: NextApiHandler = async (req: NextApiRequest, res: NextApiResponse<ActivityLogResponse>) => {
     try {
         await validateAuthInApiHandler(req, res);
 
-        const { projectId, logItem } = req.body;
+        let { projectId } = req.query;
 
-        if (!projectId || !projectId.trim()) {
+        projectId = projectId?.toString();
+
+        if (!projectId || !projectId.toString().trim()) {
             throw new HttpError(BAD_REQUEST, "projectId is required");
         }
 
-        const log = await getProjectActivityLog(projectId);
+        const activityLog = await getProjectActivityLog(projectId);
 
-        res.status(OK).json({ message: "Project Logs Retrieved Successfully", data: log });
+        res.status(OK).json({
+            message: "Success", data: {
+                recentActivities: activityLog
+            }
+        });
     } catch (error: any) {
-       
+
         return res
             .status(error?.status ?? error?.response?.status ?? INTERNAL_SERVER_ERROR)
             .json({ message: error.message });

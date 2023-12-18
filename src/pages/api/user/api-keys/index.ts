@@ -1,7 +1,7 @@
 import { NextApiHandler, NextApiResponse } from "next";
-import { INTERNAL_SERVER_ERROR } from "@/utils/constants";
-import { validateAuthInApiHandler } from "@/utils/auth";
-import { getUserApiKeys } from "@/lib/taas-api/apiKeys/getUserApiKeys";
+import { INTERNAL_SERVER_ERROR } from "@/resources/constants";
+import { validateAuthInApiHandler } from "@/data/adapters/browser/auth";
+import { getUserApiKeys } from "@/data/adapters/server/taas-api/apiKeys/getUserApiKeys";
 
 type ApiResponse = {
     message?: string;

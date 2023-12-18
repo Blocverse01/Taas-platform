@@ -1,7 +1,7 @@
 import { updateAssetDocumentLabel } from "@/lib/taas-api/asset/updateAsset";
 import { AssetLableSchema } from "@/lib/taas-api/asset/validationSchema";
-import { validateAuthInApiHandler } from "@/utils/auth";
-import { INTERNAL_SERVER_ERROR, OK, UNAUTHORIZED } from "@/utils/constants";
+import { validateAuthInApiHandler } from "@/data/adapters/browser/auth";
+import { INTERNAL_SERVER_ERROR, OK, UNAUTHORIZED } from "@/resources/constants";
 import { NextApiHandler, NextApiRequest, NextApiResponse } from "next";
 
 const handler: NextApiHandler = async (req: NextApiRequest, res: NextApiResponse) => {

@@ -8,11 +8,11 @@ import {
   getAccount,
   getPublicClient,
   getWalletClient,
-} from "@/utils/web3/connection";
-import { PLATFORM_ENTRY } from "@/utils/web3/abis";
-import { getContractAddress } from "@/utils/web3/contracts";
-import { sponsorTransaction } from "@/lib/biconomy";
-import { SPONSOR_TRANSACTION } from "@/utils/constants";
+} from "@/resources/utils/web3/connection";
+import { getContractAddress } from "@/resources/utils/web3/contracts";
+import { SPONSOR_TRANSACTION } from "@/resources/constants";
+import { PLATFORM_ENTRY } from "@/resources/utils/web3/abis";
+import { sponsorTransaction } from "@/data/adapters/browser/biconomy";
 
 const CONTRACT_FUNCTION_NAME = "createTokenFactory" as const;
 

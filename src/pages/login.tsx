@@ -1,7 +1,7 @@
-import { AuthPage } from "@/components/authPage";
-import type { NextPageWithLayout } from "./_app";
-import SubPageLayout from "@/components/layout/subPageLayout";
-import { signInWithEmail } from "@/utils/auth";
+import { AuthPage } from '@/components/authPage';
+import type { NextPageWithLayout } from './_app';
+import SubPageLayout from '@/components/layout/subPageLayout';
+import { signInWithEmail } from '@/data/adapters/browser/auth';
 
 const Login: NextPageWithLayout = () => {
   return <AuthPage authAction="login" handleSignIn={signInWithEmail} />;

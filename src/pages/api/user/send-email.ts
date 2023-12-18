@@ -1,7 +1,7 @@
 import { NextApiHandler, NextApiResponse } from "next";
-import { INTERNAL_SERVER_ERROR } from "@/utils/constants";
-import { validateAuthInApiHandler } from "@/utils/auth";
-import MailService from "@/utils/email";
+import { INTERNAL_SERVER_ERROR } from "@/resources/constants";
+import { validateAuthInApiHandler } from "@/data/adapters/browser/auth";
+import MailService from "@/resources/utils/email";
 import Yup from "yup";
 
 type ApiResponse = {

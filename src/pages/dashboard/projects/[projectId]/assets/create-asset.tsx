@@ -1,30 +1,33 @@
-import SubPageLayout from "@/components/layout/subPageLayout";
-import { CreateAsset } from "@/components/project/asset/createAsset";
-import { getProjectPageProp } from "@/lib/taas-api/project/page-utils";
-import { NextPageWithLayout } from "@/pages/_app";
-import { GetServerSideProps, InferGetServerSidePropsType } from "next";
+import SubPageLayout from '@/components/layout/subPageLayout';
+import { CreateAsset } from '@/components/project/asset/createAsset';
+import { getProjectPageProp } from '@/data/adapters/server/taas-api/project/page-utils';
+import { NextPageWithLayout } from '@/pages/_app';
+import { GetServerSideProps, InferGetServerSidePropsType } from 'next';
 
-type Project = Required<Awaited<ReturnType<typeof getProjectPageProp>>>["project"];
+type Project = Required<Awaited<ReturnType<typeof getProjectPageProp>>>['project'];
 
 export const getServerSideProps = (async (context) => {
-    const { project, redirect } = await getProjectPageProp(context);
+  const { project, redirect } = await getProjectPageProp(context);
 
-    if (redirect) {
-        return { redirect };
-    }
+  if (redirect) {
+    return { redirect };
+  }
 
-    return { props: { project } };
+  return { props: { project } };
 }) satisfies GetServerSideProps<{
-    project: Project;
+  project: Project;
 }>;
 
-const CreateProjectAsset: NextPageWithLayout<InferGetServerSidePropsType<typeof getServerSideProps>> = ({ project }) => {  
-    return (
-        <CreateAsset
-            assetType={project.assetType}
-            projectId={project.id}
-            projectTokenFactory={project.tokenFactory}
-        />);
+const CreateProjectAsset: NextPageWithLayout<
+  InferGetServerSidePropsType<typeof getServerSideProps>
+> = ({ project }) => {
+  return (
+    <CreateAsset
+      assetType={project.assetType}
+      projectId={project.id}
+      projectTokenFactory={project.tokenFactory}
+    />
+  );
 };
 
 CreateProjectAsset.getLayout = (page) => <SubPageLayout>{page} </SubPageLayout>;

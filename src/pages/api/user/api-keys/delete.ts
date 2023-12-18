@@ -1,8 +1,8 @@
 import { NextApiHandler, NextApiResponse } from "next";
-import { BAD_REQUEST, INTERNAL_SERVER_ERROR } from "@/utils/constants";
-import { validateAuthInApiHandler } from "@/utils/auth";
-import { deleteUserApiKey } from "@/lib/taas-api/apiKeys/deleteUserApiKey";
-import { HttpError } from "@/lib/errors";
+import { BAD_REQUEST, INTERNAL_SERVER_ERROR } from "@/resources/constants";
+import { validateAuthInApiHandler } from "@/data/adapters/browser/auth";
+import { deleteUserApiKey } from "@/data/adapters/server/taas-api/apiKeys/deleteUserApiKey";
+import { HttpError } from "@/resources/errors";
 
 type ApiResponse = {
     message?: string;

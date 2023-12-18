@@ -4,7 +4,8 @@ import logo from "@/assets/logo.svg";
 import { useRouter } from "next/router";
 import Image from "next/image";
 import { LogoutDialog } from "../logout";
-import { logOut } from "@/utils/auth";
+import { logOut } from "@/data/adapters/browser/auth";
+
 
 const navItems = [
   {
