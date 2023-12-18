@@ -1,6 +1,6 @@
 import ProjectLayout from '@/components/layout/projectLayout';
 import { ProjectDashboard } from '@/components/project/dashboard';
-import { getDummyProjectAnalytics } from '@/components/project/dashboard/demoData';
+import { getProjectDashboardDetails } from '@/data/adapters/browser/taas-web/project/getDashboard';
 import { getProjectPageProp } from '@/data/adapters/server/taas-api/project/page-utils';
 import { NextPageWithLayout } from '@/pages/_app';
 import type { InferGetServerSidePropsType, GetServerSideProps } from 'next';
@@ -22,7 +22,7 @@ export const getServerSideProps = (async (context) => {
 const ProjectDashboardPage: NextPageWithLayout<
   InferGetServerSidePropsType<typeof getServerSideProps>
 > = ({ project }) => {
-  return <ProjectDashboard projectId={project.id} getAnalytics={getDummyProjectAnalytics} />;
+  return <ProjectDashboard projectId={project.id} getAnalytics={getProjectDashboardDetails} />;
 };
 
 ProjectDashboardPage.getLayout = (page) => (
