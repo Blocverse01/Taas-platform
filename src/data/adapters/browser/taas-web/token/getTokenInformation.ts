@@ -27,4 +27,11 @@ const getAsset = async (tokenAddress: Address) => {
     return assetToken;
 };
 
-export { getTokenInformation, getAsset };
+const getProjectAssetCount = async (projectId: string) => {
+    
+        return (await assetPropertyRepository().filter({
+            "project.id": projectId
+        }).getMany()).length;
+}
+
+export { getTokenInformation, getAsset, getProjectAssetCount };
