@@ -85,12 +85,9 @@ const CreateRealEstateAssetForm: FC<CreateAssetFormProps> = ({ backLink, handleC
         <div className="flex items-center w-fit mx-auto">
           <div className="flex flex-col items-center">
             <div
-              className={classNames(
-                {
-                  'bg-t-purple text-white': step >= 1,
-                },
-                'h-8 w-8 flex items-center justify-center text-sm rounded-full mb-1'
-              )}
+              className={
+                'bg-t-purple text-white h-8 w-8 flex items-center justify-center text-sm rounded-full mb-1'
+              }
             >
               1
             </div>

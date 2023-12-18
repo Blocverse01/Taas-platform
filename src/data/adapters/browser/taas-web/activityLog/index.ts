@@ -34,7 +34,7 @@ const saveToProjectActivityLog = async (
   if (!response.ok) throw new Error("Saving to activity log failed");
 };
 
-const getProjectActivityLog = async (projectId: string) => {
+const getProjectActivityLog = async (projectId: string)=> {
   const queryString = new URLSearchParams({ projectId }).toString();
 
   try {
@@ -47,7 +47,7 @@ const getProjectActivityLog = async (projectId: string) => {
 
     if (!response.ok) throw new Error("Fetching data failed");
 
-    return await response.json();
+    return (await response.json())?.data;
   } catch (error) {
     throw error;
   }
