@@ -18,6 +18,9 @@ export const SPONSOR_TRANSACTION = process.env.NEXT_PUBLIC_SPONSOR_TRANSACTION! 
 
 //Numbers
 export const ZERO = 0
+export const FOUR = 4
+export const ONE_THOUSAND = 1000
+export const TEN = 10
 
 //Contract Function Name
 export const ISSUE_TOKEN_CONTRACT_FUNCTION_NAME = "issueToken" as const;
@@ -27,6 +30,7 @@ export const UPLOAD_SERVICE_ENDPOINT = "https://web3storage-service.vercel.app/u
 export const GET_ACTIVITY_LOG_ENDPOINT = "/api/activityLog/getActivityLog";
 export const CREATE_ACTIVITY_LOG_ENDPOINT = "/api/activityLog/storeActivityLog";
 export const CREATE_PROJECT_ENDPOINT = "/api/project/create-project";
+export const GET_PROJECT_DASHBOARD_ENDPOINT = "/api/project/get-dashboard";
 export const CREATE_ASSET_ENDPOINT = "/api/asset/create-asset";
 
 //helpers
