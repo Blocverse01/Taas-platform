@@ -1,7 +1,6 @@
 import { activityLogRepository, projectRepository } from "@/resources/constants";
-import { ActivityLogRecord } from "@/xata";
-import { JSONData } from "@xata.io/client";
 import { ActivityLogItem } from "./types";
+import { arrayOfActivityLogsSchema } from "@/data/schema/activityLog";
 
 export async function storeProjectActivityLogItem(projectId: string, logItem: ActivityLogItem) {
 
@@ -18,8 +17,12 @@ export async function storeProjectActivityLogItem(projectId: string, logItem: Ac
 }
 
 export async function getProjectActivityLog(projectId: string) {
-
     const logs = await activityLogRepository().filter("project.id", projectId).sort("xata.createdAt", "desc").getAll();
 
-    return logs.map((log) => log.toSerializable() as Required<JSONData<ActivityLogRecord>>);
+    const formattedActivityLog = logs.map((item) => ({
+        ...item,
+        createdAt: item.xata.createdAt
+    }));
+
+    return await arrayOfActivityLogsSchema.validate(formattedActivityLog);
 }
