@@ -41,8 +41,6 @@ const tokenizeAsset = async (
 
   const functionArgs = [
     tokenFactory,
-    salt,
-    INTER_CHAIN_TOKEN_SERVICE,
     tokenName,
     tokenTicker,
     utils.parseEther(`${tokenPrice}`),

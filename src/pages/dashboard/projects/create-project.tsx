@@ -63,16 +63,17 @@ const CreateProject: NextPageWithLayout = () => {
             throw new Error('');
           }
 
-          const safeAddress = await deploySafe([session.user.walletAddress], 1);
+          // const safeAddress = await deploySafe([session.user.walletAddress], 1);
+          //Do not uncomment or deleter this line until multisig has been implemented 100%
 
           const { tokenFactory, txHash, actor } = await deployTokenFactory(
-            safeAddress,
+            session.user.walletAddress,
             values.treasuryWallet as Address
-          );
+          );          
 
           const project = await storeProjectItem({
             ...values,
-            multiSigController: safeAddress,
+            multiSigController: session.user.walletAddress,
             tokenFactory,
           });
 

@@ -30,7 +30,9 @@ export async function createNewProject(options: CreateNewProjectOptions) {
         title: createActivityLogTitle(ActivityLogProjectSubCategory["createProject"], ActivityLogCategory["project"], newProject.name),
         category: ActivityLogCategory["project"],
         subCategory: ActivityLogProjectSubCategory["createProject"],
-        actor: user?.walletAddress as string
+        actor: user?.walletAddress as string,
+        ctaLink: `/projects/${newProject.id}`,
+        ctaText:"View Project"
     });
 
     return newProject;

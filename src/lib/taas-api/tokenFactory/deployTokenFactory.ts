@@ -13,6 +13,8 @@ import { getContractAddress } from "@/resources/utils/web3/contracts";
 import { SPONSOR_TRANSACTION } from "@/resources/constants";
 import { PLATFORM_ENTRY } from "@/resources/utils/web3/abis";
 import { sponsorTransaction } from "@/data/adapters/browser/biconomy";
+import { ethers } from "ethers";
+import { getMagicClient } from "@/data/adapters/browser/magic/webClient";
 
 const CONTRACT_FUNCTION_NAME = "createTokenFactory" as const;
 
@@ -29,22 +31,29 @@ const deployTokenFactory = async (
   const platformEntryAddress = getContractAddress("PLATFORM_ENTRY");
   const walletClient = getWalletClient();
   const publicClient = getPublicClient();
+  const magicClient = getMagicClient();  
 
-  const functionArgs = [
-    multiSigSafeAddress,
-    multiSigSafeAddress,
-    treasuryAddress,
-  ] as const;
+  
 
   if (SPONSOR_TRANSACTION) {
-    const encodedData = encodeFunctionData({
-      abi: PLATFORM_ENTRY,
-      functionName: CONTRACT_FUNCTION_NAME,
-      args: functionArgs,
-    });
+
+    
+
+    const provider = new ethers.providers.Web3Provider(magicClient.rpcProvider as any);
+
+    const contract = new ethers.Contract(platformEntryAddress, PLATFORM_ENTRY, provider);
+
+    const tx = await contract.populateTransaction.createTokenFactory(multiSigSafeAddress,
+      multiSigSafeAddress,
+      treasuryAddress);
+
+    const tx1 = {
+      to: platformEntryAddress,
+      data: tx.data
+    }
 
     const txHash = await sponsorTransaction({
-      data: encodedData,
+      data: tx.data,
       to: platformEntryAddress,
     });
     const receipt = await publicClient.getTransactionReceipt({
@@ -58,7 +67,9 @@ const deployTokenFactory = async (
     address: platformEntryAddress,
     abi: PLATFORM_ENTRY,
     functionName: CONTRACT_FUNCTION_NAME,
-    args: functionArgs,
+    args: [multiSigSafeAddress,
+      multiSigSafeAddress,
+      treasuryAddress,],
   });
 
   const txHash = await walletClient.writeContract(request);

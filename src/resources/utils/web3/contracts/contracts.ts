@@ -1,7 +1,7 @@
 import { Address } from "viem";
 import { WEB3_ENVIRONMENT, Web3Environment } from "../environment";
 
-type ContractIDs = "PLATFORM_ENTRY";
+type ContractIDs = "PLATFORM_ENTRY" | "ASSET_TOKEN" | "ASSET_TOKEN_FACTORY";
 
 type ContractsDictionary = {
   [key in Web3Environment]: {
@@ -11,8 +11,9 @@ type ContractsDictionary = {
 
 const contracts: ContractsDictionary = {
   testnet: {
-    PLATFORM_ENTRY: "0xf2037D313eDC9238ABa59DAdb16869b93d579173"
-    //"0x44C2cf0B97c5EE08156683aF5509E16d7A68A324",
+    PLATFORM_ENTRY: "0xb3972efFF9F4D805E78B440520ff003f537238b8",
+    ASSET_TOKEN: "0xAA2cBD04163a5396d185B6Bb736fE387BD13B6f4",
+    ASSET_TOKEN_FACTORY: "0x38866775961A11529a0541D34A8fab0D399A50d3"
   },
   mainnet: {
     PLATFORM_ENTRY: "0x59f2f026473aBc82a9e61286ca053175681C25E6"
