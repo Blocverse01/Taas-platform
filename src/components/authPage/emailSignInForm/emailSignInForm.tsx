@@ -1,11 +1,11 @@
-import { Input } from "@/components/formPrimitives/input";
-import { FormSubmitSpinner } from "@/components/loaders";
-import { Form, Formik } from "formik";
-import { FC } from "react";
-import toast from "react-hot-toast";
-import * as Yup from "yup";
+import { Input } from '@/components/formPrimitives/input';
+import { FormSubmitSpinner } from '@/components/loaders';
+import { Form, Formik } from 'formik';
+import { FC } from 'react';
+import toast from 'react-hot-toast';
+import * as Yup from 'yup';
 
-type AuthAction = "sign-up" | "login";
+type AuthAction = 'sign-up' | 'login';
 
 interface EmailSignInFormProps {
   handleSignIn: (email: string) => Promise<void>;
@@ -24,29 +24,27 @@ const toastMessages: {
     error: string;
   };
 } = {
-  "sign-up": {
-    success: "Welcome",
-    error: "Creating an account failed, please try again",
+  'sign-up': {
+    success: 'Welcome',
+    error: 'Creating an account failed, please try again',
   },
   login: {
-    success: "Logged In",
-    error: "Login failed",
+    success: 'Logged In',
+    error: 'Login failed',
   },
 };
 
-const EmailSignInForm: FC<EmailSignInFormProps> = ({
-  handleSignIn,
-  authAction,
-}) => {
+const EmailSignInForm: FC<EmailSignInFormProps> = ({ handleSignIn, authAction }) => {
   return (
     <Formik<Values>
       initialValues={{
-        email: "",
+        email: '',
       }}
       validationSchema={emailSignInSchema}
       onSubmit={async (values, { setSubmitting }) => {
         try {
           await handleSignIn(values.email);
+
           toast.success(toastMessages[authAction].success);
         } catch (error) {
           toast.success(toastMessages[authAction].error);
@@ -57,12 +55,7 @@ const EmailSignInForm: FC<EmailSignInFormProps> = ({
     >
       {({ isSubmitting }) => (
         <Form className="flex flex-col gap-10 max-w-[431px] w-full mx-auto">
-          <Input
-            label="Email Address"
-            name="email"
-            id="email"
-            placeholder="john@email.com"
-          />
+          <Input label="Email Address" name="email" id="email" placeholder="john@email.com" />
           <button
             disabled={isSubmitting}
             type="submit"
@@ -74,7 +67,7 @@ const EmailSignInForm: FC<EmailSignInFormProps> = ({
                 <span className="ml-2">Authenticating</span>
               </>
             ) : (
-              "Request for OTP"
+              'Request for OTP'
             )}
           </button>
         </Form>
