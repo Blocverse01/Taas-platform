@@ -4,20 +4,18 @@ import { getToken } from "next-auth/jwt";
 const AUTH_ROUTES = ["/login", "/signup"];
 
 export async function middleware(request: NextRequest) {
-  // const token = await getToken({ req: request });
-  
-  // let redirect: string | undefined;
+  const token = await getToken({ req: request });
 
-  // const isAuthenticationRoute = AUTH_ROUTES.includes(request.nextUrl.pathname);
+  let redirect: string | undefined;
 
-  // if (token && isAuthenticationRoute) {
-  //   redirect = "/dashboard";
-  // }
-  // if (!token && !isAuthenticationRoute) {
-  //   redirect = "/login";
-  // }
+  const isAuthenticationRoute = AUTH_ROUTES.includes(request.nextUrl.pathname);
 
-  const redirect = undefined;
+  if (token && isAuthenticationRoute) {
+    redirect = "/dashboard";
+  }
+  if (!token && !isAuthenticationRoute) {
+    redirect = "/login";
+  }
 
   const response = redirect
     ? NextResponse.redirect(new URL(redirect, request.url))
