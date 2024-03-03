@@ -47,7 +47,8 @@ const AuthPage: FC<AuthPageProps> = ({ authAction, handleSignIn }) => {
         authAction={authAction}
         handleSignIn={async (email) => {
           await handleSignIn(email);
-          router.push(REDIRECT_TO);
+
+          await router.reload();
         }}
       />
       <div className="text-sm flex justify-end w-full">

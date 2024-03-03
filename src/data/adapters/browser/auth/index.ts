@@ -7,6 +7,7 @@ import { getMagicClient } from "../magic/webClient";
 
 const signInWithEmail = async (email: string) => {
   const didToken = await authenticateEmail(email);
+  
   await signIn("credentials", { didToken });
 };
 
