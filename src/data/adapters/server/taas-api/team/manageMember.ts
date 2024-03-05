@@ -40,7 +40,7 @@ export const updateTeamMemberRole = async (
       throw new Error("User is not a current team member");
     }
 
-    existingProjectTeamMember.update({ roleId: payload.newRole });
+    existingProjectTeamMember.update({ roleId: +payload.newRole });
 
     await storeProjectActivityLogItem(payload.projectId, {
       title: createActivityLogTitle(ActivityLogProjectSubCategory["updateTeamMember"], ActivityLogCategory["project"], project.name),
