@@ -6,7 +6,6 @@ import { WEB3_ENVIRONMENT } from "@/resources/utils/web3/environment";
 const ALCHEMY_API_KEY = process.env.NEXT_PUBLIC_ALCHEMY_API_KEY;
 const ALCHEMY_GAS_POLICY_ID = process.env.NEXT_PUBLIC_ALCHEMY_GAS_POLICY_ID;
 
-
 const chain = WEB3_ENVIRONMENT === 'mainnet' ? polygon : polygonMumbai;
 
 let smartAccountClientInstance: SmartAccountClient | undefined;
