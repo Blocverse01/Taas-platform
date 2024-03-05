@@ -40,13 +40,15 @@ export const updateTeamMemberRole = async (
       throw new Error("User is not a current team member");
     }
 
-    existingProjectTeamMember.update({ roleId: payload.newRole });
+    existingProjectTeamMember.update({ roleId: +payload.newRole });
 
     await storeProjectActivityLogItem(payload.projectId, {
       title: createActivityLogTitle(ActivityLogProjectSubCategory["updateTeamMember"], ActivityLogCategory["project"], project.name),
       category: ActivityLogCategory["project"],
       subCategory: ActivityLogProjectSubCategory["updateTeamMember"],
-      actor: currentUser.user.walletAddress
+      actor: currentUser.user.walletAddress,
+      ctaLink: `/dashboard/projects/${payload.projectId}/team`,
+      ctaText: 'View Team Members'
     });
 
   } catch (error: any) {
@@ -88,7 +90,9 @@ export const removeTeamMember = async (
       title: createActivityLogTitle(ActivityLogProjectSubCategory["removeTeamMember"], ActivityLogCategory["project"], project.name),
       category: ActivityLogCategory["project"],
       subCategory: ActivityLogProjectSubCategory["removeTeamMember"],
-      actor: currentUser.user.walletAddress
+      actor: currentUser.user.walletAddress,
+      ctaLink: `/dashboard/projects/${payload.projectId}/team`,
+      ctaText: 'View Team Members'
     });
 
   } catch (error: any) {

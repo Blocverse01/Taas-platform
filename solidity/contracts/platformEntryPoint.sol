@@ -47,15 +47,11 @@ contract PlatformEntryPoint {
 
     function createToken(
         AssetTokenFactory factory,
-        bytes32 _salt,
-        address _interchainTokenServiceAddress,
         string memory _tokenName,
         string memory _tokenSymbol,
         uint256 _tokenOfferingPrice
     ) external onlyFactoryOwner(factory) {
         factory.createToken(
-            _salt,
-            _interchainTokenServiceAddress,
             _tokenName,
             _tokenSymbol,
             _tokenOfferingPrice

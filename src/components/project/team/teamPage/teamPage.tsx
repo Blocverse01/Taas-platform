@@ -1,15 +1,16 @@
-import { SearchIcon } from "@/assets/icon";
-import React, { ComponentProps, FC, useState } from "react";
-import { TeamMembers } from "../teamMember";
-import { AddTeamMemberDialog } from "../addTeamMember/addTeamMemberDialog";
+import { SearchIcon } from '@/assets/icon';
+import React, { ComponentProps, FC, useState } from 'react';
+import { TeamMembers } from '../teamMember';
+import { AddTeamMemberDialog } from '../addTeamMember/addTeamMemberDialog';
+import { updateTeamMemberRole } from '@/data/adapters/browser/taas-web/team/management';
 
 interface TeamPageProps {
-  teamMembers: ComponentProps<typeof TeamMembers>["teamMembers"];
-  projectId: string
+  teamMembers: ComponentProps<typeof TeamMembers>['teamMembers'];
+  projectId: string;
 }
 
 const TeamPage: FC<TeamPageProps> = ({ teamMembers, projectId }) => {
-  const [searchInput, setSearchInput] = useState("");
+  const [searchInput, setSearchInput] = useState('');
   const [filteredTeamMembers, setFilteredTeamMembers] = useState(teamMembers);
 
   const handleSearchInputChange = (inputValue: string) => {
@@ -40,7 +41,16 @@ const TeamPage: FC<TeamPageProps> = ({ teamMembers, projectId }) => {
         <AddTeamMemberDialog projectId={projectId} />
       </div>
       <div className="mt-12">
-        <TeamMembers teamMembers={filteredTeamMembers} />
+        <TeamMembers
+          handleRoleChange={(newRole, teamMemberUserId) =>
+            updateTeamMemberRole({
+              newRole,
+              teamMemberUserId,
+              projectId,
+            })
+          }
+          teamMembers={filteredTeamMembers}
+        />
       </div>
     </div>
   );

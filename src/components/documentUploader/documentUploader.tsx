@@ -136,7 +136,7 @@ const DocumentUploader: FC<DocumentUploaderProps> = ({
 
             {uploading && (
               <div className="flex items-center gap-2 mt-1.5">
-                <ClipLoader size={40} color={TAAS_PURPLE} /> Uploading file
+                <ClipLoader size={25} color={TAAS_PURPLE} /> Uploading file
               </div>
             )}
             {uploadError && <div className="text-red-500 mt-1">{uploadError}</div>}

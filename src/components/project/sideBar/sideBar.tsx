@@ -1,24 +1,19 @@
-"use client";
-import Link from "next/link";
-import logo from "@/assets/logo.svg";
-import { useRouter } from "next/router";
-import Image from "next/image";
-import { FC } from "react";
-import {
-  Assets,
-  Dashboard,
-  Authorization,
-  Settings,
-  TeamIcon,
-} from "@/assets/icon";
-import { LogoutDialog } from "@/components/logout/logoutDialog";
+'use client';
+import Link from 'next/link';
+import logo from '@/assets/logo.svg';
+import { useRouter } from 'next/router';
+import Image from 'next/image';
+import { FC } from 'react';
+import { Assets, Dashboard, Authorization, Settings, TeamIcon, Notification } from '@/assets/icon';
+import { LogoutDialog } from '@/components/logout/logoutDialog';
 import { derivePageTitle } from '@/resources/utils/helperfunctions';
-import { logOut } from "@/data/adapters/browser/auth";
-
+import { logOut } from '@/data/adapters/browser/auth';
 
 interface ProjectSidebarProps {
   projectId: string;
 }
+
+const NOT_READY_NAV_ITEM_NAMES = ['settings', 'authorizations'];
 
 const ProjectSidebar: FC<ProjectSidebarProps> = ({ projectId }) => {
   const router = useRouter();
@@ -42,6 +37,11 @@ const ProjectSidebar: FC<ProjectSidebarProps> = ({ projectId }) => {
       icon: <TeamIcon />,
     },
     {
+      name: 'activities',
+      href: `/dashboard/projects/${projectId}/activities`,
+      icon: <Notification />,
+    },
+    {
       name: 'settings',
       href: `/dashboard/projects/${projectId}/settings`,
       icon: <Settings />,
@@ -51,15 +51,18 @@ const ProjectSidebar: FC<ProjectSidebarProps> = ({ projectId }) => {
       href: `/dashboard/projects/${projectId}/authorizations`,
       icon: <Authorization />,
     },
-  ];
+  ].filter((item) => !NOT_READY_NAV_ITEM_NAMES.includes(item.name));
 
   return (
     <aside className="border-r-[1px] border-t-grey-3">
       <div className="flex flex-col justify-between pb-20 h-full gap-8 pt-12 text-center">
         <nav className="flex flex-col gap-10 list-none">
-          <p className="text-[12px] font-medium flex items-center text-t-purple  w-fit mx-auto">
-            <Image className="mr-2" src={logo} alt="logo" /> TAAS
-          </p>
+          <Link
+            href="/dashboard"
+            className="text-[12px] font-medium flex items-center text-t-purple  w-fit mx-auto"
+          >
+            <Image className="mr-2" src={logo} alt="logo" /> <span>TAAS</span>
+          </Link>
           <div className="mt-6 px-[23px] flex flex-col gap-4">
             {navItems.map((item) => (
               <Link

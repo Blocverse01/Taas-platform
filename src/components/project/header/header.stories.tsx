@@ -1,12 +1,13 @@
-import { Meta, StoryObj } from "@storybook/react";
-import { ProjectHeader } from ".";
+import { Meta, StoryObj } from '@storybook/react';
+import { ProjectHeader } from '.';
 
 const meta = {
-  title: "Project/Project Header",
+  title: 'Project/Project Header',
   component: ProjectHeader,
-  tags: ["autodocs"],
+  tags: ['autodocs'],
   args: {
-    breadcrumbs: ["Sample Project", "Assets"],
+    breadcrumbs: ['Sample Project', 'Assets'],
+    notificationLinkPage: '/notifications',
   },
 } satisfies Meta<typeof ProjectHeader>;
 

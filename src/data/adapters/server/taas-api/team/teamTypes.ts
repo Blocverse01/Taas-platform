@@ -1,18 +1,19 @@
 
 export type AddNewMemberPayload = {
-    projectId: string,    
-    name: string,
-    email: string,
-    role: string
+    projectId: string;
+    projectName: string;
+    name: string;
+    email: string;
+    role: string;
 }
 
 export type updateMemberRolePayload = {
     projectId: string,
-    teamMemberUserId: string,    
+    teamMemberUserId: string,
     newRole: string
 }
 
 export type deactivateMemberRolePayload = {
     projectId: string,
-    teamMemberUserId: string,    
+    teamMemberUserId: string,
 }

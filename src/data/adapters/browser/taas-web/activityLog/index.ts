@@ -4,7 +4,7 @@ import type {
   ActivityLogProjectSubCategory,
 } from "@/data/adapters/server/taas-api/activityLog/types";
 import { CREATE_ACTIVITY_LOG_ENDPOINT, GET_ACTIVITY_LOG_ENDPOINT } from "@/resources/constants";
-import { Address } from "viem";
+import type { Address } from "viem";
 
 interface SaveToActivityLogPayload {
   ctaLink: string;
@@ -34,7 +34,7 @@ const saveToProjectActivityLog = async (
   if (!response.ok) throw new Error("Saving to activity log failed");
 };
 
-const getProjectActivityLog = async (projectId: string)=> {
+const getProjectActivityLog = async (projectId: string) => {
   const queryString = new URLSearchParams({ projectId }).toString();
 
   try {

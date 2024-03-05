@@ -3,7 +3,6 @@ import {
   decodeEventLog,
   encodeFunctionData,
   TransactionReceipt as PreciseTransactionReceipt,
-  hashMessage,
 } from "viem";
 import { TOKEN_FACTORY, PLATFORM_ENTRY } from "@/resources/utils/web3/abis";
 import {
@@ -13,12 +12,10 @@ import {
 } from "@/resources/utils/web3/connection";
 import { utils } from "@/resources/utils/web3/utils";
 import { getContractAddress } from "@/resources/utils/web3/contracts";
-import { sponsorTransaction } from "@/data/adapters/browser/biconomy";
 import { SPONSOR_TRANSACTION } from "@/resources/constants";
+import { sendUserOperation } from "../../alchemy/userOperation";
 
 const CONTRACT_FUNCTION_NAME = "createToken" as const;
-const INTER_CHAIN_TOKEN_SERVICE =
-  "0xF786e21509A9D50a9aFD033B5940A2b7D872C208" as const;
 
 interface TokenizeAssetResponse {
   tokenAddress: Address;
@@ -32,17 +29,14 @@ const tokenizeAsset = async (
   tokenPrice: number,
   tokenName: string
 ): Promise<TokenizeAssetResponse> => {
+  const platformEntryAddress = getContractAddress("PLATFORM_ENTRY");
+
   const account = await getAccount();
   const publicClient = getPublicClient();
   const walletClient = getWalletClient();
-  const platformEntryAddress = getContractAddress("PLATFORM_ENTRY");
-
-  const salt = hashMessage(tokenName);
 
   const functionArgs = [
     tokenFactory,
-    salt,
-    INTER_CHAIN_TOKEN_SERVICE,
     tokenName,
     tokenTicker,
     utils.parseEther(`${tokenPrice}`),
@@ -55,9 +49,9 @@ const tokenizeAsset = async (
       args: functionArgs,
     });
 
-    const txHash = await sponsorTransaction({
-      data: encodedData,
-      to: platformEntryAddress,
+    const txHash = await sendUserOperation({
+      calldata: encodedData,
+      target: platformEntryAddress,
     });
 
     const receipt = await publicClient.getTransactionReceipt({
@@ -107,6 +101,7 @@ const extractResponseFromReceipt = (
     data: log.data,
     topics: log.topics,
   });
+
   const response = {
     tokenAddress: topics.args.contractAddress,
     txHash: receipt.transactionHash,

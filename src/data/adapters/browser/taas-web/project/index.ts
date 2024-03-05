@@ -4,27 +4,25 @@ import { CREATE_PROJECT_ENDPOINT } from "@/resources/constants";
 export const storeProjectItem = async (
   payload: Omit<CreateNewProjectOptions, "userId">
 ) => {
-  try {
-    const response = await fetch(CREATE_PROJECT_ENDPOINT, {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify(payload),
-    });
 
-    if (!response.ok) throw new Error("File Upload failed");
+  const response = await fetch(CREATE_PROJECT_ENDPOINT, {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json",
+    },
+    body: JSON.stringify(payload),
+  });
 
-    return (
-      (await response.json()) as {
-        data: {
-          project: {
-            id: string;
-          };
-        };
-      }
-    ).data.project;
-  } catch (error) {
-    throw error;
-  }
+  if (!response.ok) throw new Error("storing project data failed");
+
+  const responseData = await response.json() as {
+    data: {
+      project: {
+        id: string;
+        name: string;
+      };
+    };
+  };
+
+  return responseData.data.project;
 };

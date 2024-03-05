@@ -8,7 +8,6 @@ import {
   UNAUTHORIZED,
 } from "@/resources/constants";
 import { NextApiHandler, NextApiRequest, NextApiResponse } from "next";
-import { Address } from "viem";
 
 const handler: NextApiHandler = async (
   req: NextApiRequest,
@@ -25,19 +24,18 @@ const handler: NextApiHandler = async (
 
     const {
       name,
-      blockchain,
       treasuryWallet,
       tokenFactory,
       multiSigController,
     } = req.body;
 
-    if (!name.trim() || !blockchain || !treasuryWallet) {
+    // Todo: do proper validation with a schema
+    if (!name.trim() || !multiSigController.trim() || !treasuryWallet.trim() || !treasuryWallet.trim()) {
       throw new HttpError(BAD_REQUEST, "Invalid Body Properties");
     }
 
     const newProject = await createNewProject({
       name,
-      blockchain,
       treasuryWallet,
       userId,
       assetType: "real estate",
@@ -50,6 +48,7 @@ const handler: NextApiHandler = async (
       data: {
         project: {
           id: newProject.id,
+          name: newProject.name
         },
       },
     });

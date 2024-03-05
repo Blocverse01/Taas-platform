@@ -52,7 +52,9 @@ export const createUserApiKey = async (currentUser: Session["user"], projectId: 
         title: createActivityLogTitle(ActivityLogProjectSubCategory["generateKey"], ActivityLogCategory["project"], validProject.name),
         category: ActivityLogCategory["project"],
         subCategory: ActivityLogProjectSubCategory["generateKey"],
-        actor: trimmedUserId
+        actor: trimmedUserId,
+        ctaLink: '/dashboard/integrations',
+        ctaText: 'View Linked API Keys'
     });
 
     return newApiKey;

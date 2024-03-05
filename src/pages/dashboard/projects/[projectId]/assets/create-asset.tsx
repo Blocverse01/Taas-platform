@@ -25,6 +25,7 @@ const CreateProjectAsset: NextPageWithLayout<
     <CreateAsset
       assetType={project.assetType}
       projectId={project.id}
+      projectName={project.name}
       projectTokenFactory={project.tokenFactory}
     />
   );

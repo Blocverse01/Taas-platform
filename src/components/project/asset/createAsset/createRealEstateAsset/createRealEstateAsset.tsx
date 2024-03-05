@@ -17,6 +17,7 @@ import { createActivityLogTitle } from '@/data/adapters/browser/taas-web/activit
 interface CreateRealEstateAssetProps {
   projectId: string;
   projectTokenFactory: Address;
+  projectName: string;
 }
 
 interface TokenOptions {
@@ -34,6 +35,7 @@ interface UnStoredTokenization {
 const CreateRealEstateAsset: FC<CreateRealEstateAssetProps> = ({
   projectTokenFactory,
   projectId,
+  projectName,
 }) => {
   const router = useRouter();
 
@@ -81,7 +83,7 @@ const CreateRealEstateAsset: FC<CreateRealEstateAssetProps> = ({
 
     await saveToProjectActivityLog(projectId, {
       actor,
-      title: createActivityLogTitle(ActivityLogProjectSubCategory['tokenizeAsset'], txHash),
+      title: createActivityLogTitle(ActivityLogProjectSubCategory['tokenizeAsset'], projectName),
       category: ActivityLogCategory['project'],
       ctaLink: getTransactionExplorerUrl(txHash),
       ctaText: 'View Transaction',

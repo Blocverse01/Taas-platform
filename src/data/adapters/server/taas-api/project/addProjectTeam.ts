@@ -21,14 +21,17 @@ const createProjectTeammate = async (payload: CreateProjectTeammatePayload) => {
         project: payload.projectId,
         user: payload.userId,
         roleId: payload.role,
-        isActive: payload.isActive
+        isActive: payload.isActive,
+        name: payload.name
     });
 
     await storeProjectActivityLogItem(payload.projectId, {
         title: createActivityLogTitle(ActivityLogProjectSubCategory["addTeamMember"], ActivityLogCategory["project"], payload.projectName),
         category: ActivityLogCategory["project"],
         subCategory: ActivityLogProjectSubCategory["addTeamMember"],
-        actor: user.walletAddress
+        actor: user.walletAddress,
+        ctaLink: `/dashboard/projects/${payload.projectId}/team`,
+        ctaText: 'View Team Members'
     });
 
     return projectTeamMember;

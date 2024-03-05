@@ -1,12 +1,10 @@
 import type { NextPageWithLayout } from '../_app';
 import Link from 'next/link';
 import { ComponentProps } from 'react';
-
 import { ProjectsOverview } from '@/components/projectOverview';
-
 import DashboardLayout from '@/components/layout/dashboardLayout';
 import { Plus } from '@/assets/icon';
-import useSWR from 'node_modules/swr/core/dist/index.mjs';
+import useSWR from 'swr';
 import { GridListing } from '@/components/gridListing';
 import Skeleton from 'react-loading-skeleton';
 import { fetcher } from '@/resources/constants';
@@ -15,7 +13,7 @@ type Projects = ComponentProps<typeof ProjectsOverview>['projects'];
 
 const DashboardPage: NextPageWithLayout = () => {
   const { data, error } = useSWR<{
-    data?: Projects;
+    data: Projects;
   }>('/api/user/projects', fetcher);
 
   const projects = data?.data;

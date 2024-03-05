@@ -14,7 +14,8 @@ export const assetDocumentRepository = () => getXataClient().db.AssetDocument;
 export const apiKeyRepository = () => getXataClient().db.ApiKey;
 
 //Boolean
-export const SPONSOR_TRANSACTION = process.env.NEXT_PUBLIC_SPONSOR_TRANSACTION! as unknown as boolean ?? true;
+// export const SPONSOR_TRANSACTION = process.env.NEXT_PUBLIC_SPONSOR_TRANSACTION! as unknown as boolean ?? true;
+export const SPONSOR_TRANSACTION = true;
 
 //Numbers
 export const ZERO = 0
