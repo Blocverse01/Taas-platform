@@ -88,7 +88,7 @@ const AssetPage: FC<AssetPageProps> = ({
             assetHoldersCount: 5, // Todo: add functionality for asset holders count
           };
         }}
-        issueToken={handleIssueToken} // Todo: add real token issue functionality
+        issueToken={handleIssueToken}
       />
       <DangerZone
         delistAsset={(assetId) => Promise.resolve()} // Todo: add real delist asset functionality

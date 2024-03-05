@@ -13,7 +13,7 @@ import type { Session } from "next-auth";
 
 export const addNewTeamMember = async (
   currentUser: Session,
-  payload: AddNewMemberPayload
+  payload: Omit<AddNewMemberPayload, 'projectName'>
 ) => {
   const project = await projectRepository()
     .filter({
@@ -50,10 +50,11 @@ export const addNewTeamMember = async (
   if (!existingTeamMember) {
     await createProjectTeammate({
       projectId: payload.projectId,
-      projectName: payload.projectId,
+      projectName: project.name,
       userId: user.id,
       role: +payload.role,
-      isActive: false,
+      isActive: true,
+      name: payload.name
     });
   }
 

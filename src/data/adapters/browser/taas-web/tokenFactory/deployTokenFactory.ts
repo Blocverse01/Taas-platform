@@ -1,5 +1,5 @@
 import {
-  Address,
+  type Address,
   TransactionReceipt as PreciseTransactionReceipt,
   decodeEventLog
 } from "viem";
@@ -10,9 +10,9 @@ import {
 } from "@/resources/utils/web3/connection";
 import { PLATFORM_ENTRY } from "@/resources/utils/web3/abis";
 import { getContractAddress } from "@/resources/utils/web3/contracts";
-import { sponsorTransaction } from "@/data/adapters/browser/biconomy";
 import { SPONSOR_TRANSACTION } from "@/resources/constants";
 import { ethers } from "ethers";
+import { sendUserOperation } from "../../alchemy/userOperation";
 
 const CONTRACT_FUNCTION_NAME = "createTokenFactory" as const;
 
@@ -26,8 +26,9 @@ const deployTokenFactory = async (
   multiSigSafeAddress: Address,
   treasuryAddress: Address
 ): Promise<DeployFactoryResponse> => {
-  const account = await getAccount();
   const platformEntryAddress = getContractAddress("PLATFORM_ENTRY");
+
+  const account = await getAccount();
   const walletClient = getWalletClient();
   const publicClient = getPublicClient();
 
@@ -37,8 +38,8 @@ const deployTokenFactory = async (
     treasuryAddress,
   ] as const;
 
-  if (SPONSOR_TRANSACTION) {    
-  
+  if (SPONSOR_TRANSACTION) {
+
     const data = new ethers.utils.Interface([
       "function createTokenFactory(address assetAdmin, address tokenController, address treasury)"
     ]).encodeFunctionData(
@@ -50,14 +51,10 @@ const deployTokenFactory = async (
       ]
     );
 
-    const platformentryAddress = getContractAddress("PLATFORM_ENTRY");
-
-    const transaction = {
-      to: platformentryAddress,
-      data
-    }   
-
-    const transactionHash = await sponsorTransaction(transaction);
+    const transactionHash = await sendUserOperation({
+      target: platformEntryAddress,
+      calldata: data as Address
+    });
 
     const txnReceipt = await publicClient.getTransactionReceipt({
       hash: transactionHash,

@@ -8,14 +8,15 @@ const getTeamMembers = async (currentUser: Session["user"], projectId: string) =
     throw new HttpError(BAD_REQUEST, "Args cannot be empty string");
   }
 
-  const teamMemberships = await projectTeamRepository().filter("project.id", projectId).select(["user.email", "user.walletAddress", "roleId", "isActive"]).getAll();
+  const teamMemberships = await projectTeamRepository().filter("project.id", projectId).select(["user.email", "user.walletAddress", "roleId", "isActive", "name", "user.id"]).getAll();
 
   const teamMembers = teamMemberships.map((membership) => ({
-    name: "Name cannot be blank", // Todo: figure out how names should be retrieved
+    name: membership.name,
     email: membership.user!.email!,
     walletAddress: membership.user!.walletAddress! as Address,
     role: membership.roleId!,
-    isActive: membership.isActive!
+    isActive: membership.isActive!,
+    userId: membership.user!.id
   }));
 
   return teamMembers;

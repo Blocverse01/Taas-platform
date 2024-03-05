@@ -46,7 +46,9 @@ export const updateTeamMemberRole = async (
       title: createActivityLogTitle(ActivityLogProjectSubCategory["updateTeamMember"], ActivityLogCategory["project"], project.name),
       category: ActivityLogCategory["project"],
       subCategory: ActivityLogProjectSubCategory["updateTeamMember"],
-      actor: currentUser.user.walletAddress
+      actor: currentUser.user.walletAddress,
+      ctaLink: `/dashboard/projects/${payload.projectId}/team`,
+      ctaText: 'View Team Members'
     });
 
   } catch (error: any) {
@@ -88,7 +90,9 @@ export const removeTeamMember = async (
       title: createActivityLogTitle(ActivityLogProjectSubCategory["removeTeamMember"], ActivityLogCategory["project"], project.name),
       category: ActivityLogCategory["project"],
       subCategory: ActivityLogProjectSubCategory["removeTeamMember"],
-      actor: currentUser.user.walletAddress
+      actor: currentUser.user.walletAddress,
+      ctaLink: `/dashboard/projects/${payload.projectId}/team`,
+      ctaText: 'View Team Members'
     });
 
   } catch (error: any) {

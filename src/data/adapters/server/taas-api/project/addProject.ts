@@ -3,7 +3,6 @@ import { WEB3_ENVIRONMENT } from "@/resources/utils/web3/environment";
 import { CreateNewProjectOptions } from "./types";
 import { storeProjectActivityLogItem } from "../activityLog/createActivityLog";
 import { ActivityLogCategory, ActivityLogProjectSubCategory } from "../activityLog/types";
-import { createActivityLogTitle } from "../../../browser/taas-web/activityLog/utils";
 import { getUserById } from "../user";
 import { HttpError } from "@/resources/errors";
 
@@ -19,7 +18,6 @@ export async function createNewProject(options: CreateNewProjectOptions) {
         name: options.name,
         assetType: options.assetType,
         owner: options.userId,
-        blockchain: options.blockchain,
         treasuryWallet: options.treasuryWallet,
         multisigController: options.multiSigController,
         tokenFactory: options.tokenFactory,
@@ -27,12 +25,12 @@ export async function createNewProject(options: CreateNewProjectOptions) {
     });
 
     await storeProjectActivityLogItem(newProject.id, {
-        title: createActivityLogTitle(ActivityLogProjectSubCategory["createProject"], ActivityLogCategory["project"], newProject.name),
+        title: `${ActivityLogProjectSubCategory["createProject"]} named ${newProject.name}`,
         category: ActivityLogCategory["project"],
         subCategory: ActivityLogProjectSubCategory["createProject"],
         actor: user.walletAddress,
         ctaLink: `/projects/${newProject.id}`,
-        ctaText:"View Project"
+        ctaText: "View Project"
     });
 
     return newProject;

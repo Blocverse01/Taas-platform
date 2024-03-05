@@ -1,24 +1,19 @@
-"use client";
-import Link from "next/link";
-import logo from "@/assets/logo.svg";
-import { useRouter } from "next/router";
-import Image from "next/image";
-import { FC } from "react";
-import {
-  Assets,
-  Dashboard,
-  Authorization,
-  Settings,
-  TeamIcon,
-} from "@/assets/icon";
-import { LogoutDialog } from "@/components/logout/logoutDialog";
+'use client';
+import Link from 'next/link';
+import logo from '@/assets/logo.svg';
+import { useRouter } from 'next/router';
+import Image from 'next/image';
+import { FC } from 'react';
+import { Assets, Dashboard, Authorization, Settings, TeamIcon, Notification } from '@/assets/icon';
+import { LogoutDialog } from '@/components/logout/logoutDialog';
 import { derivePageTitle } from '@/resources/utils/helperfunctions';
-import { logOut } from "@/data/adapters/browser/auth";
-
+import { logOut } from '@/data/adapters/browser/auth';
 
 interface ProjectSidebarProps {
   projectId: string;
 }
+
+const NOT_READY_NAV_ITEM_NAMES = ['settings', 'authorizations'];
 
 const ProjectSidebar: FC<ProjectSidebarProps> = ({ projectId }) => {
   const router = useRouter();
@@ -42,6 +37,11 @@ const ProjectSidebar: FC<ProjectSidebarProps> = ({ projectId }) => {
       icon: <TeamIcon />,
     },
     {
+      name: 'activities',
+      href: `/dashboard/projects/${projectId}/activities`,
+      icon: <Notification />,
+    },
+    {
       name: 'settings',
       href: `/dashboard/projects/${projectId}/settings`,
       icon: <Settings />,
@@ -51,7 +51,7 @@ const ProjectSidebar: FC<ProjectSidebarProps> = ({ projectId }) => {
       href: `/dashboard/projects/${projectId}/authorizations`,
       icon: <Authorization />,
     },
-  ];
+  ].filter((item) => !NOT_READY_NAV_ITEM_NAMES.includes(item.name));
 
   return (
     <aside className="border-r-[1px] border-t-grey-3">

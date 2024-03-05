@@ -4,7 +4,7 @@ import { CrossIcon, PlusSign } from '@/assets/icon';
 import { useModalParent } from '@/data/store/zustand/modalSlice';
 import { AddTeamMemberForm } from '../addTeamMemberForm';
 import { FC } from 'react';
-import { useSWRConfig } from 'node_modules/swr/_internal/dist/index.mjs';
+import { useSWRConfig } from 'swr';
 
 interface AddTeamMemberProps {
   projectId: string;

@@ -40,7 +40,6 @@ export interface CreateNewProjectOptions {
     assetType: string;
     userId: string
     name: string;
-    blockchain: string,
     treasuryWallet: string,
     multiSigController: Address,
     tokenFactory: Address
@@ -51,5 +50,6 @@ export type CreateProjectTeammatePayload = {
     projectName: string;
     userId: string;
     role: number,
-    isActive: boolean
+    isActive: boolean;
+    name: string;
 }

@@ -61,7 +61,7 @@ export default function App({
   return (
     <div>
       {pageIsLoading && (
-        <div className="fixed inset-0 z-[9999] h-full w-full flex items-center justify-center bg-white/50">
+        <div className="fixed inset-0 z-[9999] h-full w-full flex items-center justify-center bg-white/50 backdrop-blur-[2.5px]">
           <GridLoader color={TAAS_PURPLE} />
         </div>
       )}
