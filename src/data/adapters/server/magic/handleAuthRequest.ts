@@ -16,10 +16,18 @@ const handleAuthRequest = async (
 
   if (!dbUser) {
     dbUser = await createUser({
-      email: magicUser.email,
+      email: magicUser.email.toLowerCase(),
       walletAddress: magicUser.publicAddress,
     });
   }
+
+  if (!dbUser.walletAddress) {
+    dbUser = await dbUser.update({
+      walletAddress: magicUser.publicAddress,
+    });
+  }
+
+  if (!dbUser) throw new Error('User not retrieved');
 
   return {
     id: dbUser.id,
