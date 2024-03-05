@@ -29,7 +29,7 @@ export const addNewTeamMember = async (
 
   if (!user) {
     user = await createUser({
-      email: payload.email,
+      email: payload.email.toLowerCase(),
       walletAddress: "",
     });
   }
