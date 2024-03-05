@@ -10,8 +10,6 @@ const sendUserOperation = async (operationData: { calldata: Address, target: Add
         throw new Error('SmartAccountClient account missing')
     }
 
-    console.log({ smartAccount: smartAccountClient.account })
-
     const userOperation = await smartAccountClient.sendUserOperation({
         uo: {
             target: target,

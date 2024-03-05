@@ -5,6 +5,7 @@ import * as RadioGroup from '@radix-ui/react-radio-group';
 import toast from 'react-hot-toast';
 import ClipLoader from 'react-spinners/ClipLoader';
 import { TAAS_PURPLE } from 'tailwind.config';
+import BarLoader from 'react-spinners/BarLoader';
 
 interface TeamMemberRolePickerProps {
   handleRoleChange: (newRole: number) => Promise<void>;
@@ -46,16 +47,16 @@ const TeamMemberRolePicker: FC<TeamMemberRolePickerProps> = ({ role, handleRoleC
       </DropdownMenu.Trigger>
       <DropdownMenu.Portal>
         <DropdownMenu.Content
-          className="min-w-[220px] bg-white rounded-md p-6 shadow-[0px_10px_38px_-10px_rgba(22,_23,_24,_0.35),_0px_10px_20px_-15px_rgba(22,_23,_24,_0.2)] will-change-[opacity,transform] data-[side=top]:animate-slideDownAndFade data-[side=right]:animate-slideLeftAndFade data-[side=bottom]:animate-slideUpAndFade data-[side=left]:animate-slideRightAndFade relative"
+          className="min-w-[220px] bg-white rounded-md shadow-[0px_10px_38px_-10px_rgba(22,_23,_24,_0.35),_0px_10px_20px_-15px_rgba(22,_23,_24,_0.2)] will-change-[opacity,transform] data-[side=top]:animate-slideDownAndFade data-[side=right]:animate-slideLeftAndFade data-[side=bottom]:animate-slideUpAndFade data-[side=left]:animate-slideRightAndFade relative"
           sideOffset={5}
         >
           {updatingRole && (
-            <div className="flex absolute top-2 items-center gap-2">
-              <ClipLoader size={25} color={TAAS_PURPLE} /> updating role.
+            <div className="flex absolute items-center gap-2 top-[0.5px] inset-x-0">
+              <BarLoader color={TAAS_PURPLE} width={'100%'} className="rounded-t-md" />
             </div>
           )}
           <RadioGroup.Root
-            className="flex flex-col gap-2.5 pt-4"
+            className="flex flex-col gap-5 p-6"
             value={`${currentUserRole}`}
             aria-label="Select a new role"
             onValueChange={async (value) => {
