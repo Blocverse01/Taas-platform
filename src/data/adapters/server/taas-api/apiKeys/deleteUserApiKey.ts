@@ -28,6 +28,8 @@ export const deleteUserApiKey = async (currentUser: Session["user"], apiKeyId: s
         title: createActivityLogTitle(ActivityLogProjectSubCategory["deleteKey"], ActivityLogCategory["project"], existingApiKey.project.name),
         category: ActivityLogCategory["project"],
         subCategory: ActivityLogProjectSubCategory["deleteKey"],
-        actor: existingApiKey.user?.walletAddress ?? trimmedUserId
+        actor: existingApiKey.user?.walletAddress ?? trimmedUserId,
+        ctaLink: '/dashboard/integrations',
+        ctaText: 'View Linked API Keys'
     });
 }

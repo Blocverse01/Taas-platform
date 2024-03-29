@@ -1,8 +1,8 @@
-import { FC } from "react";
-import { Address } from "viem";
-import useSwr from "swr";
-import Skeleton from "react-loading-skeleton";
-import { IssueTokenDialog } from "./issueTokenDialog";
+import { FC } from 'react';
+import { Address } from 'viem';
+import useSwr from 'swr';
+import Skeleton from 'react-loading-skeleton';
+import { IssueTokenDialog } from './issueTokenDialog';
 
 interface TokenManagementProps {
   tokenAddress: Address;
@@ -11,12 +11,11 @@ interface TokenManagementProps {
     totalSupply: number;
     assetHoldersCount: number;
   }>;
-  issueToken: (
-    tokenAddress: Address,
-    destinationWallet: Address,
-    amount: number
-  ) => Promise<void>;
+  issueToken: (tokenAddress: Address, destinationWallet: Address, amount: number) => Promise<void>;
 }
+
+const TRANSFER_TOKEN_IS_READY = true;
+const ASSET_HOLDERS_IS_READY = false;
 
 const TokenManagement: FC<TokenManagementProps> = ({
   tokenAddress,
@@ -25,9 +24,7 @@ const TokenManagement: FC<TokenManagementProps> = ({
   issueToken,
 }) => {
   const key = `/tokens/${tokenAddress}/information`;
-  const { data: tokenInformation, error } = useSwr(key, () =>
-    getTokenInformation(tokenAddress)
-  );
+  const { data: tokenInformation, error } = useSwr(key, () => getTokenInformation(tokenAddress));
 
   const totalSupply = tokenInformation?.totalSupply;
   const assetHoldersCount = tokenInformation?.assetHoldersCount;
@@ -35,7 +32,7 @@ const TokenManagement: FC<TokenManagementProps> = ({
   return (
     <section className="bg-t-gray-2 p-6 rounded-xl">
       <section className="max-w-fit space-y-6">
-        <div className="flex items-center justify-between">
+        <div className="flex items-center justify-between gap-48">
           <h3 className="text-xl text-t-black font-medium">Token Management</h3>
           <IssueTokenDialog
             handleIssueToken={async (destinationAddress, amount) => {
@@ -50,33 +47,27 @@ const TokenManagement: FC<TokenManagementProps> = ({
               {totalSupply === undefined && !error ? <Skeleton /> : totalSupply}
             </span>
           </div>
-          <div className="flex flex-col gap-4">
-            <span className="text-t-black text-base">
-              No. of Wallets Holding Asset
-            </span>
-            <span className="text-t-gray-4 text-base">
-              {assetHoldersCount === undefined && !error ? (
-                <Skeleton />
-              ) : (
-                assetHoldersCount
-              )}
-            </span>
-          </div>
+          {ASSET_HOLDERS_IS_READY && (
+            <div className="flex flex-col gap-4">
+              <span className="text-t-black text-base">No. of Wallets Holding Asset</span>
+              <span className="text-t-gray-4 text-base">
+                {assetHoldersCount === undefined && !error ? <Skeleton /> : assetHoldersCount}
+              </span>
+            </div>
+          )}
           <div className="flex flex-col gap-4">
             <span className="text-t-black text-base">Price</span>
-            <span className="text-t-gray-4 text-base">
-              {"$" + `${tokenPrice}`}
-            </span>
+            <span className="text-t-gray-4 text-base">{'$' + `${tokenPrice}`}</span>
           </div>
         </div>
-        <div>
-          {
-            // Todo: Request for token transfer designs and implement.
-          }
-          <button className="underline text-t-purple text-base">
-            Transfer Token to Wallet
-          </button>
-        </div>
+        {TRANSFER_TOKEN_IS_READY && (
+          <div>
+            {
+              // Todo: Request for token transfer designs and implement.
+            }
+            <button className="underline text-t-purple text-base">Transfer Token to Wallet</button>
+          </div>
+        )}
       </section>
     </section>
   );

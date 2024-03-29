@@ -27,7 +27,8 @@ const handler: NextApiHandler = async (req: NextApiRequest, res: NextApiResponse
         const activityLog = await getProjectActivityLog(projectId);
 
         res.status(OK).json({
-            message: "Success", data: {
+            message: "Success",
+            data: {
                 recentActivities: activityLog
             }
         });

@@ -1,9 +1,9 @@
-import { Caret, TeamIcon } from "@/assets/icon";
-import { SafeMultisigConfirmationResponse } from "@safe-global/safe-core-sdk-types";
-import useSWR from "node_modules/swr/core/dist/index.mjs";
-import { FC } from "react";
-import Skeleton from "react-loading-skeleton";
-import { Address } from "viem";
+import { Caret, TeamIcon } from '@/assets/icon';
+import { SafeMultisigConfirmationResponse } from '@safe-global/safe-core-sdk-types';
+import useSWR from 'swr';
+import { FC } from 'react';
+import Skeleton from 'react-loading-skeleton';
+import { Address } from 'viem';
 
 interface SafeTransaction {
   safe: string;
@@ -46,7 +46,7 @@ interface AuthorizationCardProps {
         name: string;
         assetLink: string;
       };
-      approvals: string[]
+      approvals: string[];
     }
   ) => void;
 }
@@ -56,14 +56,18 @@ const AuthorizationCard: FC<AuthorizationCardProps> = ({
   parseAuthorization,
   getAssetDetails,
   selectAuthorization,
-  getApprovals
+  getApprovals,
 }) => {
   const parsedAuthorization = parseAuthorization(safeTransaction);
 
   const key = `/asset-details/${parsedAuthorization.assetAddress}`;
-  const { data: assetDetails } = useSWR(key, () => getAssetDetails(parsedAuthorization.assetAddress));
+  const { data: assetDetails } = useSWR(key, () =>
+    getAssetDetails(parsedAuthorization.assetAddress)
+  );
 
-  const { data: approvedOwners } = useSWR(`/approvals/${parsedAuthorization.safeTxHash}`, () => getApprovals(parsedAuthorization.safeTxHash));
+  const { data: approvedOwners } = useSWR(`/approvals/${parsedAuthorization.safeTxHash}`, () =>
+    getApprovals(parsedAuthorization.safeTxHash)
+  );
 
   if (!assetDetails || !approvedOwners)
     return (
@@ -89,7 +93,7 @@ const AuthorizationCard: FC<AuthorizationCardProps> = ({
         selectAuthorization({
           ...parsedAuthorization,
           assetDetails: assetDetails,
-          approvals: approvedOwners
+          approvals: approvedOwners,
         })
       }
       className="bg-t-gray-2 text-t-gray-5 rounded cursor-pointer"

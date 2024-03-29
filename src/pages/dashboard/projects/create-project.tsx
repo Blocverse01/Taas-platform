@@ -1,9 +1,7 @@
-import { Formik, Form, Field, ErrorMessage } from 'formik';
+import { Formik, Form, ErrorMessage } from 'formik';
 import * as Yup from 'yup';
-import { FC } from 'react';
 import Select from 'react-select';
 import { Input } from '@/components/formPrimitives/input';
-import classNames from 'classnames';
 import { NextPageWithLayout } from '@/pages/_app';
 import Link from 'next/link';
 import SubPageLayout from '@/components/layout/subPageLayout';
@@ -20,19 +18,16 @@ import {
 } from '@/data/adapters/server/taas-api/activityLog/types';
 import { createActivityLogTitle } from '@/data/adapters/browser/taas-web/activityLog/utils';
 import { getTransactionExplorerUrl } from '@/resources/utils/web3/connection';
+import { useRouter } from 'next/router';
+import { getSmartAccountAddress } from '@/data/adapters/browser/alchemy/modularSmartAccount';
 
 const validationSchema = Yup.object({
   name: Yup.string().required('Name is required'),
   assetType: Yup.string().required('Asset type is required'),
-  blockchain: Yup.string().required('Blockchain is required'),
   treasuryWallet: Yup.string().required('Treasury Wallet is required'),
 });
 
-const blockchainOptions = [
-  { value: 'optimism', label: 'Optimism' },
-  { value: 'polygon', label: 'Polygon' },
-  { value: 'scroll', label: 'Scroll' },
-];
+type FormValues = Yup.InferType<typeof validationSchema>;
 
 const assetOptions = [
   { value: 'realestate', label: 'Real Estate' },
@@ -42,43 +37,58 @@ const assetOptions = [
 ];
 
 const CreateProject: NextPageWithLayout = () => {
-  const initialValues = {
+  const router = useRouter();
+
+  const initialValues: FormValues = {
     name: '',
-    blockchain: '',
     assetType: '',
     treasuryWallet: '',
   };
+
   return (
-    <Formik
+    <Formik<FormValues>
       initialValues={initialValues}
       validationSchema={validationSchema}
       onSubmit={async (values, { setSubmitting, resetForm }) => {
         const toastOptions = { id: 'generate-api-key' };
+
         try {
           toast.loading('Generating a project', toastOptions);
 
           const session = await getSession();
 
           if (!session) {
-            throw new Error('');
+            toast.dismiss(toastOptions.id);
+
+            toast.error('Please login again');
+
+            await router.push('/login');
+
+            return;
           }
 
-          const safeAddress = await deploySafe([session.user.walletAddress], 1);
+          // const safeAddress = await deploySafe([session.user.walletAddress], 1);
+          //Do not uncomment or delete this line until multisig has been implemented 100%
+
+          const userSmartAccountAddress = await getSmartAccountAddress();
 
           const { tokenFactory, txHash, actor } = await deployTokenFactory(
-            safeAddress,
+            userSmartAccountAddress,
             values.treasuryWallet as Address
           );
 
           const project = await storeProjectItem({
             ...values,
-            multiSigController: safeAddress,
+            multiSigController: userSmartAccountAddress,
             tokenFactory,
           });
 
           await saveToProjectActivityLog(project.id, {
             actor,
-            title: createActivityLogTitle(ActivityLogProjectSubCategory['deployFactory'], txHash),
+            title: createActivityLogTitle(
+              ActivityLogProjectSubCategory['deployFactory'],
+              project.name
+            ),
             category: ActivityLogCategory['project'],
             ctaLink: getTransactionExplorerUrl(txHash),
             ctaText: 'View Transaction',
@@ -88,8 +98,11 @@ const CreateProject: NextPageWithLayout = () => {
           toast.success('Project generated successfully', toastOptions);
 
           resetForm();
+
+          await router.push(`/dashboard`);
         } catch (error) {
           const errorMessage = error instanceof Error ? error.message : 'Something went wrong';
+
           toast.error(errorMessage, toastOptions);
         } finally {
           setSubmitting(false);
@@ -100,7 +113,7 @@ const CreateProject: NextPageWithLayout = () => {
         <Form className=" space-y-4 max-w-[430px] w-full">
           <Input
             className="text-t-black text-sm"
-            placeholder="Johnny Jones"
+            placeholder="Add Project Name"
             label="Project Name"
             type="text"
             name="name"
@@ -108,84 +121,44 @@ const CreateProject: NextPageWithLayout = () => {
           />
 
           <div>
-            <label
-              htmlFor="assetType"
-              className="block mb-4 text-t-black "
-            >
+            <label htmlFor="assetType" className="block mb-4 text-t-black ">
               Type of Asset
             </label>
             <Select
               styles={{
                 control(base) {
-                  base.backgroundColor = "#FAFAFA";
-                  base.padding = "8px";
-                  base.borderRadius = "4px";
-                  base.border = "none";
-                  base.color = "#474747";
-                  base.fontSize = "14px";
-                  base.fontWeight = "normal";
+                  base.backgroundColor = '#FAFAFA';
+                  base.padding = '8px';
+                  base.borderRadius = '4px';
+                  base.border = 'none';
+                  base.color = '#474747';
+                  base.fontSize = '14px';
+                  base.fontWeight = 'normal';
 
                   return base;
                 },
               }}
               placeholder="Select an asset"
               options={assetOptions}
-              isOptionDisabled={(option) => option.value !== "realestate"}
+              isOptionDisabled={(option) => option.value !== 'realestate'}
               onChange={(assetOption) => {
                 if (!assetOption) return null;
-                setFieldValue("assetType", assetOption.value);
+                setFieldValue('assetType', assetOption.value);
               }}
             />
-            <ErrorMessage
-              name="assetType"
-              component="div"
-              className="text-red-500"
-            />
+            <ErrorMessage name="assetType" component="div" className="text-red-500" />
           </div>
 
           <div>
-            <label
-              htmlFor="blockchain"
-              className="block mb-4 text-t-black"
-            >
-              Blockchain(select blockchain)
-            </label>
-            <Select
-              styles={{
-                control(base) {
-                  base.backgroundColor = "#FAFAFA";
-                  base.padding = "8px";
-                  base.borderRadius = "4px";
-                  base.border = "none";
-                  base.color = "#474747"
-                  base.fontSize = "14px";
-                  base.fontWeight = "normal";
-
-                  return base;
-                },
-              }}
-              placeholder="Select Blockchain"
-              options={blockchainOptions}
-              onChange={(blockchainOption) => {
-                if (!blockchainOption) return null;
-                setFieldValue("blockchain", blockchainOption.value);
-              }}
-            />
-            <ErrorMessage
-              name="blockchain"
-              component="div"
-              className="text-red-500"
+            <Input
+              className="text-t-black text-sm"
+              placeholder="Add Treasury Wallet"
+              label="Treasury Wallet"
+              type="text"
+              name="treasuryWallet"
+              id="treasuryWallet"
             />
           </div>
-
-          <Input
-            className="text-t-black text-sm mb-6"
-            placeholder="Add Treasury Wallet"
-            label="Treasury Wallet"
-            type="text"
-            name="treasuryWallet"
-            id="treasuryWallet"
-          />
           <div className="grid grid-cols-2 gap-4">
             <Link
               href="/dashboard"

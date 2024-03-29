@@ -1,7 +1,8 @@
-import React, { FC } from "react";
-import * as Popover from "@radix-ui/react-popover";
-import { EditIcon, Ellipsis } from "@/assets/icon";
-import { RemoveTeamMemberDialog } from "./removeTeamMember";
+import React, { FC } from 'react';
+import * as Popover from '@radix-ui/react-popover';
+import { EditIcon, Ellipsis } from '@/assets/icon';
+import { RemoveTeamMemberDialog } from './removeTeamMember';
+import { TeamMemberRolePicker } from './RolePicker';
 
 interface TeamMembersProps {
   teamMembers: {
@@ -9,19 +10,21 @@ interface TeamMembersProps {
     name: string;
     role: string;
     walletAddress: string;
+    userId: string;
     email: string;
   }[];
+  handleRoleChange: (newRole: number, teamMemberUserId: string) => Promise<void>;
 }
 
 const USER_ROLES = {
-  1: "developer",
-  2: "admin",
-  3: "owner"
-}
+  1: 'developer',
+  2: 'admin',
+  3: 'owner',
+};
 
-type Role = keyof typeof USER_ROLES;
+const REMOVE_MEMBER_IS_READY = false;
 
-const TeamMembers: FC<TeamMembersProps> = ({ teamMembers }) => {
+const TeamMembers: FC<TeamMembersProps> = ({ teamMembers, handleRoleChange }) => {
   return (
     <div>
       <table className="table-fixed border-separate border-spacing-y-8">
@@ -42,39 +45,49 @@ const TeamMembers: FC<TeamMembersProps> = ({ teamMembers }) => {
               <td className="font-medium">
                 <p className="w-[141px] truncate">{member.walletAddress}</p>
               </td>
-              <td className="font-medium">{USER_ROLES[+member.role as Role]}</td>
+              <td className="font-medium">
+                <TeamMemberRolePicker
+                  roles={USER_ROLES}
+                  role={+member.role}
+                  handleRoleChange={(newRole) => handleRoleChange(newRole, member.userId)}
+                />
+              </td>
               <td>
                 <span className="text-t-purple py-1 px-4 rounded-full bg-t-purple/20">Active</span>
               </td>
-              <td className="text-right pr-12">
-                <Popover.Root>
-                  <Popover.Trigger asChild>
-                    <button
-                      className="w-[35px] cursor-pointer h-[35px] inline-flex items-center justify-center text-t-black shadow-black/40 outline-none"
-                      aria-label="manage team member"
-                    >
-                      <Ellipsis />
-                    </button>
-                  </Popover.Trigger>
-                  <Popover.Portal>
-                    <Popover.Content
-                      className="rounded p-5 flex flex-col  bg-white shadow-[0_10px_38px_-10px_hsla(206,22%,7%,.35),0_10px_20px_-15px_hsla(206,22%,7%,.2)] focus:shadow-[0_10px_38px_-10px_hsla(206,22%,7%,.35),0_10px_20px_-15px_hsla(206,22%,7%,.2),0_0_0_2px_theme(colors.t.black)] will-change-[transform,opacity] data-[state=open]:data-[side=top]:animate-slideDownAndFade data-[state=open]:data-[side=right]:animate-slideLeftAndFade data-[state=open]:data-[side=bottom]:animate-slideUpAndFade data-[state=open]:data-[side=left]:animate-slideRightAndFade"
-                      sideOffset={1}
-                    >
-                      <RemoveTeamMemberDialog />
-                      <button className="flex hover:bg-t-gray-2 rounded p-3  items-center space-x-2">
-                        {" "}
-                        <EditIcon /> <span>Edit Role</span>
+              {REMOVE_MEMBER_IS_READY && (
+                <td className="text-right pr-12">
+                  <Popover.Root>
+                    <Popover.Trigger asChild>
+                      <button
+                        className="w-[35px] cursor-pointer h-[35px] inline-flex items-center justify-center text-t-black shadow-black/40 outline-none"
+                        aria-label="manage team member"
+                      >
+                        <Ellipsis />
                       </button>
-                    </Popover.Content>
-                  </Popover.Portal>
-                </Popover.Root>
-              </td>
+                    </Popover.Trigger>
+                    <Popover.Portal>
+                      <Popover.Content
+                        className="rounded p-5 flex flex-col  bg-white shadow-[0_10px_38px_-10px_hsla(206,22%,7%,.35),0_10px_20px_-15px_hsla(206,22%,7%,.2)] focus:shadow-[0_10px_38px_-10px_hsla(206,22%,7%,.35),0_10px_20px_-15px_hsla(206,22%,7%,.2),0_0_0_2px_theme(colors.t.black)] will-change-[transform,opacity] data-[state=open]:data-[side=top]:animate-slideDownAndFade data-[state=open]:data-[side=right]:animate-slideLeftAndFade data-[state=open]:data-[side=bottom]:animate-slideUpAndFade data-[state=open]:data-[side=left]:animate-slideRightAndFade"
+                        sideOffset={1}
+                      >
+                        <RemoveTeamMemberDialog />
+                        <button className="flex hover:bg-t-gray-2 rounded p-3  items-center space-x-2">
+                          {' '}
+                          <EditIcon /> <span>Edit Role</span>
+                        </button>
+                      </Popover.Content>
+                    </Popover.Portal>
+                  </Popover.Root>
+                </td>
+              )}
             </tr>
           ))}
         </tbody>
       </table>
-      {teamMembers.length === 0 && <div className="text-center text-sm text-t-black/70">No items to display</div>}
+      {teamMembers.length === 0 && (
+        <div className="text-center text-sm text-t-black/70">No items to display</div>
+      )}
     </div>
   );
 };

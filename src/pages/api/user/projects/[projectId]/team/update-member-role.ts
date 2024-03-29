@@ -1,14 +1,17 @@
 import { HttpError } from "@/resources/errors";
-import { addNewTeamMember } from "@/data/adapters/server/taas-api/team/addNewMember";
+import { updateTeamMemberRole } from "@/data/adapters/server/taas-api/team/manageMember";
 import { validateAuthInApiHandler } from "@/data/adapters/browser/auth";
 import { BAD_REQUEST, INTERNAL_SERVER_ERROR, OK, UNAUTHORIZED } from "@/resources/constants";
 import { NextApiHandler, NextApiRequest, NextApiResponse } from "next";
+import * as Yup from "yup";
 
-const USER_ROLES = {
-    "developer": 1,
-    "admin": 2,
-    "owner": 3
-}
+const VALID_USER_ROLES = [1, 2, 3];
+
+const updateRoleSchema = Yup.object({
+    newRole: Yup.number().required().oneOf(VALID_USER_ROLES),
+    teamMemberUserId: Yup.string().required(),
+    projectId: Yup.string().required()
+})
 
 const handler: NextApiHandler = async (req: NextApiRequest, res: NextApiResponse) => {
     try {
@@ -18,23 +21,24 @@ const handler: NextApiHandler = async (req: NextApiRequest, res: NextApiResponse
             res.status(UNAUTHORIZED).send({});
         }
 
-        const userId = session.user.id;
+        const { newRole, teamMemberUserId, projectId } = await updateRoleSchema.validate({
+            ...req.body,
+            ...req.query
+        });
 
-        const { name, email, role } = req.body;
-
-        if (!name.trim() || !email || !role) {
+        if (!newRole || !VALID_USER_ROLES.includes(newRole)) {
             throw new HttpError(BAD_REQUEST, "Invalid Body Properties");
         }
 
-        await addNewTeamMember(session, {
-            name,
-            email,
-            role: `${USER_ROLES[role as "admin" | "developer" | "owner"]}`,
-            projectId: req.query.projectId! as string,
+        await updateTeamMemberRole(session, {
+            teamMemberUserId: teamMemberUserId,
+            newRole: newRole.toString(),
+            projectId
         });
 
-        res.status(OK).json({ message: "Team member added Successfully" });
+        res.status(OK).json({ message: "Role updated Successfully" });
     } catch (error: any) {
+        console.log(error);
         return res
             .status(error?.status ?? error?.response?.status ?? INTERNAL_SERVER_ERROR)
             .json({ message: error.message });

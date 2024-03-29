@@ -22,7 +22,7 @@ const getWalletClient = () => {
 
   walletClientInstance = createWalletClient({
     chain: getViemChain(),
-    transport: custom(magic.rpcProvider)
+    transport: custom(magic.rpcProvider),
   });
   return walletClientInstance;
 }

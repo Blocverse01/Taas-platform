@@ -1,8 +1,7 @@
 import {
-  Address,
+  type Address,
   TransactionReceipt as PreciseTransactionReceipt,
-  decodeEventLog,
-  encodeFunctionData,
+  decodeEventLog
 } from "viem";
 import {
   getAccount,
@@ -11,8 +10,9 @@ import {
 } from "@/resources/utils/web3/connection";
 import { PLATFORM_ENTRY } from "@/resources/utils/web3/abis";
 import { getContractAddress } from "@/resources/utils/web3/contracts";
-import { sponsorTransaction } from "@/data/adapters/browser/biconomy";
 import { SPONSOR_TRANSACTION } from "@/resources/constants";
+import { ethers } from "ethers";
+import { sendUserOperation } from "../../alchemy/userOperation";
 
 const CONTRACT_FUNCTION_NAME = "createTokenFactory" as const;
 
@@ -26,8 +26,9 @@ const deployTokenFactory = async (
   multiSigSafeAddress: Address,
   treasuryAddress: Address
 ): Promise<DeployFactoryResponse> => {
-  const account = await getAccount();
   const platformEntryAddress = getContractAddress("PLATFORM_ENTRY");
+
+  const account = await getAccount();
   const walletClient = getWalletClient();
   const publicClient = getPublicClient();
 
@@ -38,22 +39,29 @@ const deployTokenFactory = async (
   ] as const;
 
   if (SPONSOR_TRANSACTION) {
-    const encodedData = encodeFunctionData({
-      abi: PLATFORM_ENTRY,
-      functionName: CONTRACT_FUNCTION_NAME,
-      args: functionArgs,
+
+    const data = new ethers.utils.Interface([
+      "function createTokenFactory(address assetAdmin, address tokenController, address treasury)"
+    ]).encodeFunctionData(
+      "createTokenFactory",
+      [
+        multiSigSafeAddress,
+        multiSigSafeAddress,
+        treasuryAddress
+      ]
+    );
+
+    const transactionHash = await sendUserOperation({
+      target: platformEntryAddress,
+      calldata: data as Address
     });
 
-    const txHash = await sponsorTransaction({
-      data: encodedData,
-      to: platformEntryAddress,
-    });
-    const receipt = await publicClient.getTransactionReceipt({
-      hash: txHash,
+    const txnReceipt = await publicClient.getTransactionReceipt({
+      hash: transactionHash,
     });
 
     return {
-      ...extractResponseFromReceipt(receipt, platformEntryAddress),
+      ...extractResponseFromReceipt(txnReceipt, platformEntryAddress),
       actor: account
     };
   }
@@ -67,6 +75,7 @@ const deployTokenFactory = async (
   });
 
   const txHash = await walletClient.writeContract(request);
+
   const receipt = await publicClient.waitForTransactionReceipt({
     hash: txHash,
   });
@@ -84,8 +93,9 @@ const extractResponseFromReceipt = (
   if (receipt.status === "reverted") throw new Error("Transaction failed");
 
   const log = receipt.logs.find(
-    (l) => l.address.toLowerCase() === platformEntryAddress.toLowerCase()
+    (log) => log.address.toLowerCase() === platformEntryAddress.toLowerCase()
   );
+
   if (!log) throw new Error("Reference log not found");
 
   const topics = decodeEventLog({
@@ -94,6 +104,7 @@ const extractResponseFromReceipt = (
     data: log.data,
     topics: log.topics,
   });
+
   const response = {
     tokenFactory: topics.args.contractAddress,
     txHash: receipt.transactionHash,
